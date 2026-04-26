@@ -3,836 +3,1157 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Formulário de Entrevista - Complexo XP</title>
-  <link rel="icon" href="https://i.postimg.cc/MG7qzW4x/emote.png" type="image/x-icon" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Entrevista - COMPREXO</title>
+  <link rel="icon" href="https://i.postimg.cc/9QGqLt5t/COMPREXO-RDR-RED4x.webp" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #11131a;
-      --bg-secondary: #181a22;
-      --bg-tertiary: #23253a;
-      --accent: #4f8cff;
-      --accent2: #ffb300;
-      --danger: #ff4b4b;
-      --success: #4caf50;
-      --warning: #ff9800;
-      --text: #f4f4f4;
-      --muted: #b0b0b0;
-      --radius: 14px;
-      --shadow: 0 2px 12px 0 rgba(0,0,0,0.14);
-      --shadow2: 0 1px 2px 0 rgba(0,0,0,0.07);
-      --transition: 0.18s cubic-bezier(.4,0,.2,1);
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a0a;
+      color: #f0f0f0;
+      min-height: 100vh;
+      line-height: 1.5;
     }
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Inter', Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      box-sizing: border-box;
-    }
-    nav {
-      background: var(--bg-secondary);
-      padding: 0.7em 0;
-      border-radius: 0 0 var(--radius) var(--radius);
-      box-shadow: var(--shadow2);
-      margin-bottom: 0.8em;
+
+    /* HEADER */
+    .header {
+      background: #111;
+      border-bottom: 1px solid #2a2a2a;
+      padding: 0 24px;
+      height: 60px;
       display: flex;
-      justify-content: center;
-      gap: 1.5em;
-      font-size: 1.07em;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    nav a {
-      color: var(--accent);
+
+    .brand {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #f0f0f0;
       text-decoration: none;
-      font-weight: 600;
-      padding: 0.3em 0.6em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      background: #e63946;
+      border-radius: 50%;
+      display: inline-block;
+      animation: blink 2s infinite;
+      box-shadow: 0 0 8px #e63946;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      color: #888;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.85rem;
+      padding: 6px 12px;
       border-radius: 6px;
-      transition: background var(--transition), color var(--transition);
+      transition: all 0.2s;
     }
-    nav a:hover {
-      background: var(--accent);
-      color: #fff;
+
+    .nav-links a:hover {
+      color: #e63946;
+      background: rgba(230, 57, 70, 0.1);
     }
-    hr {
-      border: none;
-      border-top: 1px solid #222a35;
-      margin: 0 0 1.4em 0;
+
+    .nav-links a.active {
+      color: #e63946;
+      background: rgba(230, 57, 70, 0.15);
+      font-weight: 600;
     }
-    .container {
+
+    /* MAIN */
+    .main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      padding-left: 12px;
+      border-left: 3px solid #e63946;
+    }
+
+    /* GRID */
+    .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2.2em;
-      max-width: 1400px;
-      margin: auto;
-      margin-top: 1.5em;
+      gap: 20px;
     }
-    @media (max-width: 1100px) {
-      .container {
-        grid-template-columns: 1fr;
-      }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
     }
-    .form, .results {
-      background: var(--bg-tertiary);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 2.2em 2em 1.3em 2em;
-      min-width: 300px;
+
+    /* CARD */
+    .card {
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .card-header {
       display: flex;
-      flex-direction: column;
-      gap: 0.7em;
-      min-height: 560px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
     }
-    .form h2, .results h3 {
-      margin: 0 0 1em 0;
-      font-weight: 700;
-      letter-spacing: -.5px;
-      color: var(--accent);
-      font-size: 1.36em;
-      text-align: left;
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
     }
-    .form h2 { font-size: 1.48em; }
+
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(230, 57, 70, 0.15);
+      color: #e63946;
+    }
+
+    /* FORM */
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 80px;
+      gap: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
     input, select, textarea {
+      width: 100%;
       font-family: inherit;
-      background: var(--bg-secondary);
-      border: 1.7px solid #2b2f41;
-      color: var(--text);
-      border-radius: 7px;
-      font-size: 1em;
-      padding: 0.72em 0.9em;
-      margin-bottom: 0.5em;
-      transition: border var(--transition), box-shadow var(--transition);
+      background: #1c1c1c;
+      border: 1.5px solid #2a2a2a;
+      color: #f0f0f0;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      padding: 10px 12px;
+      transition: all 0.2s;
       outline: none;
-      box-shadow: none;
     }
+
     input:focus, select:focus, textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px #4f8cff55;
+      border-color: #e63946;
+      box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
     }
+
+    input::placeholder, textarea::placeholder {
+      color: #555;
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23555' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+    }
+
     textarea {
-      min-height: 90px;
-      max-height: 220px;
+      min-height: 80px;
       resize: vertical;
     }
+
     #idade {
-      background-color: #191b25;
-      color: #ffb300;
-      border: none;
-      font-weight: bold;
-      margin-top: -7px;
-      margin-bottom: 10px;
-      max-width: 90px;
-      min-width: 60px;
+      background: #111;
+      color: #e63946;
+      font-weight: 700;
       text-align: center;
-      font-size: 0.95em;
-      padding-right: 0;
-      padding-left: 0;
-      box-sizing: border-box;
     }
-    button {
+
+    /* BUTTONS */
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .btn {
       font-family: inherit;
       border: none;
-      border-radius: 7px;
-      padding: 0.7em 1.1em;
-      font-size: 1.04em;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background var(--transition), box-shadow var(--transition), color var(--transition);
-      box-shadow: var(--shadow2);
-      margin-bottom: 0;
-      margin-top: 0;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
-    button.aprovar { background: var(--success);}
-    button.reprovar { background: var(--danger);}
-    button.limpar { background: #444;}
-    button.nova { background: var(--danger); }
-    button.copiar-visual { background: var(--accent);}
-    button.limpar-individual { background: var(--warning); color: #222;}
-    .botoes-rumo {
-      margin: 1.1em 0 0.2em 0;
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-success {
+      background: #22c55e;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #2dd46a;
+    }
+
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #f87171;
+    }
+
+    .btn-secondary {
+      background: #222;
+      color: #888;
+      border: 1px solid #333;
+    }
+
+    .btn-secondary:hover {
+      background: #2a2a2a;
+      color: #f0f0f0;
+    }
+
+    .btn-primary {
+      background: #e63946;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #ff4d5a;
+      box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+    }
+
+    .btn-sm {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+    }
+
+    .btn-block {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* STATS */
+    .stats {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5em;
+      gap: 12px;
+      padding: 14px;
+      background: #111;
+      border-radius: 10px;
+      margin: 16px 0;
+      border: 1px solid #2a2a2a;
     }
-    .botoes-rumo button {
-      flex: 1 1 115px;
-      background: #1e88e5;
-      font-weight: 600;
-      font-size: 1em;
-      border-radius: 7px;
-      color: #fff;
-      margin-bottom: 0;
-      min-width: 110px;
+
+    .stat {
+      font-size: 0.8rem;
+      color: #888;
     }
-    .custom-row-btns {
-      display: flex;
-      gap: 0.7em;
-      margin-bottom: 0.3em;
-      margin-top: 0.1em;
-    }
-    .custom-row-btns button {
-      flex: 1 1 50%;
-      min-width: 120px;
-    }
-    .total-bar, .visual-bar {
-      font-size: 1.09em;
-      background: transparent;
-      color: var(--muted);
-      font-weight: 600;
-      margin: 1.2em 0 0.5em 0;
-      text-align: left;
-      letter-spacing: .2px;
-      padding: 0;
-    }
-    .total-bar span, .visual-bar span {
-      color: var(--accent2);
-      font-weight: bold;
-    }
-    .rumos-bar {
-      display: inline-block;
-      margin-left: 11px;
-      font-size: 1em;
-      letter-spacing: .5px;
-    }
-    .rumos-bar span {
-      color: var(--accent2);
-      font-weight: bold;
-      margin-right: 8px;
-    }
-    .visual-bar {
-      color: #ffe082;
-      font-size: 1.07em;
-      margin-bottom: 0.5em;
-      margin-top: 4px;
-    }
-    .visual-bar span, .visual-bar .rumos-bar span { color: #ffe082;}
-    .descricao-geral {
-      margin-bottom: 3px;
-      margin-top: 10px;
-      font-size: 0.99em;
-      color: var(--muted);
-      background: #181a22;
-      border-left: 4px solid var(--accent2);
-      border-radius: 7px;
-      padding: 0.7em 1em;
-    }
-    footer {
-      text-align: center;
-      margin-top: 28px;
-      padding: 14px 0 5px 0;
-      background: var(--bg-secondary);
-      border-top: 1px solid #23253a;
-      border-radius: var(--radius) var(--radius) 0 0;
-    }
-    .lembrete {
-      text-align: center;
-      margin-top: 1.6em;
-      margin-bottom: 1em;
-      padding: 1em 0.7em;
-      background: linear-gradient(90deg, #23253a 90%, #ffb30022 100%);
-      border-left: 7px solid var(--accent2);
-      border-radius: var(--radius);
-      color: var(--accent2);
+
+    .stat strong {
+      color: #e63946;
       font-weight: 700;
-      font-size: 1.06em;
-      box-shadow: var(--shadow2);
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
     }
-    .images-container {
-      display: flex;
-      gap: 1.5em;
-      justify-content: center;
-      align-items: center;
-      margin-top: 1.2em;
-      margin-bottom: 0.8em;
-    }
-    .images-container img {
-      width: 110px;
-      height: auto;
+
+    /* INFO */
+    .info {
+      background: #111;
+      border-left: 3px solid #e63946;
       border-radius: 8px;
-      box-shadow: var(--shadow2);
-      cursor: pointer;
-      transition: transform .15s cubic-bezier(.4,0,.2,1);
+      padding: 14px;
+      margin: 14px 0;
+      font-size: 0.8rem;
+      color: #888;
+      line-height: 1.7;
     }
-    .images-container img:hover {
-      transform: scale(1.08) rotate(-3deg);
+
+    .info a {
+      color: #e63946;
+      text-decoration: none;
     }
-    .btn-full {
-      width: 100%;
-      background: var(--accent);
-      color: #fff;
-      font-weight: bold;
-      border-radius: 7px;
-      font-size: 1.07em;
-      height: 44px;
-      box-shadow: var(--shadow2);
-      max-width: 320px;
-      text-align: center;
-      padding-left: 0;
-      margin-top: 0;
+
+    .info a:hover {
+      text-decoration: underline;
     }
-    /* Feedback de cópia */
-    #copyFeedback {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #333;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-        opacity: 0;
-        transition: opacity 0.5s;
-        z-index: 1000;
+
+    /* RUMO GRID */
+    .rumo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 14px 0;
     }
-    @media (max-width: 700px) {
-      .container {
-        grid-template-columns: 1fr;
-        gap: 1em;
-        padding: 0 0.2em;
-      }
-      .form, .results {
-        padding: 1.2em 0.5em 1em 0.5em;
-        min-width: 0;
-      }
-      nav {
-        flex-direction: column;
-        gap: 0.4em;
-        font-size: 1em;
-      }
-      .images-container img {
-        width: 70px;
-      }
+
+    @media (max-width: 500px) {
+      .rumo-grid { grid-template-columns: repeat(2, 1fr); }
     }
-    .form input, .form select, .form textarea {
-      margin-bottom: 0.35em;
+
+    .rumo-grid .btn {
+      background: #1c1c1c;
+      color: #888;
+      border: 1px solid #2a2a2a;
     }
-    .form .input-group {
+
+    .rumo-grid .btn:hover {
+      background: #e63946;
+      color: white;
+      border-color: #e63946;
+    }
+
+    /* RESULTS */
+    .result-section {
+      margin-bottom: 16px;
+    }
+
+    .result-section h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #888;
+      margin-bottom: 6px;
       display: flex;
-      gap: 1em;
-      flex-wrap: wrap; /* ADICIONADO: Permite quebra de linha para os campos */
+      align-items: center;
+      gap: 6px;
     }
-    .form .input-group > * { flex: 1 1 0; }
-    /* Ajuste para botões principais */
-    .botoes-principais {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 10px;
+
+    .result-section h4::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #e63946;
     }
-    .botoes-principais button {
-        flex: 1;
-        min-width: 100px;
+
+    .result-textarea {
+      width: 100%;
+      background: #1c1c1c;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 10px;
+      min-height: 100px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #f0f0f0;
+      resize: vertical;
+      outline: none;
+    }
+
+    .result-textarea:focus {
+      border-color: #e63946;
+    }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      margin-top: 32px;
+      border-top: 1px solid #2a2a2a;
+      background: #111;
+    }
+
+    .footer img {
+      width: 80px;
+      margin-bottom: 12px;
+      opacity: 0.7;
+    }
+
+    .footer p {
+      font-size: 0.75rem;
+      color: #555;
+      margin: 3px 0;
+    }
+
+    .footer a {
+      color: #888;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #e63946;
+    }
+
+    /* TOAST */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #1c1c1c;
+      color: #f0f0f0;
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: 1px solid #2a2a2a;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      font-weight: 500;
+      font-size: 0.85rem;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #444;
     }
   </style>
+<base target="_blank">
 </head>
 <body>
-  <nav>
-		<a href="/complexogg/index.html">🏠 Início</a>
-        <a href="/complexogg/entrevista/index.html">🎤 Entrevista</a>
-        <a href="/complexogg/punicoes_trabalho/index.html">🛠️ Punições Trabalho</a>
-        <a href="/complexogg/punicoes_nome/index.html">❌ Punições Nome</a>
-        <a href="/complexogg/verificar_perfil/index.html">🔍 Verificar Perfil</a>
-        <a href="/complexogg/reuniao_nome/index.html">📅 Marcar Troca de Nome</a>
-        <a href="/complexogg/modelos_suporte/index.html">🔄 Modelos Suporte</a>
-  </nav>
-  <hr>
-  <div class="container">
-    <form class="form" autocomplete="off" onsubmit="return false;">
-      <h2>Entrevista Complexo XP</h2>
-      <div class="input-group">
-        <input type="text" id="nome" placeholder="Nome Completo (IRL)" autocomplete="off" />
-        <input type="text" id="data" placeholder="Nascimento (dd mm aaaa)" autocomplete="off" />
-        <input type="text" id="idade" placeholder="Idade" disabled />
-      </div>
-      <div class="input-group">
-        <input type="text" id="discord" placeholder="ID Discord" autocomplete="off" />
-        <input type="text" id="entrevista" placeholder="Nº da Entrevista" autocomplete="off" />
-      </div>
-      <div class="input-group">
-        <select id="rumo">
-          <option value="">Selecione o Rumo</option>
-          <option value="Livre">Livre</option>
-          <option value="Policia">Polícia</option>
-          <option value="Mecanica">Mecânica</option>
-          <option value="Hospital">Hospital</option>
-          <option value="Ilegal">Ilegal</option>
-          <option value="Outro">Outro (especifique ao lado)</option>
-        </select>
-        <input type="text" id="rumoOutro" placeholder="Outro Rumo (se aplicável)" autocomplete="off" />
-      </div>
-      <textarea id="observacoes" placeholder="Observações ou motivo da reprovação..."></textarea>
+  <header class="header">
+    <a href="index.html" class="brand">
+      <span class="brand-dot"></span>
+      COMPREXO
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">🏠 Início</a>
+      <a href="entrevista/index.html" class="active">🎤 Entrevista</a>
+      <a href="alinhamento/index.html">🎫 Alinhamento</a>
+    </nav>
+  </header>
 
-      <div class="botoes-principais">
-        <button class="aprovar" onclick="adicionar('aprovado')" type="button">Aprovar</button>
-        <button class="reprovar" onclick="adicionar('reprovado')" type="button">Reprovar</button>
-        <button class="limpar" onclick="limparCampos()" type="button">Limpar Tudo</button>
-        <button class="nova" onclick="limparStorageGeral()" type="button">Nova Entrevista</button>
-      </div>
-      <div class="total-bar" id="totalBarForm">
-        Total: <span id="totalGeral">0</span> |
-        Aprovados: <span id="aprovadosGeral">0</span> |
-        Reprovados: <span id="reprovadosGeral">0</span>
-        <span class="rumos-bar">
-          <span>polícia: <span id="aprovadosPolicia">0</span></span>|
-          <span>hospital: <span id="aprovadosHospital">0</span></span>|
-          <span>mecânica: <span id="aprovadosMecanica">0</span></span>|
-          <span>ilegal: <span id="aprovadosIlegal">0</span></span>|
-          <span>outros: <span id="aprovadosOutro">0</span></span>
-        </span>
-      </div>
-      <div class="descricao-geral">
-    <p style="margin:0;">
-        <span style="color:#4caf50;font-weight:bold;">✅</span> Todos os dados de aprovados e reprovados de todas as entrevistas ficam salvos, mesmo que você limpe os campos visuais. Esses dados só serão apagados ao clicar em <b>"Nova Entrevista"</b>.<br><br>
-        <span style="color:#ffb300;font-weight:bold;">⚠️</span> Limpar os campos visuais não apaga os dados salvos das entrevistas.<br><br>
-        <span style="color:#4f8cff;font-weight:bold;">💾</span> <b>Salvar entrevista completa</b> salva todas as entrevistas acumuladas no painel geral, não apenas as informações visuais atuais.<br><br>
-        <span style="color:#ffe082;font-weight:bold;">ℹ️</span> Aqui está o documento que deve ser repassado para o entrevistado: <a href="https://docs.google.com/document/d/1FRO7mZaNyVMSYKPTDAvXHE1kXz14GlOz5VGh7FhR-Kg/edit?pli=1&tab=t.0" style="color: red;" target="_blank">Regras básicas.</a>
-    </p>
-</div>
-      <div class="botoes-rumo">
-        <button onclick="copiarPorRumo('Policia', false)" type="button">Copiar Polícia</button>
-        <button onclick="copiarPorRumo('Mecanica', false)" type="button">Copiar Mecânica</button>
-        <button onclick="copiarPorRumo('Hospital', false)" type="button">Copiar Hospital</button>
-        <button onclick="copiarPorRumo('Ilegal', false)" type="button">Copiar Ilegal</button>
-        <button onclick="copiarPorRumo('Outro', false)" type="button">Copiar Outro</button>
-      </div>
-      <div style="margin-top: 1em; margin-bottom: 0.3em;">
-        <button type="button" onclick="copiarReprovadosGeral()" style="width:100%;background:var(--danger);color:#fff;font-size:1.03em;">Copiar Reprovados (Geral)</button>
-      </div>
-      <div style="display: flex; justify-content: center; margin-top: 0.3em; margin-bottom: 0.8em;">
-        <button class="btn-full" onclick="salvarTxtComDataHora()" type="button">
-          Salvar entrevista completa (TXT)
+  <main class="main">
+    <h1 class="page-title">Entrevista</h1>
+
+    <div class="grid">
+      <!-- FORM CARD -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Formulário</span>
+          <span class="badge">COMPREXO</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome">Nome Completo (IRL)</label>
+            <input type="text" id="nome" placeholder="Digite o nome..." autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="data">Data de Nascimento</label>
+            <input type="text" id="data" placeholder="dd/mm/aaaa" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="idade">Idade</label>
+            <input type="text" id="idade" disabled>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="discord">ID Discord</label>
+          <input type="text" id="discord" placeholder="000000000000000000" autocomplete="off">
+        </div>
+
+        <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+          <div class="form-group">
+            <label for="rumo">Rumo</label>
+            <select id="rumo">
+              <option value="">Selecione...</option>
+              <option value="Livre">Livre</option>
+              <option value="Policia">Polícia</option>
+              <option value="Fazenda">Fazenda</option>
+              <option value="Hospital">Hospital</option>
+              <option value="Nativo">Nativo</option>
+              <option value="Ilegal">Ilegal</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="rumoOutro">Outro Rumo</label>
+            <input type="text" id="rumoOutro" placeholder="Especifique..." autocomplete="off">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="observacoes">Observações</label>
+          <textarea id="observacoes" placeholder="Motivo da reprovação ou observações..."></textarea>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-success" onclick="aprovar()" type="button">✓ Aprovar</button>
+          <button class="btn btn-danger" onclick="reprovar()" type="button">✕ Reprovar</button>
+          <button class="btn btn-secondary" onclick="limparCampos()" type="button">Limpar</button>
+          <button class="btn btn-secondary" onclick="novaEntrevista()" type="button">Nova Entrevista</button>
+        </div>
+
+        <div class="stats">
+          <span class="stat">Total: <strong id="totalGeral">0</strong></span>
+          <span class="stat">Aprovados: <strong id="aprovadosGeral">0</strong></span>
+          <span class="stat">Reprovados: <strong id="reprovadosGeral">0</strong></span>
+          <span class="stat">Polícia: <strong id="aprovadosPolicia">0</strong></span>
+          <span class="stat">Fazenda: <strong id="aprovadosFazenda">0</strong></span>
+          <span class="stat">Nativo: <strong id="aprovadosNativo">0</strong></span>
+          <span class="stat">Hospital: <strong id="aprovadosHospital">0</strong></span>
+          <span class="stat">Ilegal: <strong id="aprovadosIlegal">0</strong></span>
+          <span class="stat">Outros: <strong id="aprovadosOutro">0</strong></span>
+        </div>
+
+        <div class="info">
+          <strong style="color:#f0f0f0;">ℹ️ Informações:</strong><br>
+          • Dados salvos automaticamente no navegador<br>
+          • "Nova Entrevista" apaga tudo permanentemente<br>
+          • <a href="https://comprexo.gg/regras/" target="_blank">Regras básicas</a> para o entrevistado
+        </div>
+
+        <div class="rumo-grid">
+          <button class="btn btn-sm" onclick="copiarRumo('Policia', false)" type="button">📋 Polícia</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Hospital', false)" type="button">📋 Hospital</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Nativo', false)" type="button">📋 Nativo</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Fazenda', false)" type="button">📋 Fazenda</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Ilegal', false)" type="button">📋 Ilegal</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Outro', false)" type="button">📋 Outro</button>
+        </div>
+
+        <button class="btn btn-danger btn-block" onclick="copiarReprovados()" type="button" style="margin-top:10px;">
+          📋 Copiar Reprovados
+        </button>
+
+        <button class="btn btn-primary btn-block" onclick="salvarTXT()" type="button" style="margin-top:8px;">
+          💾 Salvar como TXT
         </button>
       </div>
-    </form>
-    <section class="results">
-      <div class="visual-bar" id="visualBarResults">
-        Visual | Aprovados: <span id="aprovadosVisual">0</span> | Reprovados: <span id="reprovadosVisual">0</span>
-        <span class="rumos-bar">
-          <span>Polícia: <span id="aprovadosPoliciaVisual">0</span></span>|
-          <span>Hospital: <span id="aprovadosHospitalVisual">0</span></span>|
-          <span>Mecânica: <span id="aprovadosMecanicaVisual">0</span></span>|
-          <span>Ilegal: <span id="aprovadosIlegalVisual">0</span></span>|
-          <span>Outros: <span id="aprovadosOutroVisual">0</span></span>
-        </span>
+
+      <!-- RESULTS CARD -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Resultados</span>
+          <span class="badge">Visual</span>
+        </div>
+
+        <div class="stats" style="margin-bottom:16px;">
+          <span class="stat">Aprovados: <strong id="aprovadosVisual">0</strong></span>
+          <span class="stat">Reprovados: <strong id="reprovadosVisual">0</strong></span>
+          <span class="stat">Polícia: <strong id="aprovadosPoliciaVisual">0</strong></span>
+          <span class="stat">Fazenda: <strong id="aprovadosFazendaVisual">0</strong></span>
+          <span class="stat">Nativo: <strong id="aprovadosNativoVisual">0</strong></span>
+          <span class="stat">Hospital: <strong id="aprovadosHospitalVisual">0</strong></span>
+          <span class="stat">Ilegal: <strong id="aprovadosIlegalVisual">0</strong></span>
+          <span class="stat">Outros: <strong id="aprovadosOutroVisual">0</strong></span>
+        </div>
+
+        <div class="result-section">
+          <h4>Aprovados</h4>
+          <textarea id="resultadoAprovados" class="result-textarea"></textarea>
+          <div class="btn-group" style="margin-top:6px;">
+            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoAprovados')" type="button">📋 Copiar</button>
+            <button class="btn btn-secondary btn-sm" onclick="limpar('resultadoAprovados')" type="button">🗑 Limpar</button>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <h4>Reprovados (Detalhado)</h4>
+          <textarea id="resultadoReprovadosDetalhado" class="result-textarea"></textarea>
+          <div class="btn-group" style="margin-top:6px;">
+            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoReprovadosDetalhado')" type="button">📋 Copiar</button>
+            <button class="btn btn-secondary btn-sm" onclick="limpar('resultadoReprovadosDetalhado')" type="button">🗑 Limpar</button>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <h4>Reprovados (Simples)</h4>
+          <textarea id="resultadoReprovadosSimples" class="result-textarea"></textarea>
+          <div class="btn-group" style="margin-top:6px;">
+            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoReprovadosSimples')" type="button">📋 Copiar</button>
+            <button class="btn btn-secondary btn-sm" onclick="limpar('resultadoReprovadosSimples')" type="button">🗑 Limpar</button>
+          </div>
+        </div>
+
+        <div class="rumo-grid" style="margin-top:10px;">
+          <button class="btn btn-sm" onclick="copiarRumo('Policia', true)" type="button">📋 Polícia</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Fazenda', true)" type="button">📋 Fazenda</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Nativo', true)" type="button">📋 Nativo</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Hospital', true)" type="button">📋 Hospital</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Ilegal', true)" type="button">📋 Ilegal</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Outro', true)" type="button">📋 Outro</button>
+        </div>
       </div>
-      <h3>Aprovados</h3>
-      <textarea id="resultadoAprovados" aria-label="Aprovados"></textarea>
-      <div class="custom-row-btns">
-        <button class="copiar-visual" onclick="copiarTexto('resultadoAprovados')" type="button">Copiar</button>
-        <button class="limpar-individual" onclick="limparResultado('resultadoAprovados')" type="button">Limpar</button>
-      </div>
-      <h3>Reprovados (Detalhado)</h3>
-      <textarea id="resultadoReprovadosDetalhado" aria-label="Reprovados Detalhado"></textarea>
-      <div class="custom-row-btns">
-        <button class="copiar-visual" onclick="copiarTexto('resultadoReprovadosDetalhado')" type="button">Copiar</button>
-        <button class="limpar-individual" onclick="limparResultado('resultadoReprovadosDetalhado')" type="button">Limpar</button>
-      </div>
-      <h3>Reprovados (ID e Motivo)</h3>
-      <textarea id="resultadoReprovadosSimples" aria-label="Reprovados Simples"></textarea>
-      <div class="custom-row-btns">
-        <button class="copiar-visual" onclick="copiarTexto('resultadoReprovadosSimples')" type="button">Copiar</button>
-        <button class="limpar-individual" onclick="limparResultado('resultadoReprovadosSimples')" type="button">Limpar</button>
-      </div>
-      <div class="botoes-rumo" style="margin-top:13px;">
-        <button onclick="copiarPorRumo('Policia', true)" type="button">Copiar Polícia</button>
-        <button onclick="copiarPorRumo('Mecanica', true)" type="button">Copiar Mecânica</button>
-        <button onclick="copiarPorRumo('Hospital', true)" type="button">Copiar Hospital</button>
-        <button onclick="copiarPorRumo('Ilegal', true)" type="button">Copiar Ilegal</button>
-        <button onclick="copiarPorRumo('Outro', true)" type="button">Copiar Outro</button>
-      </div>
-    </section>
-  </div>
-  <div class="images-container">
-    <img src="https://i.postimg.cc/6Q3r7hr6/COMPLEXO-800-X800.png" alt="Imagem 1" title="Clique com o botão direito para abrir ou copiar" />
-    <img src="https://i.postimg.cc/2yphKRP3/COMPLEXO-1200-X800.png" alt="Imagem 2" title="Clique com o botão direito para abrir ou copiar" />
-  </div>
-  <div class="lembrete">
-    Lembrete: Não esqueça de registrar todas as informações no Discord".
-  </div>
-    <div id="copyFeedback">Copiado!</div>
-  <footer>
-    <img src="https://i.postimg.cc/WzSNyqxY/Jacky-Confuso.png" alt="Mascote Jacky" width="120" style="margin-bottom: 8px;" />
-    <p>
-      © 2025 - Todos os direitos reservados. Feito com ❤, ajuda de IA e um pouquinho de preguiça por
-      <a href="https://jackymayers.github.io/" target="_blank" style="color: #e0e0e0;">Jacky Mayers</a>!
-    <p>Editado por 
-      <a href="https://github.com/vferreiracpx" target="_blank" style="color:#aaa;">vFerreira</a>!
-    </p>
-    </p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <img src="https://i.postimg.cc/WzSNyqxY/Jacky-Confuso.png" alt="Jacky">
+    <p>© 2026 - Todos os direitos reservados</p>
+    <p>Procurar <a href="https://github.com/nsantiago-cpx" target="_blank">Nath</a> para ajustes</p>
+    <p>Original por <a href="https://jackymayers.github.io/" target="_blank">Jacky Mayers</a></p>
   </footer>
+
+  <div id="toast">Copiado!</div>
+
   <script>
-    window.onload = () => {
-      // Adicionado 'nomePersonagem' ao localStorage.getItem para carregar ao iniciar
-      ['nome', 'data', 'discord', 'nomePersonagem', 'entrevista', 'rumo', 'rumoOutro', 'observacoes'].forEach(id => {
-        if (localStorage.getItem(id)) document.getElementById(id).value = localStorage.getItem(id);
-      });
-      ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'].forEach(id => {
-        if (localStorage.getItem(id)) document.getElementById(id).value = localStorage.getItem(id);
-      });
+    // =====================================================
+    // INICIALIZAÇÃO
+    // =====================================================
+
+    // Carregar dados salvos
+    window.addEventListener('load', function() {
+      var campos = ['nome', 'data', 'discord', 'rumo', 'rumoOutro', 'observacoes'];
+      for (var i = 0; i < campos.length; i++) {
+        var id = campos[i];
+        var val = localStorage.getItem(id);
+        if (val) document.getElementById(id).value = val;
+      }
+
+      var resultados = ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'];
+      for (var i = 0; i < resultados.length; i++) {
+        var id = resultados[i];
+        var val = localStorage.getItem(id);
+        if (val) document.getElementById(id).value = val;
+      }
+
+      // Calcular idade se tiver data salva
       calcularIdade();
+
+      // Atualizar contadores
       atualizarContadores();
       atualizarContadorVisual();
-    };
+    });
 
-    document.querySelectorAll('input, textarea, select').forEach(el => {
-      el.addEventListener('input', () => {
-        localStorage.setItem(el.id, el.value);
+    // Salvar campos automaticamente
+    var todosCampos = document.querySelectorAll('input, select, textarea');
+    for (var i = 0; i < todosCampos.length; i++) {
+      todosCampos[i].addEventListener('input', function() {
+        localStorage.setItem(this.id, this.value);
       });
-    });
+    }
 
-    // Listener para limpar 'rumoOutro' quando o 'rumo' selecionado não é 'Outro'
-    document.getElementById('rumo').addEventListener('change', () => {
-        const rumoSelect = document.getElementById('rumo');
-        const rumoOutro = document.getElementById('rumoOutro');
-        if (rumoSelect.value !== 'Outro') {
-            rumoOutro.value = '';
-            localStorage.removeItem('rumoOutro');
-        }
-    });
-
+    // Listener para calcular idade
     document.getElementById('data').addEventListener('input', calcularIdade);
+    document.getElementById('data').addEventListener('blur', calcularIdade);
+
+    // Listener para limpar "Outro" quando não selecionado
+    document.getElementById('rumo').addEventListener('change', function() {
+      if (this.value !== 'Outro') {
+        document.getElementById('rumoOutro').value = '';
+        localStorage.removeItem('rumoOutro');
+      }
+    });
+
+    // =====================================================
+    // FUNÇÕES AUXILIARES
+    // =====================================================
 
     function calcularIdade() {
-      const dataInput = document.getElementById('data').value.trim();
-      const idadeCampo = document.getElementById('idade');
-      const dataRegex = /(\d{2})[-\/.\s]?(\d{2})[-\/.\s]?(\d{4})/;
-      const match = dataInput.match(dataRegex);
-      if (match) {
-        const [dia, mes, ano] = [parseInt(match[1]), parseInt(match[2]) - 1, parseInt(match[3])];
-        const nascimento = new Date(ano, mes, dia);
-        const hoje = new Date();
-        let idade = hoje.getFullYear() - nascimento.getFullYear();
-        const m = hoje.getMonth() - nascimento.getMonth();
-        if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
-          idade--;
-        }
-        idadeCampo.value = `${idade}`;
-      } else {
+      var dataInput = document.getElementById('data').value.trim();
+      var idadeCampo = document.getElementById('idade');
+
+      // Aceita: dd/mm/aaaa, dd-mm-aaaa, dd.mm.aaaa
+      var regex = /^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/;
+      var match = dataInput.match(regex);
+
+      if (!match) {
         idadeCampo.value = '';
+        return;
+      }
+
+      var dia = parseInt(match[1], 10);
+      var mes = parseInt(match[2], 10) - 1;
+      var ano = parseInt(match[3], 10);
+
+      var nasc = new Date(ano, mes, dia);
+      var hoje = new Date();
+
+      // Verificar data válida
+      if (nasc.getMonth() !== mes || nasc.getDate() !== dia || nasc > hoje) {
+        idadeCampo.value = '';
+        return;
+      }
+
+      var idade = hoje.getFullYear() - nasc.getFullYear();
+      var diffMes = hoje.getMonth() - nasc.getMonth();
+
+      if (diffMes < 0 || (diffMes === 0 && hoje.getDate() < nasc.getDate())) {
+        idade--;
+      }
+
+      idadeCampo.value = idade >= 0 ? idade : '';
+    }
+
+    function formatarData(data) {
+      var regex = /^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/;
+      var match = data.match(regex);
+      return match ? match[1] + '/' + match[2] + '/' + match[3] : '';
+    }
+
+    function toast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function() {
+        t.classList.remove('show');
+      }, 2000);
+    }
+
+    function copiar(id) {
+      var el = document.getElementById(id);
+      if (!el.value.trim()) {
+        alert('Campo vazio!');
+        return;
+      }
+
+      el.select();
+      el.setSelectionRange(0, 99999);
+
+      try {
+        navigator.clipboard.writeText(el.value).then(function() {
+          toast('Copiado!');
+        });
+      } catch(e) {
+        document.execCommand('copy');
+        toast('Copiado!');
       }
     }
 
-    function limparCampos(aprovacao = false) {
-      if (!aprovacao && !confirm("Tem certeza que deseja limpar todos os campos?")) return;
-      ['nome', 'data', 'idade', 'discord', 'entrevista', 'rumo', 'rumoOutro', 'observacoes'].forEach(id => {
-        document.getElementById(id).value = '';
-        if (!aprovacao) localStorage.removeItem(id);
-      });
-    }
-
-    function limparResultado(id) {
-      if (!confirm("Tem certeza que deseja limpar este campo de resultados?")) return;
+    function limpar(id) {
+      if (!confirm('Limpar este campo?')) return;
       document.getElementById(id).value = '';
       localStorage.removeItem(id);
       atualizarContadorVisual();
     }
 
-    async function copiarTexto(id) {
-      const texto = document.getElementById(id).value;
-      const feedbackDiv = document.getElementById('copyFeedback');
-      try {
-        await navigator.clipboard.writeText(texto);
-        feedbackDiv.style.opacity = '1';
-        setTimeout(() => {
-          feedbackDiv.style.opacity = '0';
-        }, 1500); // 1.5 segundos
-      } catch (err) {
-        console.error('Falha ao copiar texto: ', err);
-        alert('Erro ao copiar o texto. Por favor, copie manualmente.');
+    function limparCampos() {
+      if (!confirm('Limpar todos os campos do formulário?')) return;
+      var campos = ['nome', 'data', 'idade', 'discord', 'rumo', 'rumoOutro', 'observacoes'];
+      for (var i = 0; i < campos.length; i++) {
+        document.getElementById(campos[i]).value = '';
+        localStorage.removeItem(campos[i]);
       }
     }
 
+    function novaEntrevista() {
+      if (!confirm('⚠️ ISSO APAGA TODOS OS DADOS PERMANENTEMENTE!
+
+Tem certeza?')) return;
+      localStorage.removeItem('entrevistasGerais');
+      toast('Dados apagados!');
+      atualizarContadores();
+    }
+
+    // =====================================================
+    // APROVAR / REPROVAR
+    // =====================================================
+
+    function aprovar() {
+      adicionar('aprovado');
+    }
+
+    function reprovar() {
+      adicionar('reprovado');
+    }
+
     function adicionar(status) {
-      const nome = document.getElementById('nome').value.trim();
-      const data = formatarData(document.getElementById('data').value.trim());
-      const idade = document.getElementById('idade').value.trim();
-      const discord = document.getElementById('discord').value.trim();
-      const entrevista = document.getElementById('entrevista').value.trim();
-      const rumoSelect = document.getElementById('rumo').value;
-      const rumoOutro = document.getElementById('rumoOutro').value.trim();
-      const observacoes = document.getElementById('observacoes').value.trim();
-      const rumo = (rumoSelect === 'Outro' && rumoOutro) ? rumoOutro : rumoSelect;
+      var nome = document.getElementById('nome').value.trim();
+      var data = formatarData(document.getElementById('data').value.trim());
+      var idade = document.getElementById('idade').value.trim();
+      var discord = document.getElementById('discord').value.trim();
+      var rumoSelect = document.getElementById('rumo').value;
+      var rumoOutro = document.getElementById('rumoOutro').value.trim();
+      var observacoes = document.getElementById('observacoes').value.trim();
+      var rumo = (rumoSelect === 'Outro' && rumoOutro) ? rumoOutro : rumoSelect;
 
-      // Validação: ID Discord é sempre obrigatório
+      // Validações
       if (!discord) {
-        alert("O ID Discord é obrigatório para aprovar ou reprovar!");
+        alert('ID Discord é obrigatório!');
         return;
       }
 
-      // Validação flexível do ID Discord: avisa, mas permite continuar
-      const idDiscordValido = /^\d{17,20}$/.test(discord); // Verifica se é numérico e tem entre 17 e 20 dígitos
-      if (!idDiscordValido) {
-        if (!confirm("ATENÇÃO: O ID Discord parece não estar no formato correto (apenas números, geralmente entre 17 e 20 dígitos).\n\nDeseja continuar mesmo assim?")) {
-          return; // Se o usuário clicar em "Cancelar", a função é interrompida
-        }
+      if (!/^\d{17,20}$/.test(discord)) {
+        if (!confirm('ID Discord parece inválido. Continuar mesmo assim?')) return;
       }
 
-      // Validação específica para aprovação
-      if (status === 'aprovado' && (!nome || !data || !entrevista || !rumo)) {
-        alert("Para aprovar, preencha o Nome, Data de Nascimento, Nº da Entrevista e Rumo.");
+      if (status === 'aprovado' && (!nome || !data || !rumo)) {
+        alert('Para APROVAR, preencha: Nome, Data de Nascimento e Rumo!');
         return;
       }
 
-      // Confirmação para reprovação
-      if (status === 'reprovado' && !confirm("Tem certeza que deseja reprovar esta entrevista?")) {
-          return;
-      }
+      if (status === 'reprovado' && !confirm('Confirmar REPROVAÇÃO?')) return;
 
-      let resultadoAprovadosStr = [];
-      let resultadoDetalhadoStr = [];
-      let resultadoSimplesStr = [];
-
+      // Montar resultado
       if (status === 'aprovado') {
-        if (nome) resultadoAprovadosStr.push(`**Nome do Aprovado (IRL):** ${nome}`);
-        if (data) resultadoAprovadosStr.push(`**Data de Nascimento:** ${data} (${idade} anos)`);
-        if (discord) resultadoAprovadosStr.push(`**ID Discord:** ${discord} |<@${discord}>`);
-        if (entrevista) resultadoAprovadosStr.push(`**Número da Entrevista:** ${entrevista}`);
-        if (rumo) resultadoAprovadosStr.push(`**Rumo:** ${rumo}`);
-        if (observacoes) resultadoAprovadosStr.push(`**Observações:** ${observacoes}`);
+        var partes = [];
+        if (nome) partes.push('**Nome do Aprovado (IRL):** ' + nome);
+        if (data) partes.push('**Data de Nascimento:** ' + data + ' (' + idade + ' anos)');
+        if (discord) partes.push('**ID Discord:** ' + discord + ' | <@' + discord + '>');
+        if (rumo) partes.push('**Rumo:** ' + rumo);
+        if (observacoes) partes.push('**Observações:** ' + observacoes);
 
-        const resultadoAprovados = document.getElementById('resultadoAprovados');
-        resultadoAprovados.value += (resultadoAprovados.value.trim() ? '\n\n' : '') + resultadoAprovadosStr.join('\n');
-        localStorage.setItem('resultadoAprovados', resultadoAprovados.value);
-      } else { // status === 'reprovado'
-        // Reprovados (Detalhado)
-        if (nome) resultadoDetalhadoStr.push(`**Nome do Reprovado (IRL):** ${nome}`);
-        if (data) resultadoDetalhadoStr.push(`**Data de Nascimento:** ${data} (${idade} anos)`);
-        if (discord) resultadoDetalhadoStr.push(`**ID Discord:** ${discord} |<@${discord}>`);
-        if (entrevista) resultadoDetalhadoStr.push(`**Número da Entrevista:** ${entrevista}`);
-        if (rumo) resultadoDetalhadoStr.push(`**Rumo:** ${rumo}`);
-        resultadoDetalhadoStr.push(`**Observações:** ${observacoes ? observacoes : 'Motivo não informado.'}`); // Sempre incluir motivo na detalhada
+        var el = document.getElementById('resultadoAprovados');
+        el.value += (el.value.trim() ? '
 
-        const resultadoDetalhado = document.getElementById('resultadoReprovadosDetalhado');
-        resultadoDetalhado.value += (resultadoDetalhado.value.trim() ? '\n\n' : '') + resultadoDetalhadoStr.join('\n');
-        localStorage.setItem('resultadoReprovadosDetalhado', resultadoDetalhado.value);
+' : '') + partes.join('
+');
+        localStorage.setItem('resultadoAprovados', el.value);
+      } else {
+        // Reprovado detalhado
+        var partes = [];
+        if (nome) partes.push('**Nome do Reprovado (IRL):** ' + nome);
+        if (data) partes.push('**Data de Nascimento:** ' + data + ' (' + idade + ' anos)');
+        if (discord) partes.push('**ID Discord:** ' + discord + ' | <@' + discord + '>');
+        if (rumo) partes.push('**Rumo:** ' + rumo);
+        partes.push('**Observações:** ' + (observacoes || 'Motivo não informado.'));
 
-        // Reprovados (ID e Motivo) - ID é obrigatório
-        resultadoSimplesStr.push(`ID: ${discord} | <@${discord}>\nMotivo: ${observacoes ? observacoes : 'Motivo não informado.'}`);
-        const resultadoSimples = document.getElementById('resultadoReprovadosSimples');
-        resultadoSimples.value += (resultadoSimples.value.trim() ? '\n\n' : '') + resultadoSimplesStr.join('\n');
-        localStorage.setItem('resultadoReprovadosSimples', resultadoSimples.value);
+        var el = document.getElementById('resultadoReprovadosDetalhado');
+        el.value += (el.value.trim() ? '
+
+' : '') + partes.join('
+');
+        localStorage.setItem('resultadoReprovadosDetalhado', el.value);
+
+        // Reprovado simples
+        var simples = document.getElementById('resultadoReprovadosSimples');
+        simples.value += (simples.value.trim() ? '
+
+' : '') + 
+          'ID: ' + discord + ' | <@' + discord + '>
+Motivo: ' + (observacoes || 'Motivo não informado.');
+        localStorage.setItem('resultadoReprovadosSimples', simples.value);
       }
 
-      // Salva no storage geral entrevistas
-      let entrevistasGerais = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-      entrevistasGerais.push({
+      // Salvar no storage geral
+      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      geral.push({
         nome: nome,
         data: data,
         idade: idade,
         discord: discord,
-        entrevista: entrevista,
         rumo: rumo,
         observacoes: observacoes,
         status: status,
         timestamp: new Date().toLocaleString()
       });
-      localStorage.setItem('entrevistasGerais', JSON.stringify(entrevistasGerais));
+      localStorage.setItem('entrevistasGerais', JSON.stringify(geral));
 
+      // Atualizar e limpar
       atualizarContadores();
       atualizarContadorVisual();
-      limparCampos(true);
+      limparCampos();
+      toast(status === 'aprovado' ? '✅ Aprovado!' : '❌ Reprovado!');
     }
 
-    function formatarData(data) {
-      const dataRegex = /(\d{2})[-\/.\s]?(\d{2})[-\/.\s]?(\d{4})/;
-      const match = data.match(dataRegex);
-      if (match) return `${match[1]}/${match[2]}/${match[3]}`;
-      else {
-        return '';
-      }
-    }
-
-    function limparStorageGeral() {
-      if (!confirm("AVISO: Esta ação irá limpar TODOS os dados salvos das entrevistas permanentemente. Tem certeza que deseja continuar?")) return;
-      localStorage.removeItem('entrevistasGerais');
-      alert('Storage geral das entrevistas limpa. Os campos e resultados visuais permanecem inalterados.');
-      atualizarContadores();
-    }
+    // =====================================================
+    // CONTADORES
+    // =====================================================
 
     function atualizarContadores() {
-      const entrevistasGerais = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-      const total = entrevistasGerais.length;
-      const aprovados = entrevistasGerais.filter(e => e.status === 'aprovado').length;
-      const reprovados = entrevistasGerais.filter(e => e.status === 'reprovado').length;
-      
-      const conhecidosArray = ['policia', 'mecanica', 'hospital', 'ilegal'];
+      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      var total = geral.length;
+      var aprovados = 0;
+      var reprovados = 0;
+      var policia = 0, fazenda = 0, nativo = 0, hospital = 0, ilegal = 0, outros = 0;
 
-      const countByRumo = rumo => entrevistasGerais.filter(e => e.status === 'aprovado' && (e.rumo || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() === rumo.toLowerCase()).length;
-      
-      const countOutro = () => entrevistasGerais.filter(e => {
-        const r = (e.rumo || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-        return e.status === 'aprovado' && !conhecidosArray.includes(r);
-      }).length;
+      for (var i = 0; i < geral.length; i++) {
+        var e = geral[i];
+        if (e.status === 'aprovado') {
+          aprovados++;
+          var r = (e.rumo || '').toLowerCase();
+          if (r.indexOf('polic') === 0) policia++;
+          else if (r.indexOf('fazend') === 0) fazenda++;
+          else if (r.indexOf('nativ') === 0) nativo++;
+          else if (r.indexOf('hospital') === 0) hospital++;
+          else if (r.indexOf('ilegal') === 0) ilegal++;
+          else if (r) outros++;
+        } else {
+          reprovados++;
+        }
+      }
 
       document.getElementById('totalGeral').textContent = total;
       document.getElementById('aprovadosGeral').textContent = aprovados;
       document.getElementById('reprovadosGeral').textContent = reprovados;
-      document.getElementById('aprovadosPolicia').textContent = countByRumo('policia');
-      document.getElementById('aprovadosMecanica').textContent = countByRumo('mecanica');
-      document.getElementById('aprovadosHospital').textContent = countByRumo('hospital');
-      document.getElementById('aprovadosIlegal').textContent = countByRumo('ilegal');
-      document.getElementById('aprovadosOutro').textContent = countOutro();
+      document.getElementById('aprovadosPolicia').textContent = policia;
+      document.getElementById('aprovadosFazenda').textContent = fazenda;
+      document.getElementById('aprovadosNativo').textContent = nativo;
+      document.getElementById('aprovadosHospital').textContent = hospital;
+      document.getElementById('aprovadosIlegal').textContent = ilegal;
+      document.getElementById('aprovadosOutro').textContent = outros;
     }
 
     function atualizarContadorVisual() {
-      const aprovadosText = document.getElementById('resultadoAprovados').value.trim();
-      let aprovados = 0, policia = 0, mecanica = 0, hospital = 0, ilegal = 0, outro = 0;
+      var aprovadosText = document.getElementById('resultadoAprovados').value.trim();
+      var aprovados = 0, policia = 0, fazenda = 0, nativo = 0, hospital = 0, ilegal = 0, outro = 0;
 
       if (aprovadosText) {
-        const blocos = aprovadosText.split(/\n\s*\n/).filter(b=>b.trim());
+        var blocos = aprovadosText.split(/
+\s*
+/).filter(function(b) { return b.trim(); });
         aprovados = blocos.length;
-        const conhecidosArray = ['policia', 'mecanica', 'hospital', 'ilegal'];
-        
-        blocos.forEach(b=>{
-          const match = b.match(/[*_]*Rumo:[*_]*\s*(.*)/i);
-          let rumo = match ? match[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim() : "";
-          
-          if (rumo.startsWith("polic")) policia++;
-          else if (rumo.startsWith("mecan")) mecanica++;
-          else if (rumo.startsWith("hospital")) hospital++;
-          else if (rumo.startsWith("ilegal")) ilegal++;
-          else if (rumo && !conhecidosArray.some(c => rumo.startsWith(c))) outro++; // Conta como "outro" se tiver algum rumo, mas não for um dos conhecidos
-        });
+
+        for (var i = 0; i < blocos.length; i++) {
+          var match = blocos[i].match(/[*_]*Rumo:[*_]*\s*(.*)/i);
+          var rumo = match ? match[1].toLowerCase().trim() : '';
+
+          if (rumo.indexOf('polic') === 0) policia++;
+          else if (rumo.indexOf('fazend') === 0) fazenda++;
+          else if (rumo.indexOf('nativ') === 0) nativo++;
+          else if (rumo.indexOf('hospital') === 0) hospital++;
+          else if (rumo.indexOf('ilegal') === 0) ilegal++;
+          else if (rumo) outro++;
+        }
       }
+
       document.getElementById('aprovadosVisual').textContent = aprovados;
       document.getElementById('aprovadosPoliciaVisual').textContent = policia;
-      document.getElementById('aprovadosMecanicaVisual').textContent = mecanica;
+      document.getElementById('aprovadosFazendaVisual').textContent = fazenda;
+      document.getElementById('aprovadosNativoVisual').textContent = nativo;
       document.getElementById('aprovadosHospitalVisual').textContent = hospital;
       document.getElementById('aprovadosIlegalVisual').textContent = ilegal;
       document.getElementById('aprovadosOutroVisual').textContent = outro;
 
-      const reprovadosText = document.getElementById('resultadoReprovadosDetalhado').value.trim();
-      let reprovadosDetalhadoCount = 0;
+      var reprovadosText = document.getElementById('resultadoReprovadosDetalhado').value.trim();
+      var reprovados = 0;
       if (reprovadosText) {
-        reprovadosDetalhadoCount = reprovadosText.split(/\n\s*\n/).filter(b=>b.trim()).length;
+        reprovados = reprovadosText.split(/
+\s*
+/).filter(function(b) { return b.trim(); }).length;
       }
-      document.getElementById('reprovadosVisual').textContent = reprovadosDetalhadoCount;
+      document.getElementById('reprovadosVisual').textContent = reprovados;
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'].forEach(id => {
-        document.getElementById(id).addEventListener('input', atualizarContadorVisual);
-      });
-      atualizarContadorVisual();
-    });
+    // Atualizar visual quando digitar nos resultados
+    document.getElementById('resultadoAprovados').addEventListener('input', atualizarContadorVisual);
+    document.getElementById('resultadoReprovadosDetalhado').addEventListener('input', atualizarContadorVisual);
 
-    async function copiarPorRumo(rumoParam, visual) {
+    // =====================================================
+    // COPIAR POR RUMO
+    // =====================================================
+
+    function copiarRumo(rumoParam, visual) {
       if (visual) {
-        const aprovadosText = document.getElementById('resultadoAprovados').value.trim();
-        if (!aprovadosText) { alert('Nenhum aprovado no campo visual.'); return; }
-        const blocos = aprovadosText.split(/\n\s*\n/).filter(b=>b.trim());
-        const conhecidosArray = ['policia','mecanica','hospital','ilegal'];
-        let resultado = [];
-        
-        blocos.forEach(b=>{
-          const match = b.match(/[*_]*Rumo:[*_]*\s*(.*)/i);
-          let rumoValor = match ? match[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim() : "";
-          
+        // Copiar do campo visual
+        var text = document.getElementById('resultadoAprovados').value.trim();
+        if (!text) { alert('Nenhum aprovado no campo visual.'); return; }
+
+        var blocos = text.split(/
+\s*
+/).filter(function(b) { return b.trim(); });
+        var resultado = [];
+        var conhecidos = ['policia', 'fazenda', 'nativo', 'hospital', 'ilegal'];
+
+        for (var i = 0; i < blocos.length; i++) {
+          var match = blocos[i].match(/[*_]*Rumo:[*_]*\s*(.*)/i);
+          var rumo = match ? match[1].toLowerCase().trim() : '';
+
           if (rumoParam === 'Outro') {
-            if (rumoValor && !conhecidosArray.some(c => rumoValor.startsWith(c))) resultado.push(b);
-          } else {
-            if (rumoValor.startsWith(rumoParam.toLowerCase())) resultado.push(b);
+            var ehConhecido = false;
+            for (var j = 0; j < conhecidos.length; j++) {
+              if (rumo.indexOf(conhecidos[j]) === 0) ehConhecido = true;
+            }
+            if (rumo && !ehConhecido) resultado.push(blocos[i]);
+          } else if (rumo.indexOf(rumoParam.toLowerCase()) === 0) {
+            resultado.push(blocos[i]);
           }
-        });
+        }
 
         if (resultado.length === 0) {
-          alert(`Nenhum aprovado visual para o rumo: ${rumoParam}`);
+          alert('Nenhum aprovado para o rumo: ' + rumoParam);
         } else {
-          await copiarTextoDirect(resultado.join('\n\n')); // Usando a função auxiliar de cópia
+          copiarTexto(resultado.join('
+
+'));
         }
       } else {
-        let entrevistas = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-        let filteredEntrevistas;
-        const conhecidosArray = ['Policia','Mecanica','Hospital','Ilegal'];
+        // Copiar do storage geral
+        var entrevistas = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+        var conhecidos = ['Policia', 'Fazenda', 'Nativo', 'Hospital', 'Ilegal'];
+        var filtered = [];
 
-        if (rumoParam === 'Outro') {
-          filteredEntrevistas = entrevistas.filter(e => e.status === 'aprovado' && e.rumo && !conhecidosArray.includes(e.rumo));
-        } else {
-          filteredEntrevistas = entrevistas.filter(e => e.status === 'aprovado' && (e.rumo || '').toLowerCase() === rumoParam.toLowerCase());
+        for (var i = 0; i < entrevistas.length; i++) {
+          var e = entrevistas[i];
+          if (e.status !== 'aprovado') continue;
+
+          if (rumoParam === 'Outro') {
+            var ehConhecido = false;
+            for (var j = 0; j < conhecidos.length; j++) {
+              if (e.rumo === conhecidos[j]) ehConhecido = true;
+            }
+            if (e.rumo && !ehConhecido) filtered.push(e);
+          } else if ((e.rumo || '').toLowerCase() === rumoParam.toLowerCase()) {
+            filtered.push(e);
+          }
         }
 
-        if (filteredEntrevistas.length === 0) {
-          alert(`Nenhuma entrevista aprovada salva para o rumo: ${rumoParam}`);
+        if (filtered.length === 0) {
+          alert('Nenhuma entrevista aprovada para: ' + rumoParam);
           return;
         }
-        let texto = '';
-        filteredEntrevistas.forEach(e => {
-          let entry = [];
-          if (e.nome) entry.push(`**Nome do Aprovado (IRL):** ${e.nome}`);
-          if (e.data) entry.push(`**Data de Nascimento:** ${e.data} (${e.idade})`);
-          if (e.discord) entry.push(`**ID Discord:** ${e.discord} |<@${e.discord}>`);
-          if (e.entrevista) entry.push(`**Número da Entrevista:** ${e.entrevista}`);
-          if (e.rumo) entry.push(`**Rumo:** ${e.rumo}`);
-          if (e.observacoes) entry.push(`**Observações:** ${e.observacoes}`);
-          texto += entry.join('\n') + '\n\n';
-        });
-        await copiarTextoDirect(texto.trim()); // Usando a função auxiliar de cópia
+
+        var texto = '';
+        for (var i = 0; i < filtered.length; i++) {
+          var e = filtered[i];
+          var partes = [];
+          if (e.nome) partes.push('**Nome do Aprovado (IRL):** ' + e.nome);
+          if (e.data) partes.push('**Data de Nascimento:** ' + e.data + ' (' + e.idade + ' anos)');
+          if (e.discord) partes.push('**ID Discord:** ' + e.discord + ' | <@' + e.discord + '>');
+          if (e.rumo) partes.push('**Rumo:** ' + e.rumo);
+          if (e.observacoes) partes.push('**Observações:** ' + e.observacoes);
+          texto += partes.join('
+') + '
+
+';
+        }
+        copiarTexto(texto.trim());
       }
     }
 
-    async function salvarTxtComDataHora() {
-      const entrevistasGerais = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-      if (entrevistasGerais.length === 0) {
-        alert("Nenhuma entrevista salva para salvar.");
+    function copiarTexto(texto) {
+      try {
+        navigator.clipboard.writeText(texto).then(function() {
+          toast('Copiado!');
+        });
+      } catch(e) {
+        var area = document.createElement('textarea');
+        area.value = texto;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        document.body.removeChild(area);
+        toast('Copiado!');
+      }
+    }
+
+    // =====================================================
+    // COPIAR REPROVADOS
+    // =====================================================
+
+    function copiarReprovados() {
+      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      var reprovados = [];
+
+      for (var i = 0; i < geral.length; i++) {
+        if (geral[i].status === 'reprovado') reprovados.push(geral[i]);
+      }
+
+      if (reprovados.length === 0) {
+        alert('Nenhum reprovado salvo.');
         return;
       }
-      const dataHoraAgora = new Date().toLocaleString();
-      let texto = `--- Entrevistas Salvas em: ${dataHoraAgora} ---\n\n`;
-      entrevistasGerais.forEach(e => {
-        let entry = [];
-        entry.push(`${e.status === 'aprovado' ? '**Nome do Aprovado (IRL):**' : '**Nome do Reprovado (IRL):**'} ${e.nome || 'Não Informado'}`);
-        if (e.data) entry.push(`**Data de Nascimento:** ${e.data} (${e.idade})`);
-        entry.push(`**ID Discord:** ${e.discord} |<@${e.discord}>`);
-        if (e.entrevista) entry.push(`**Número da Entrevista:** ${e.entrevista}`);
-        if (e.rumo) entry.push(`**Rumo:** ${e.rumo}`);
-        if (e.observacoes) entry.push(`**Observações:** ${e.observacoes}`);
-        entry.push(`**Status:** ${e.status}`);
-        entry.push(`**Salvo em:** ${e.timestamp}`);
-        texto += entry.join('\n') + '\n\n';
-      });
-      const blob = new Blob([texto], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+
+      var texto = '';
+      for (var i = 0; i < reprovados.length; i++) {
+        var e = reprovados[i];
+        texto += 'ID: ' + e.discord + ' | <@' + e.discord + '>
+';
+        texto += 'Motivo: ' + (e.observacoes || 'Não informado') + '
+
+';
+      }
+      copiarTexto(texto.trim());
+    }
+
+    // =====================================================
+    // SALVAR TXT
+    // =====================================================
+
+    function salvarTXT() {
+      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      if (geral.length === 0) {
+        alert('Nenhuma entrevista para salvar.');
+        return;
+      }
+
+      var agora = new Date().toLocaleString();
+      var texto = '=== ENTREVISTAS COMPREXO ===
+';
+      texto += 'Salvo em: ' + agora + '
+';
+      texto += 'Total: ' + geral.length + '
+';
+      texto += '============================
+
+';
+
+      for (var i = 0; i < geral.length; i++) {
+        var e = geral[i];
+        texto += (e.status === 'aprovado' ? '[APROVADO]' : '[REPROVADO]') + '
+';
+        if (e.nome) texto += 'Nome: ' + e.nome + '
+';
+        if (e.data) texto += 'Nascimento: ' + e.data + ' (' + e.idade + ' anos)
+';
+        texto += 'Discord: ' + e.discord + '
+';
+        if (e.rumo) texto += 'Rumo: ' + e.rumo + '
+';
+        if (e.observacoes) texto += 'Obs: ' + e.observacoes + '
+';
+        texto += 'Data: ' + e.timestamp + '
+';
+        texto += '---------------------------
+
+';
+      }
+
+      var blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
       a.href = url;
-      a.download = `entrevistas_${dataHoraAgora.replace(/[\/:\s]/g, "_")}.txt`;
+      a.download = 'entrevistas_comprexo_' + Date.now() + '.txt';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      alert('Arquivo TXT salvo com sucesso!');
-    }
-
-    async function copiarReprovadosGeral() {
-      const entrevistasGerais = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-      const reprovados = entrevistasGerais.filter(e => e.status === 'reprovado');
-      if (reprovados.length === 0) {
-        alert("Nenhuma entrevista reprovada salva.");
-        return;
-      }
-      let texto = '';
-      reprovados.forEach(e => {
-        texto += `ID: ${e.discord} | <@${e.discord}>\nMotivo: ${e.observacoes ? e.observacoes : 'Motivo não informado.'}\n\n`;
-      });
-      await copiarTextoDirect(texto.trim()); // Usando a função auxiliar de cópia
-    }
-
-    // Função auxiliar para copiar texto direto para a área de transferência com feedback visual
-    async function copiarTextoDirect(textToCopy) {
-      const feedbackDiv = document.getElementById('copyFeedback');
-      try {
-        await navigator.clipboard.writeText(textToCopy);
-        feedbackDiv.style.opacity = '1';
-        setTimeout(() => {
-          feedbackDiv.style.opacity = '0';
-        }, 1500); // 1.5 segundos
-      } catch (err) {
-        console.error('Falha ao copiar texto: ', err);
-        alert('Erro ao copiar o texto. Por favor, copie manualmente.');
-      }
+      toast('TXT salvo!');
     }
   </script>
 </body>
