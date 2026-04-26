@@ -383,8 +383,8 @@
         Aprovados: <span id="aprovadosGeral">0</span> |
         Reprovados: <span id="reprovadosGeral">0</span>
         <span class="rumos-bar">
-          <span>polícia: <span id="aprovadosPolicia">0</span></span>|
-          <span>hospital: <span id="aprovadosHospital">0</span></span>|
+          <span>Polícia: <span id="aprovadosPolicia">0</span></span>|
+          <span>Hospital: <span id="aprovadosHospital">0</span></span>|
           <span>Fazenda: <span id="aprovadosFazenda">0</span></span>|
           <span>Nativo: <span id="aprovadosNativo">0</span></span>|
           <span>ilegal: <span id="aprovadosIlegal">0</span></span>|
@@ -660,7 +660,7 @@
       const aprovados = entrevistasGerais.filter(e => e.status === 'aprovado').length;
       const reprovados = entrevistasGerais.filter(e => e.status === 'reprovado').length;
 
-      const conhecidosArray = ['policia', 'Fazenda','nativo', 'hospital', 'ilegal'];
+      const conhecidosArray = ['policia', 'Fazenda','nativo', 'Hospital', 'ilegal'];
 
       const countByRumo = rumo => entrevistasGerais.filter(e => e.status === 'aprovado' && (e.rumo || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() === rumo.toLowerCase()).length;
 
@@ -674,7 +674,7 @@
       document.getElementById('reprovadosGeral').textContent = reprovados;
       document.getElementById('aprovadosPolicia').textContent = countByRumo('policia');
       document.getElementById('aprovadosFazenda').textContent = countByRumo('Fazenda');
-      document.getElementById('aprovadosHospital').textContent = countByRumo('hospital');
+      document.getElementById('aprovadosHospital').textContent = countByRumo('Hospital');
       document.getElementById('aprovadosNativo').textContent = countByRumo('Nativo');
       document.getElementById('aprovadosIlegal').textContent = countByRumo('ilegal');
       document.getElementById('aprovadosOutro').textContent = countOutro();
@@ -682,12 +682,12 @@
 
     function atualizarContadorVisual() {
       const aprovadosText = document.getElementById('resultadoAprovados').value.trim();
-      let aprovados = 0, policia = 0, Fazenda = 0, Nativo = 0, hospital = 0, ilegal = 0, outro = 0;
+      let aprovados = 0, policia = 0, Fazenda = 0, Nativo = 0, Hospital = 0, ilegal = 0, outro = 0;
 
       if (aprovadosText) {
         const blocos = aprovadosText.split(/\n\s*\n/).filter(b=>b.trim());
         aprovados = blocos.length;
-        const conhecidosArray = ['policia', 'Fazenda', 'nativo', 'hospital', 'ilegal'];
+        const conhecidosArray = ['policia', 'Fazenda', 'nativo', 'Hospital', 'ilegal'];
 
         blocos.forEach(b=>{
           const match = b.match(/[*_]*Rumo:[*_]*\s*(.*)/i);
@@ -696,7 +696,7 @@
           if (rumo.startsWith("polic")) policia++;
           else if (rumo.startsWith("mecan")) Fazenda++;
           else if (rumo.startsWith("mecan")) nativo++;
-          else if (rumo.startsWith("hospital")) hospital++;
+          else if (rumo.startsWith("Hospital")) Hospital++;
           else if (rumo.startsWith("ilegal")) ilegal++;
           else if (rumo && !conhecidosArray.some(c => rumo.startsWith(c))) outro++;
         });
@@ -705,7 +705,7 @@
       document.getElementById('aprovadosPoliciaVisual').textContent = policia;
       document.getElementById('aprovadosFazendaVisual').textContent = Fazenda;
       document.getElementById('aprovadosNativoVisual').textContent = nativo;
-      document.getElementById('aprovadosHospitalVisual').textContent = hospital;
+      document.getElementById('aprovadosHospitalVisual').textContent = Hospital;
       document.getElementById('aprovadosIlegalVisual').textContent = ilegal;
       document.getElementById('aprovadosOutroVisual').textContent = outro;
 
@@ -729,7 +729,7 @@
         const aprovadosText = document.getElementById('resultadoAprovados').value.trim();
         if (!aprovadosText) { alert('Nenhum aprovado no campo visual.'); return; }
         const blocos = aprovadosText.split(/\n\s*\n/).filter(b=>b.trim());
-        const conhecidosArray = ['policia','fazenda','nativo','hospital','ilegal'];
+        const conhecidosArray = ['policia','fazenda','nativo','Hospital','ilegal'];
         let resultado = [];
 
         blocos.forEach(b=>{
