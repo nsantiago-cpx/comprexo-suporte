@@ -1,834 +1,1026 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Relatórios Dinâmico</title>
-    <link rel="icon" href="https://i.postimg.cc/MG7qzW4x/emote.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #10131b;
-            --card: #181d27;
-            --accent: #4f8cff;
-            --accent2: #ffd54f;
-            --label: #b8b8b8;
-            --input: #232a3a;
-            --shadow: 0 4px 24px 0 rgba(0,0,0,0.13);
-            --radius: 16px;
-            --trans: 0.22s cubic-bezier(.4,0,.2,1);
-            --text: #fffde7;
-        }
-        html, body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            font-size: 15px;
-            min-height: 100vh;
-            width: 100vw;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-        }
-        nav {
-            background: #1f1f1f;
-            padding: 10px 0;
-            text-align: center;
-            width: 100vw;
-            min-width: 320px;
-            border-radius: 0 0 12px 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 12px #1118;
-            font-size: 1.05em;
-        }
-        nav a {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: 600;
-            border-radius: 7px;
-            padding: 5px 10px;
-            transition: background .17s, color .17s;
-            display: inline-block;
-        }
-        nav a:hover {
-            background: var(--accent);
-            color: #fffde7;
-        }
-        main {
-            flex-grow: 1;
-            width: 100vw;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 0 0 15px 0;
-        }
-        .card {
-            background: var(--card);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 25px 30px;
-            width: 980px;
-            max-width: 98vw;
-            margin: 0;
-            display: flex;
-            gap: 30px;
-            align-items: flex-start;
-        }
-        /* Media query para telas menores: empilhar formulário e resultado */
-        @media (max-width: 980px) {
-            .card {
-                flex-direction: column;
-                width: 99vw;
-                gap: 20px;
-                padding: 16px 2vw;
-            }
-            .painel-form, .painel-output {
-                max-width: 100% !important;
-                width: 100%;
-            }
-            /* Reset inline-group for smaller screens to stack properly */
-            .input-group-inline {
-                flex-direction: column;
-                gap: 0; /* Remove gap when stacking */
-            }
-            .input-group-inline > div {
-                margin-bottom: 10px; /* Add spacing between stacked groups */
-            }
-            .input-group-inline > div:last-child {
-                margin-bottom: 0; /* No margin after last stacked group */
-            }
-        }
-        @media (max-width: 700px) {
-            .output-content {
-                font-size: 0.9em;
-                padding: 7px 6px;
-            }
-            .painel-form h1 {
-                font-size: 1.4em;
-            }
-        }
-        .painel-form {
-            flex: 1 1 0;
-            min-width: 280px;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5em; /* Ajuste para espaçamento entre os grupos de input */
-        }
-        .painel-form h1 {
-            font-size: 1.55em;
-            margin-bottom: 5px;
-        }
-        .painel-form .desc {
-            font-size: 1em;
-            margin-bottom: 15px;
-        }
-        /* Melhorias para alinhamento e espaçamento dos campos */
-        label {
-            display: block; /* Garante que a label ocupe toda a largura e o input vá para a próxima linha */
-            margin-bottom: 5px; /* Espaço entre a label e o campo de input */
-            margin-top: 10px; /* Espaço antes da label, para separar grupos de input */
-            color: var(--label);
-        }
-        /* Ajuste para a primeira label após o select */
-        .form-section label:first-of-type {
-            margin-top: 0;
-        }
-        .select-container label {
-            margin-top: 0; /* Ajusta a margem para a label do select */
-            margin-bottom: 5px;
-        }
-        input[type="text"], input[type="date"], input[type="time"], textarea, select {
-            padding: 11px 12px;
-            font-size: 1.02em;
-            width: 100%; /* Garante que ocupem a largura total do container pai */
-            margin-bottom: 15px; /* Espaço consistente após cada input */
-            background-color: var(--input);
-            border-color: #26314b;
-            color: var(--text);
-            border-radius: 8px;
-            border: 2px solid;
-            box-sizing: border-box; /* Inclui padding e border na largura total */
-            font-family: 'Inter', Arial, sans-serif;
-            transition: border var(--trans), box-shadow var(--trans);
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%23b8b8b8%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M5.293%207.293a1%201%200%20011.414%200L10%2010.586l3.293-3.293a1%201%200%20111.414%201.414l-4%204a1%201%200%2001-1.414%200l-4-4a1%201%200%20010-1.414z%22%20clip-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E');
-            background-repeat: no-repeat;
-            background-position: right 0.7em top 50%;
-            background-size: 0.8em auto;
-        }
-        input[type="date"], input[type="time"] {
-            background-image: none; /* Remover a seta para date/time se não for útil */
-        }
-        textarea {
-            min-height: 70px;
-            resize: vertical;
-        }
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px #4f8cff44;
-            background: #242d41;
-        }
-        button {
-            padding: 13px 0;
-            font-size: 1.1em;
-            margin-top: 18px;
-            width: 100%;
-            background: linear-gradient(90deg, var(--accent) 40%, var(--accent2) 100%);
-            color: #fff;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.27s, color 0.22s;
-            box-shadow: 0 2px 12px 0 #191e2e44;
-            letter-spacing: .03em;
-        }
-        button:hover {
-            background: linear-gradient(90deg, var(--accent2) 10%, var(--accent) 100%);
-            color: #1a1a1a;
-        }
-        /* Estilo para campos lado a lado (ID e Nome) */
-        .input-group-inline {
-            display: flex;
-            gap: 10px; /* Espaço entre os campos inline */
-            margin-top: 10px; /* Espaço antes do grupo inline */
-            margin-bottom: 15px; /* Espaço após o grupo inline */
-        }
-        .input-group-inline > div {
-            flex: 1; /* Faz com que cada div dentro do grupo ocupe espaço igual */
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        .input-group-inline label {
-            margin-top: 0; /* Remove margem superior extra para labels dentro de grupos */
-            margin-bottom: 5px; /* Mantém a margem entre label e input */
-        }
-        .input-group-inline input {
-            margin-bottom: 0; /* Remove margem inferior extra para inputs dentro de grupos */
-        }
-        /* Estilo para o checkbox e sua label */
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 15px;
-            margin-bottom: 10px;
-        }
-        .checkbox-container input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin: 0;
-            -webkit-appearance: checkbox; /* Garante que o checkbox seja exibido como tal */
-            -moz-appearance: checkbox;
-            appearance: checkbox;
-            border: 1px solid var(--label);
-            background-color: var(--input);
-            cursor: pointer;
-        }
-        .checkbox-container input[type="checkbox"]:checked {
-            background-color: var(--accent);
-            border-color: var(--accent);
-        }
-        .checkbox-container label {
-            margin: 0;
-            font-size: 1em;
-            color: var(--text);
-            cursor: pointer;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alinhamento - COMPREXO</title>
+  <link rel="icon" href="https://i.postimg.cc/9QGqLt5t/COMPREXO-RDR-RED4x.webp" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .painel-output {
-            flex: 2.1 1 0;
-            min-width: 350px;
-            max-width: 550px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: stretch;
-            justify-content: flex-start;
-        }
-        .painel-output h2 {
-            font-size: 1.1em;
-            margin-bottom: 8px;
-        }
-        .output-label {
-            font-size: 1.05em;
-            margin-bottom: 4px;
-        }
-        .output-content {
-            background: #171a22;
-            color: var(--text);
-            font-family: 'Fira Mono', 'Consolas', monospace;
-            border-radius: 7px;
-            padding: 15px 12px;
-            font-size: 1.02em;
-            white-space: pre-wrap;
-            word-break: break-word;
-            margin-bottom: 0;
-            min-height: 120px;
-            overflow: auto;
-            flex-grow: 1;
-            border: 1px solid #2c344f;
-        }
-        /* Para o negrito dentro do <pre> */
-        .output-content strong {
-            font-weight: bold;
-            color: var(--text);
-        }
-        .copy-btn {
-            padding: 10px 0;
-            font-size: 0.98em;
-            margin-top: 8px;
-            width: 100%;
-            border-radius: 7px;
-            background: var(--accent);
-            color: #fff;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: background .17s;
-        }
-        .copy-btn:hover {
-            background: var(--accent2);
-            color: #222;
-        }
-        .footer {
-            text-align: center;
-            margin-top: auto;
-            padding: 20px 0 15px 0;
-            font-size: 0.9em;
-            color: #aaa;
-            width: 100vw;
-        }
-        .footer img {
-            margin-top: 10px;
-            width: 120px;
-        }
-        a {
-            color: #5dade2;
-            text-decoration: none;
-        }
-        .hidden {
-            display: none !important;
-        }
-    </style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a0a;
+      color: #f0f0f0;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* HEADER */
+    .header {
+      background: #111;
+      border-bottom: 1px solid #2a2a2a;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #f0f0f0;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      background: #e63946;
+      border-radius: 50%;
+      display: inline-block;
+      animation: blink 2s infinite;
+      box-shadow: 0 0 8px #e63946;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      color: #888;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #e63946;
+      background: rgba(230, 57, 70, 0.1);
+    }
+
+    .nav-links a.active {
+      color: #e63946;
+      background: rgba(230, 57, 70, 0.15);
+      font-weight: 600;
+    }
+
+    /* MAIN */
+    .main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      padding-left: 12px;
+      border-left: 3px solid #e63946;
+    }
+
+    /* GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+
+    /* CARD */
+    .card {
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(230, 57, 70, 0.15);
+      color: #e63946;
+    }
+
+    /* FORM */
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 80px;
+      gap: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      font-family: inherit;
+      background: #1c1c1c;
+      border: 1.5px solid #2a2a2a;
+      color: #f0f0f0;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      padding: 10px 12px;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #e63946;
+      box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #555;
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23555' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    #idade {
+      background: #111;
+      color: #e63946;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* BUTTONS */
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .btn {
+      font-family: inherit;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-success {
+      background: #22c55e;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #2dd46a;
+    }
+
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #f87171;
+    }
+
+    .btn-secondary {
+      background: #222;
+      color: #888;
+      border: 1px solid #333;
+    }
+
+    .btn-secondary:hover {
+      background: #2a2a2a;
+      color: #f0f0f0;
+    }
+
+    .btn-primary {
+      background: #e63946;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #ff4d5a;
+      box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+    }
+
+    .btn-sm {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+    }
+
+    .btn-block {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* STATS */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 14px;
+      background: #111;
+      border-radius: 10px;
+      margin: 16px 0;
+      border: 1px solid #2a2a2a;
+    }
+
+    .stat {
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    .stat strong {
+      color: #e63946;
+      font-weight: 700;
+    }
+
+    /* INFO */
+    .info {
+      background: #111;
+      border-left: 3px solid #e63946;
+      border-radius: 8px;
+      padding: 14px;
+      margin: 14px 0;
+      font-size: 0.8rem;
+      color: #888;
+      line-height: 1.7;
+    }
+
+    .info a {
+      color: #e63946;
+      text-decoration: none;
+    }
+
+    .info a:hover {
+      text-decoration: underline;
+    }
+
+    /* RUMO GRID */
+    .rumo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    @media (max-width: 500px) {
+      .rumo-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .rumo-grid .btn {
+      background: #1c1c1c;
+      color: #888;
+      border: 1px solid #2a2a2a;
+    }
+
+    .rumo-grid .btn:hover {
+      background: #e63946;
+      color: white;
+      border-color: #e63946;
+    }
+
+    /* RESULTS */
+    .result-section {
+      margin-bottom: 16px;
+    }
+
+    .result-section h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #888;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .result-section h4::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #e63946;
+    }
+
+    .result-textarea {
+      width: 100%;
+      background: #1c1c1c;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 10px;
+      min-height: 100px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #f0f0f0;
+      resize: vertical;
+      outline: none;
+    }
+
+    .result-textarea:focus {
+      border-color: #e63946;
+    }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      margin-top: 32px;
+      border-top: 1px solid #2a2a2a;
+      background: #111;
+    }
+
+    .footer img {
+      width: 80px;
+      margin-bottom: 12px;
+      opacity: 0.7;
+    }
+
+    .footer p {
+      font-size: 0.75rem;
+      color: #555;
+      margin: 3px 0;
+    }
+
+    .footer a {
+      color: #888;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #e63946;
+    }
+
+    /* TOAST */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #1c1c1c;
+      color: #f0f0f0;
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: 1px solid #2a2a2a;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      font-weight: 500;
+      font-size: 0.85rem;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #444;
+    }
+  </style>
+<base target="_blank">
 </head>
 <body>
-    <nav>
-        <a href="/complexogg/index.html">🏠 Início</a>
-        <a href="/complexogg/entrevista/index.html">🎤 Entrevista</a>
-        <a href="/complexogg/punicoes_trabalho/index.html">🛠️ Punições Trabalho</a>
-        <a href="/complexogg/punicoes_nome/index.html">❌ Punições Nome</a>
-        <a href="/complexogg/verificar_perfil/index.html">🔍 Verificar Perfil</a>
-        <a href="/complexogg/reuniao_nome/index.html">📅 Marcar Troca de Nome</a>
-        <a href="/complexogg/modelos_suporte/index.html">🔄 Modelos Suporte</a>
+  <header class="header">
+    <a href="../index.html" class="brand">
+      <span class="brand-dot"></span>
+      COMPREXO
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html">🏠 Início</a>
+      <a href="../entrevista/index.html">🎤 Entrevista</a>
+      <a href="index.html" class="active">🎫 Alinhamento</a>
     </nav>
+  </header>
 
-    <main>
-        <div class="card">
-            <form class="painel-form" onsubmit="event.preventDefault(); gerarRelatorio();">
-                <h1>Gerador de Relatórios</h1>
-                <div class="desc">
-                    Selecione o tipo de relatório que deseja gerar.
-                </div>
+  <main class="main">
+    <h1 class="page-title">Alinhamento</h1>
 
-                <div class="select-container">
-                    <label for="selectRelatorio">Selecione o Tipo de Relatório:</label>
-                    <select id="selectRelatorio" onchange="showFormFields()">
-                        <option value="">-- Selecione --</option>
-                        <option value="ausenciasSuporte">AUSÊNCIAS SUPORTE</option>
-                        <option value="revogacaoReativacao">REVOGAÇÃO/REATIVAÇÃO</option>
-                        <option value="lojaVipTebex">LOJA VIP/TEBEX</option>
-                        <option value="trocaSteam">TROCA DE STEAM</option>
-                        <option value="trocaDiscord">TROCA DE DISCORD</option>
-                        <option value="banimentoSuporte">BANIMENTO SUPORTE</option>
-                        <option value="multaVeiculoAbandonado">MULTA VEÍCULO ABANDONADO</option>
-                    </select>
-                </div>
-
-                <div class="checkbox-container hidden">
-                    <input type="checkbox" id="addOcorrenciaInfo" onchange="toggleOcorrenciaFields()">
-                    <label for="addOcorrenciaInfo">Adicionar Informações da Ocorrência</label>
-                </div>
-
-                <div id="ocorrenciaFields" class="form-section hidden">
-                    <label for="ocorrencia_titulo">Título da Ocorrência:</label>
-                    <input type="text" id="ocorrencia_titulo" placeholder="Ex: Multa de Trânsito / Abandono de Veículo">
-
-                    <div class="input-group-inline">
-                        <div>
-                            <label for="ocorrencia_data">Data da Ocorrência:</label>
-                            <input type="date" id="ocorrencia_data">
-                        </div>
-                        <div>
-                            <label for="ocorrencia_hora">Hora da Ocorrência:</label>
-                            <input type="time" id="ocorrencia_hora">
-                        </div>
-                    </div>
-                </div>
-
-                <div id="formFieldsContainer">
-                    <div id="fields_ausenciasSuporte" class="form-section hidden">
-                        <div class="input-group-inline">
-                            <div>
-                                <label for="ausencias_idPersonagem">ID do Personagem:</label>
-                                <input type="text" id="ausencias_idPersonagem" placeholder="Ex: 9876">
-                            </div>
-                            <div>
-                                <label for="ausencias_nomePersonagem">Nome do Personagem:</label>
-                                <input type="text" id="ausencias_nomePersonagem" placeholder="Ex: Carlos Nuvens">
-                            </div>
-                        </div>
-
-                        <label for="ausencias_idDiscord">ID Discord:</label>
-                        <input type="text" id="ausencias_idDiscord" placeholder="Ex: 1234567890123456789">
-
-                        <label for="ausencias_tempo">Tempo:</label>
-                        <input type="text" id="ausencias_tempo" placeholder="Ex: 10 dias / Indeterminado">
-
-                        <label for="ausencias_provas">Provas:</label>
-                        <input type="text" id="ausencias_provas" placeholder="URL do link das provas">
-                    </div>
-
-                    <div id="fields_revogacaoReativacao" class="form-section hidden">
-                        <label for="revogacao_nomeDiscord">Nome/Discord:</label>
-                        <input type="text" id="revogacao_nomeDiscord" placeholder="Ex: Maria Flor / @maria.flor">
-
-                        <label for="revogacao_idDiscord">ID Discord:</label>
-                        <input type="text" id="revogacao_idDiscord" placeholder="Ex: 9876543210987654321">
-
-                        <label for="revogacao_status">Status:</label>
-                        <select id="revogacao_status">
-                            <option value="">-- Selecione --</option>
-                            <option value="Aprovado">Aprovado</option>
-                            <option value="Reprovado">Reprovado</option>
-                            <option value="Revogado">Revogado</option>
-                            <option value="Reativado">Reativado</option>
-                        </select>
-
-                        <label for="revogacao_motivoAusencia">Motivo da Ausência:</label>
-                        <textarea id="revogacao_motivoAusencia" placeholder="Motivo pelo qual o suporte se ausentou"></textarea>
-
-                        <label for="revogacao_motivoAprovacaoReprovacao">Motivo da Aprovação ou Reprovacao:</label>
-                        <textarea id="revogacao_motivoAprovacaoReprovacao" placeholder="Motivo da decisão final"></textarea>
-                    </div>
-
-                    <div id="fields_lojaVipTebex" class="form-section hidden">
-                        <div class="input-group-inline">
-                            <div>
-                                <label for="loja_idPersonagem">ID do Personagem:</label>
-                                <input type="text" id="loja_idPersonagem" placeholder="Ex: 1234">
-                            </div>
-                            <div>
-                                <label for="loja_nomePersonagem">Nome do Personagem:</label>
-                                <input type="text" id="loja_nomePersonagem" placeholder="Ex: Pedro Rocha">
-                            </div>
-                        </div>
-
-                        <label for="loja_idDiscord">ID Discord:</label>
-                        <input type="text" id="loja_idDiscord" placeholder="Ex: 1122334455667788990">
-
-                        <label for="loja_nomeCompleto">Nome Completo:</label>
-                        <input type="text" id="loja_nomeCompleto" placeholder="Ex: Pedro Rocha da Silva">
-
-                        <label for="loja_email">E-mail:</label>
-                        <input type="text" id="loja_email" placeholder="Ex: pedro.rocha@exemplo.com">
-
-                        <label for="loja_dataCompra">Data da Compra:</label>
-                        <input type="text" id="loja_dataCompra" placeholder="Ex: DD/MM/AAAA">
-
-                        <label for="loja_idTransacao">ID Transação:</label>
-                        <input type="text" id="loja_idTransacao" placeholder="Ex: #ABCDE12345">
-
-                        <label for="loja_comprovante">Comprovante:</label>
-                        <input type="text" id="loja_comprovante" placeholder="URL do link do comprovante">
-                    </div>
-
-                    <div id="fields_trocaSteam" class="form-section hidden">
-                        <label for="steam_idDiscord">ID Discord:</label>
-                        <input type="text" id="steam_idDiscord" placeholder="Ex: 2233445566778899001">
-
-                        <label for="steam_steamAntiga">Steam Antiga:</label>
-                        <input type="text" id="steam_steamAntiga" placeholder="Ex: steam:1100001abcdef12">
-
-                        <label for="steam_steamNova">Steam Nova:</label>
-                        <input type="text" id="steam_steamNova" placeholder="Ex: steam:1100001fedcba32">
-
-                        <div class="input-group-inline">
-                            <div>
-                                <label for="steam_idPersonagem">ID do Personagem:</label>
-                                <input type="text" id="steam_idPersonagem" placeholder="Ex: 5678">
-                            </div>
-                            <div>
-                                <label for="steam_nomePersonagem">Nome do Personagem:</label>
-                                <input type="text" id="steam_nomePersonagem" placeholder="Ex: Sofia Sol">
-                            </div>
-                        </div>
-
-                        <label for="steam_motivo">Motivo:</label>
-                        <textarea id="steam_motivo" placeholder="Ex: Conta Steam perdida / Steam nova"></textarea>
-                    </div>
-
-                    <div id="fields_trocaDiscord" class="form-section hidden">
-                        <label for="discord_idDiscordAntigo">Discord ID Antigo:</label>
-                        <input type="text" id="discord_idDiscordAntigo" placeholder="Ex: 3344556677889900112">
-
-                        <label for="discord_idDiscordNovo">Discord ID Novo:</label>
-                        <input type="text" id="discord_idDiscordNovo" placeholder="Ex: 4455667788990011223">
-
-                        <label for="discord_steamHex">Steam HEX:</label>
-                        <input type="text" id="discord_steamHex" placeholder="Ex: 1100001abcdef12">
-
-                        <div class="input-group-inline">
-                            <div>
-                                <label for="discord_idPersonagem">ID do Personagem:</label>
-                                <input type="text" id="discord_idPersonagem" placeholder="Ex: 9012">
-                            </div>
-                            <div>
-                                <label for="discord_nomePersonagem">Nome do Personagem:</label>
-                                <input type="text" id="discord_nomePersonagem" placeholder="Ex: Lucas Vento">
-                            </div>
-                        </div>
-
-                        <label for="discord_motivo">Motivo:</label>
-                        <textarea id="discord_motivo" placeholder="Ex: Conta do discord Hackeada e banida"></textarea>
-                    </div>
-
-                    <div id="fields_banimentoSuporte" class="form-section hidden">
-                        <div class="input-group-inline">
-                            <div>
-                                <!--<label for="banimento_idPersonagem">ID do Personagem:</label>
-                                <input type="text" id="banimento_idPersonagem" placeholder="Ex: 3456">
-                            </div>
-                            <div>
-                                <label for="banimento_nomePersonagem">Nome do Personagem:</label>
-                                <input type="text" id="banimento_nomePersonagem" placeholder="Ex: Ana Sombra">-->
-                            </div>
-                        </div>
-
-                        <label for="banimento_idDiscord">ID Discord:</label>
-                        <input type="text" id="banimento_idDiscord" placeholder="Ex: 5566778899001122334">
-
-                        <label for="banimento_motivo">Motivo:</label>
-                        <textarea id="banimento_motivo" placeholder="Motivo do banimento"></textarea>
-
-                        <!--<label for="banimento_tempo">Tempo:</label>
-                        <input type="text" id="banimento_tempo" placeholder="Ex: 30 dias / Permantente">-->
-
-                        <label for="banimento_provas">Provas:</label>
-                        <input type="text" id="banimento_provas" placeholder="URL do link das provas">
-                    </div>
-
-                    <div id="fields_multaVeiculoAbandonado" class="form-section hidden">
-                        <label for="multa_tipoVeiculo">Tipo de Veículo:</label>
-                        <input type="text" id="multa_tipoVeiculo" placeholder="Ex: caminhão de lixo">
-
-                        <label for="multa_localInfracao">Localização / Infração (descreva a ocorrência):</label>
-                        <textarea id="multa_localInfracao" placeholder="Ex: abandonado, estacionado de forma irregular atrás do banco da praça."></textarea>
-
-                        <div class="input-group-inline">
-                            <div>
-                                <label for="multa_nomeProprietario">Nome do Proprietário:</label>
-                                <input type="text" id="multa_nomeProprietario" placeholder="Ex: N">
-                            </div>
-                            <div>
-                                <label for="multa_idProprietario">ID do Proprietário:</label>
-                                <input type="text" id="multa_idProprietario" placeholder="Ex: 7890">
-                            </div>
-                        </div>
-
-                        <label for="multa_valorMulta">Valor da Multa:</label>
-                        <input type="text" id="multa_valorMulta" placeholder="Ex: 4.000 (apenas números ou com vírgula/ponto)">
-                    </div>
-                </div>
-
-                <button type="submit">Gerar Relatório</button>
-            </form>
-
-            <section class="painel-output">
-                <h2>Relatório Pronto</h2>
-                <div class="output-label">Conteúdo do Relatório</div>
-                <pre class="output-content" id="relatorioGerado">Selecione um tipo de relatório e preencha os campos.</pre>
-                <button class="copy-btn" onclick="copiarRelatorio()">Copiar Relatório</button>
-            </section>
+    <div class="grid">
+      <!-- FORM CARD -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Formulário de Alinhamento</span>
+          <span class="badge">COMPREXO</span>
         </div>
-    </main>
 
-    <div class="footer">
-        <img src="https://i.postimg.cc/WzSNyqxY/Jacky-Confuso.png" alt="Jacky Confuso" />
-        <p>© 2025 - Todos os direitos reservados. Feito com ❤, ajuda de IA e um pouquinho de preguiça por <a href="https://jackymayers.github.io/" target="_blank" style="color:#aaa;">Jacky Mayers</a>!</p>
-         <p>Editado por 
-       <a href="https://github.com/vferreiracpx" target="_blank" style="color:#aaa;">vFerreira</a>!
-    </p>
+        <div class="form-group">
+          <label for="nome">Nome Completo (IRL)</label>
+          <input type="text" id="nome" placeholder="Digite o nome..." autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="discord">ID Discord</label>
+          <input type="text" id="discord" placeholder="000000000000000000" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="quemIndicou">Quem Indicou</label>
+          <input type="text" id="quemIndicou" placeholder="Nome de quem indicou..." autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="observacoes">Observações</label>
+          <textarea id="observacoes" placeholder="Motivo da reprovação ou observações..."></textarea>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-success" onclick="aprovar()" type="button">✓ Aprovar</button>
+          <button class="btn btn-danger" onclick="reprovar()" type="button">✕ Reprovar</button>
+          <button class="btn btn-secondary" onclick="limparCampos()" type="button">Limpar</button>
+          <button class="btn btn-secondary" onclick="novoAlinhamento()" type="button">Nova Entrevista</button>
+        </div>
+
+        <div class="stats">
+          <span class="stat">Total: <strong id="totalGeral">0</strong></span>
+          <span class="stat">Aprovados: <strong id="aprovadosGeral">0</strong></span>
+          <span class="stat">Reprovados: <strong id="reprovadosGeral">0</strong></span>
+          <span class="stat">Com Indicação: <strong id="comIndicacao">0</strong></span>
+          <span class="stat">Sem Indicação: <strong id="semIndicacao">0</strong></span>
+        </div>
+
+        <div class="info">
+          <strong style="color:#f0f0f0;">ℹ️ Informações:</strong><br>
+          • Dados salvos automaticamente no navegador<br>
+          • "Novo Alinhamento" apaga tudo permanentemente<br>
+          • <a href="https://comprexo.gg/regras/" target="_blank">Regras básicas</a> para o alinhamento
+        </div>
+
+        <div class="rumo-grid">
+          <button class="btn btn-sm" onclick="copiarComIndicacao(false)" type="button">📋 Com Indicação</button>
+          <button class="btn btn-sm" onclick="copiarSemIndicacao(false)" type="button">📋 Sem Indicação</button>
+        </div>
+
+        <button class="btn btn-danger btn-block" onclick="copiarReprovados()" type="button" style="margin-top:10px;">
+          📋 Copiar Reprovados
+        </button>
+
+        <button class="btn btn-primary btn-block" onclick="salvarTXT()" type="button" style="margin-top:8px;">
+          💾 Salvar como TXT
+        </button>
+      </div>
+
+      <!-- RESULTS CARD -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Resultados</span>
+          <span class="badge">Visual</span>
+        </div>
+
+        <div class="stats" style="margin-bottom:16px;">
+          <span class="stat">Aprovados: <strong id="aprovadosVisual">0</strong></span>
+          <span class="stat">Reprovados: <strong id="reprovadosVisual">0</strong></span>
+          <span class="stat">Com Indicação: <strong id="comIndicacaoVisual">0</strong></span>
+          <span class="stat">Sem Indicação: <strong id="semIndicacaoVisual">0</strong></span>
+        </div>
+
+        <div class="result-section">
+          <h4>Aprovados no Alinhamento</h4>
+          <textarea id="resultadoAprovados" class="result-textarea"></textarea>
+          <div class="btn-group" style="margin-top:6px;">
+            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoAprovados')" type="button">📋 Copiar</button>
+            <button class="btn btn-secondary btn-sm" onclick="limpar('resultadoAprovados')" type="button">🗑 Limpar</button>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <h4>Reprovados no Alinhamento (Detalhado)</h4>
+          <textarea id="resultadoReprovadosDetalhado" class="result-textarea"></textarea>
+          <div class="btn-group" style="margin-top:6px;">
+            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoReprovadosDetalhado')" type="button">📋 Copiar</button>
+            <button class="btn btn-secondary btn-sm" onclick="limpar('resultadoReprovadosDetalhado')" type="button">🗑 Limpar</button>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <h4>Reprovados no Alinhamento (Simples)</h4>
+          <textarea id="resultadoReprovadosSimples" class="result-textarea"></textarea>
+          <div class="btn-group" style="margin-top:6px;">
+            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoReprovadosSimples')" type="button">📋 Copiar</button>
+            <button class="btn btn-secondary btn-sm" onclick="limpar('resultadoReprovadosSimples')" type="button">🗑 Limpar</button>
+          </div>
+        </div>
+
+        <div class="rumo-grid" style="margin-top:10px;">
+          <button class="btn btn-sm" onclick="copiarComIndicacao(true)" type="button">📋 Com Indicação</button>
+          <button class="btn btn-sm" onclick="copiarSemIndicacao(true)" type="button">📋 Sem Indicação</button>
+        </div>
+      </div>
     </div>
+  </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            showFormFields(); // Inicializa o formulário e garante que a seção de ocorrência esteja oculta no início
+  <footer class="footer">
+    <img src="https://i.postimg.cc/WzSNyqxY/Jacky-Confuso.png" alt="Jacky">
+    <p>© 2026 - Todos os direitos reservados</p>
+    <p>Procurar <a href="https://github.com/nsantiago-cpx" target="_blank">Nath</a> para ajustes</p>
+    <p>Original por <a href="https://jackymayers.github.io/" target="_blank">Jacky Mayers</a></p>
+  </footer>
+
+  <div id="toast">Copiado!</div>
+
+  <script>
+    // =====================================================
+    // INICIALIZAÇÃO
+    // =====================================================
+
+    // Carregar dados salvos
+    window.addEventListener('load', function() {
+      var campos = ['nome', 'discord', 'quemIndicou', 'observacoes'];
+      for (var i = 0; i < campos.length; i++) {
+        var id = campos[i];
+        var val = localStorage.getItem(id + '_alinhamento');
+        if (val) document.getElementById(id).value = val;
+      }
+
+      var resultados = ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'];
+      for (var i = 0; i < resultados.length; i++) {
+        var id = resultados[i];
+        var val = localStorage.getItem(id + '_alinhamento');
+        if (val) document.getElementById(id).value = val;
+      }
+
+      // Atualizar contadores
+      atualizarContadores();
+      atualizarContadorVisual();
+    });
+
+    // Salvar campos automaticamente
+    var todosCampos = document.querySelectorAll('input, select, textarea');
+    for (var i = 0; i < todosCampos.length; i++) {
+      todosCampos[i].addEventListener('input', function() {
+        localStorage.setItem(this.id + '_alinhamento', this.value);
+      });
+    }
+
+    // Listener para limpar campos
+
+    // =====================================================
+    // FUNÇÕES AUXILIARES
+    // =====================================================
+
+    function formatarData(data) {
+      var regex = /^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/;
+      var match = data.match(regex);
+      return match ? match[1] + '/' + match[2] + '/' + match[3] : '';
+    }
+
+    function toast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function() {
+        t.classList.remove('show');
+      }, 2000);
+    }
+
+    function copiar(id) {
+      var el = document.getElementById(id);
+      if (!el.value.trim()) {
+        alert('Campo vazio!');
+        return;
+      }
+
+      el.select();
+      el.setSelectionRange(0, 99999);
+
+      try {
+        navigator.clipboard.writeText(el.value).then(function() {
+          toast('Copiado!');
         });
+      } catch(e) {
+        document.execCommand('copy');
+        toast('Copiado!');
+      }
+    }
 
-        // Função para mostrar/esconder e preencher os campos de Ocorrência
-        function toggleOcorrenciaFields() {
-            const checkbox = document.getElementById('addOcorrenciaInfo');
-            const ocorrenciaFieldsDiv = document.getElementById('ocorrenciaFields');
-            const tituloInput = document.getElementById('ocorrencia_titulo');
-            const dataInput = document.getElementById('ocorrencia_data');
-            const horaInput = document.getElementById('ocorrencia_hora');
+    function limpar(id) {
+      if (!confirm('Limpar este campo?')) return;
+      document.getElementById(id).value = '';
+      localStorage.removeItem(id);
+      atualizarContadorVisual();
+    }
 
-            if (checkbox.checked) {
-                ocorrenciaFieldsDiv.classList.remove('hidden');
+    function limparCampos() {
+      if (!confirm('Limpar todos os campos do formulário?')) return;
+      var campos = ['nome', 'discord', 'quemIndicou', 'observacoes'];
+      for (var i = 0; i < campos.length; i++) {
+        document.getElementById(campos[i]).value = '';
+        localStorage.removeItem(campos[i] + '_alinhamento');
+      }
+    }
 
-                // Preencher automaticamente
-                tituloInput.value = 'Ocorrência';
-                const now = new Date();
-                const year = now.getFullYear();
-                const month = (now.getMonth() + 1).toString().padStart(2, '0');
-                const day = now.getDate().toString().padStart(2, '0');
-                dataInput.value = `${year}-${month}-${day}`;
+    function novaEntrevista() {
+      if (!confirm('⚠️ ISSO APAGA TODOS OS DADOS PERMANENTEMENTE!\n\nTem certeza?')) return;
+      localStorage.removeItem('entrevistasGerais');
+      toast('Dados apagados!');
+      atualizarContadores();
+    }
 
-                const hours = now.getHours().toString().padStart(2, '0');
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                horaInput.value = `${hours}:${minutes}`;
+    // =====================================================
+    // APROVAR / REPROVAR
+    // =====================================================
 
-            } else {
-                ocorrenciaFieldsDiv.classList.add('hidden');
-                // Limpar os campos quando a caixa é desmarcada
-                tituloInput.value = '';
-                dataInput.value = '';
-                horaInput.value = '';
+    function aprovar() {
+      adicionar('aprovado');
+    }
+
+    function reprovar() {
+      adicionar('reprovado');
+    }
+
+    function adicionar(status) {
+      var nome = document.getElementById('nome').value.trim();
+      var data = formatarData(document.getElementById('data').value.trim());
+      var idade = document.getElementById('idade').value.trim();
+      var discord = document.getElementById('discord').value.trim();
+      var rumoSelect = document.getElementById('rumo').value;
+      var rumoOutro = document.getElementById('rumoOutro').value.trim();
+      var observacoes = document.getElementById('observacoes').value.trim();
+      var rumo = (rumoSelect === 'Outro' && rumoOutro) ? rumoOutro : rumoSelect;
+
+      // Validações
+      if (!discord) {
+        alert('ID Discord é obrigatório!');
+        return;
+      }
+
+      if (!/^\d{17,20}$/.test(discord)) {
+        if (!confirm('ID Discord parece inválido. Continuar mesmo assim?')) return;
+      }
+
+      if (status === 'aprovado' && (!nome || !data || !rumo)) {
+        alert('Para APROVAR, preencha: Nome, Data de Nascimento e Rumo!');
+        return;
+      }
+
+      if (status === 'reprovado' && !confirm('Confirmar REPROVAÇÃO?')) return;
+
+      // Montar resultado
+      if (status === 'aprovado') {
+        var partes = [];
+        if (nome) partes.push('**Nome do Aprovado (IRL):** ' + nome);
+        if (data) partes.push('**Data de Nascimento:** ' + data + ' (' + idade + ' anos)');
+        if (discord) partes.push('**ID Discord:** ' + discord + ' | <@' + discord + '>');
+        if (rumo) partes.push('**Rumo:** ' + rumo);
+        if (observacoes) partes.push('**Observações:** ' + observacoes);
+
+        var el = document.getElementById('resultadoAprovados');
+        el.value += (el.value.trim() ? '\n\n' : '') + partes.join('\n');
+        localStorage.setItem('resultadoAprovados', el.value);
+      } else {
+        // Reprovado detalhado
+        var partes = [];
+        if (nome) partes.push('**Nome do Reprovado (IRL):** ' + nome);
+        if (data) partes.push('**Data de Nascimento:** ' + data + ' (' + idade + ' anos)');
+        if (discord) partes.push('**ID Discord:** ' + discord + ' | <@' + discord + '>');
+        if (rumo) partes.push('**Rumo:** ' + rumo);
+        partes.push('**Observações:** ' + (observacoes || 'Motivo não informado.'));
+
+        var el = document.getElementById('resultadoReprovadosDetalhado');
+        el.value += (el.value.trim() ? '\n\n' : '') + partes.join('\n');
+        localStorage.setItem('resultadoReprovadosDetalhado', el.value);
+
+        // Reprovado simples
+        var simples = document.getElementById('resultadoReprovadosSimples');
+        simples.value += (simples.value.trim() ? '\n\n' : '') + 
+          'ID: ' + discord + ' | <@' + discord + '>\nMotivo: ' + (observacoes || 'Motivo não informado.');
+        localStorage.setItem('resultadoReprovadosSimples', simples.value);
+      }
+
+      // Salvar no storage geral
+      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      geral.push({
+        nome: nome,
+        data: data,
+        idade: idade,
+        discord: discord,
+        rumo: rumo,
+        observacoes: observacoes,
+        status: status,
+        timestamp: new Date().toLocaleString()
+      });
+      localStorage.setItem('entrevistasGerais', JSON.stringify(geral));
+
+      // Atualizar e limpar
+      atualizarContadores();
+      atualizarContadorVisual();
+      limparCampos();
+      toast(status === 'aprovado' ? '✅ Aprovado!' : '❌ Reprovado!');
+    }
+
+    // =====================================================
+    // CONTADORES
+    // =====================================================
+
+    function atualizarContadores() {
+      var geral = JSON.parse(localStorage.getItem('alinhamentosGerais') || '[]');
+      var total = geral.length;
+      var aprovados = 0;
+      var reprovados = 0;
+      var comIndicacao = 0;
+      var semIndicacao = 0;
+
+      for (var i = 0; i < geral.length; i++) {
+        var e = geral[i];
+        if (e.status === 'aprovado') {
+          aprovados++;
+          if (e.quemIndicou && e.quemIndicou.trim()) {
+            comIndicacao++;
+          } else {
+            semIndicacao++;
+          }
+        } else {
+          reprovados++;
+        }
+      }
+
+      document.getElementById('totalGeral').textContent = total;
+      document.getElementById('aprovadosGeral').textContent = aprovados;
+      document.getElementById('reprovadosGeral').textContent = reprovados;
+      document.getElementById('comIndicacao').textContent = comIndicacao;
+      document.getElementById('semIndicacao').textContent = semIndicacao;
+    }
+
+    function atualizarContadorVisual() {
+      var aprovadosText = document.getElementById('resultadoAprovados').value.trim();
+      var aprovados = 0, policia = 0, fazenda = 0, nativo = 0, hospital = 0, ilegal = 0, outro = 0;
+
+      if (aprovadosText) {
+        var blocos = aprovadosText.split(/\n\s*\n/).filter(function(b) { return b.trim(); });
+        aprovados = blocos.length;
+
+        for (var i = 0; i < blocos.length; i++) {
+          var match = blocos[i].match(/[*_]*Rumo:[*_]*\s*(.*)/i);
+          var rumo = match ? match[1].toLowerCase().trim() : '';
+
+          if (rumo.indexOf('polic') === 0) policia++;
+          else if (rumo.indexOf('fazend') === 0) fazenda++;
+          else if (rumo.indexOf('nativ') === 0) nativo++;
+          else if (rumo.indexOf('hospital') === 0) hospital++;
+          else if (rumo.indexOf('ilegal') === 0) ilegal++;
+          else if (rumo) outro++;
+        }
+      }
+
+      document.getElementById('aprovadosVisual').textContent = aprovados;
+      document.getElementById('aprovadosPoliciaVisual').textContent = policia;
+      document.getElementById('aprovadosFazendaVisual').textContent = fazenda;
+      document.getElementById('aprovadosNativoVisual').textContent = nativo;
+      document.getElementById('aprovadosHospitalVisual').textContent = hospital;
+      document.getElementById('aprovadosIlegalVisual').textContent = ilegal;
+      document.getElementById('aprovadosOutroVisual').textContent = outro;
+
+      var reprovadosText = document.getElementById('resultadoReprovadosDetalhado').value.trim();
+      var reprovados = 0;
+      if (reprovadosText) {
+        reprovados = reprovadosText.split(/\n\s*\n/).filter(function(b) { return b.trim(); }).length;
+      }
+      document.getElementById('reprovadosVisual').textContent = reprovados;
+    }
+
+    // Atualizar visual quando digitar nos resultados
+    document.getElementById('resultadoAprovados').addEventListener('input', atualizarContadorVisual);
+    document.getElementById('resultadoReprovadosDetalhado').addEventListener('input', atualizarContadorVisual);
+
+    // =====================================================
+    // COPIAR POR RUMO
+    // =====================================================
+
+    function copiarRumo(rumoParam, visual) {
+      if (visual) {
+        // Copiar do campo visual
+        var text = document.getElementById('resultadoAprovados').value.trim();
+        if (!text) { alert('Nenhum aprovado no campo visual.'); return; }
+
+        var blocos = text.split(/\n\s*\n/).filter(function(b) { return b.trim(); });
+        var resultado = [];
+        var conhecidos = ['policia', 'fazenda', 'nativo', 'hospital', 'ilegal'];
+
+        for (var i = 0; i < blocos.length; i++) {
+          var match = blocos[i].match(/[*_]*Rumo:[*_]*\s*(.*)/i);
+          var rumo = match ? match[1].toLowerCase().trim() : '';
+
+          if (rumoParam === 'Outro') {
+            var ehConhecido = false;
+            for (var j = 0; j < conhecidos.length; j++) {
+              if (rumo.indexOf(conhecidos[j]) === 0) ehConhecido = true;
             }
+            if (rumo && !ehConhecido) resultado.push(blocos[i]);
+          } else if (rumo.indexOf(rumoParam.toLowerCase()) === 0) {
+            resultado.push(blocos[i]);
+          }
         }
 
-        // Função principal para mostrar/esconder seções de formulário e a seção de Ocorrência
-        function showFormFields() {
-            const selectedType = document.getElementById('selectRelatorio').value;
-            const formSections = document.querySelectorAll('#formFieldsContainer .form-section'); // Todas as seções de relatório principal
-            const relatorioGerado = document.getElementById('relatorioGerado');
+        if (resultado.length === 0) {
+          alert('Nenhum aprovado para o rumo: ' + rumoParam);
+        } else {
+          copiarTexto(resultado.join('\n\n'));
+        }
+      } else {
+        // Copiar do storage geral
+        var entrevistas = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+        var conhecidos = ['Policia', 'Fazenda', 'Nativo', 'Hospital', 'Ilegal'];
+        var filtered = [];
 
-            const addOcorrenciaCheckboxContainer = document.querySelector('.checkbox-container');
-            const addOcorrenciaCheckbox = document.getElementById('addOcorrenciaInfo');
-            const ocorrenciaFieldsDiv = document.getElementById('ocorrenciaFields');
-            const tituloInput = document.getElementById('ocorrencia_titulo');
-            const dataInput = document.getElementById('ocorrencia_data');
-            const horaInput = document.getElementById('ocorrencia_hora');
+        for (var i = 0; i < entrevistas.length; i++) {
+          var e = entrevistas[i];
+          if (e.status !== 'aprovado') continue;
 
-            // 1. Ocultar todas as seções de relatórios principais
-            formSections.forEach(section => {
-                section.classList.add('hidden');
-            });
-
-            // 2. Ocultar e limpar a seção de Ocorrência por padrão (sempre que a seleção muda)
-            addOcorrenciaCheckboxContainer.classList.add('hidden'); // Esconde o checkbox container
-            addOcorrenciaCheckbox.checked = false; // Desmarca o checkbox
-            ocorrenciaFieldsDiv.classList.add('hidden'); // Esconde os campos de ocorrência
-            tituloInput.value = ''; // Limpa os campos
-            dataInput.value = '';
-            horaInput.value = '';
-
-            if (selectedType) {
-                const targetSection = document.getElementById(`fields_${selectedType}`);
-                if (targetSection) {
-                    targetSection.classList.remove('hidden');
-                }
-
-                // Lógica específica: Mostrar Ocorrência APENAS para 'multaVeiculoAbandonado'
-                if (selectedType === 'multaVeiculoAbandonado') {
-                    addOcorrenciaCheckboxContainer.classList.remove('hidden'); // Mostra o checkbox
-                    addOcorrenciaCheckbox.checked = true; // Marca automaticamente
-                    toggleOcorrenciaFields(); // Chama a função para mostrar e preencher os campos de ocorrência
-                }
-
-                relatorioGerado.textContent = "Preencha os campos e clique em Gerar Relatório.";
-            } else {
-                relatorioGerado.textContent = "Selecione um tipo de relatório e preencha os campos.";
+          if (rumoParam === 'Outro') {
+            var ehConhecido = false;
+            for (var j = 0; j < conhecidos.length; j++) {
+              if (e.rumo === conhecidos[j]) ehConhecido = true;
             }
+            if (e.rumo && !ehConhecido) filtered.push(e);
+          } else if ((e.rumo || '').toLowerCase() === rumoParam.toLowerCase()) {
+            filtered.push(e);
+          }
         }
 
-        function gerarRelatorio() {
-            const selectedType = document.getElementById('selectRelatorio').value;
-            let relatorio = "";
-
-            if (!selectedType) {
-                alert("Por favor, selecione um tipo de relatório.");
-                document.getElementById('relatorioGerado').innerHTML = "Selecione um tipo de relatório para começar.";
-                return;
-            }
-
-            const fields = {};
-
-            function getFieldValue(id) {
-                const element = document.getElementById(id);
-                if (element) {
-                    return element.value.trim();
-                }
-                return "";
-            }
-
-            switch (selectedType) {
-                case 'ausenciasSuporte':
-                    fields.idPersonagem = getFieldValue('ausencias_idPersonagem');
-                    fields.nomePersonagem = getFieldValue('ausencias_nomePersonagem');
-                    fields.idDiscord = getFieldValue('ausencias_idDiscord');
-                    fields.tempo = getFieldValue('ausencias_tempo');
-                    fields.provas = getFieldValue('ausencias_provas');
-
-                    relatorio = `** ID e Nome do Personagem:** ${fields.idPersonagem} - ${fields.nomePersonagem}\n`;
-                    relatorio += `** ID Discord:** ${fields.idDiscord}\n`;
-                    relatorio += `** Tempo:** ${fields.tempo}\n`;
-                    relatorio += `** Provas:** ${fields.provas}`;
-                    break;
-
-                case 'revogacaoReativacao':
-                    fields.nomeDiscord = getFieldValue('revogacao_nomeDiscord');
-                    fields.idDiscord = getFieldValue('revogacao_idDiscord');
-                    fields.status = getFieldValue('revogacao_status');
-                    fields.motivoAusencia = getFieldValue('revogacao_motivoAusencia');
-                    fields.motivoAprovacaoReprovacao = getFieldValue('revogacao_motivoAprovacaoReprovacao');
-
-                    relatorio = `** Nome/Discord:** ${fields.nomeDiscord}\n`;
-                    relatorio += `** ID Discord:** ${fields.idDiscord}\n`;
-                    relatorio += `** Status:** ${fields.status}\n`;
-                    relatorio += `** Motivo da Ausência:** ${fields.motivoAusencia}\n\n`;
-                    relatorio += `** Motivo da Aprovação ou Reprovacao:** ${fields.motivoAprovacaoReprovacao}`;
-                    break;
-
-                case 'lojaVipTebex':
-                    fields.idPersonagem = getFieldValue('loja_idPersonagem');
-                    fields.nomePersonagem = getFieldValue('loja_nomePersonagem');
-                    fields.idDiscord = getFieldValue('loja_idDiscord');
-                    fields.nomeCompleto = getFieldValue('loja_nomeCompleto');
-                    fields.email = getFieldValue('loja_email');
-                    fields.dataCompra = getFieldValue('loja_dataCompra');
-                    fields.idTransacao = getFieldValue('loja_idTransacao');
-                    fields.comprovante = getFieldValue('loja_comprovante');
-
-                    relatorio = `** ID e Nome do Personagem:** ${fields.idPersonagem} - ${fields.nomePersonagem}\n`;
-                    relatorio += `** ID Discord:** ${fields.idDiscord}\n`;
-                    relatorio += `** Nome Completo:** ${fields.nomeCompleto}\n`;
-                    relatorio += `** E-mail:** ${fields.email}\n`;
-                    relatorio += `** Data da Compra:** ${fields.dataCompra}\n`;
-                    relatorio += `** ID Transação:** ${fields.idTransacao}\n`;
-                    relatorio += `** Comprovante:** ${fields.comprovante}`;
-                    break;
-
-                case 'trocaSteam':
-                    fields.idDiscord = getFieldValue('steam_idDiscord');
-                    fields.steamAntiga = getFieldValue('steam_steamAntiga');
-                    fields.steamNova = getFieldValue('steam_steamNova');
-                    fields.idPersonagem = getFieldValue('steam_idPersonagem');
-                    fields.nomePersonagem = getFieldValue('steam_nomePersonagem');
-                    fields.motivo = getFieldValue('steam_motivo');
-
-                    relatorio = `** ID Discord:** ${fields.idDiscord}\n`;
-                    relatorio += `** Steam Antiga:** ${fields.steamAntiga}\n`;
-                    relatorio += `** Steam Nova:** ${fields.steamNova}\n`;
-                    relatorio += `** ID e Nome do Personagem:** ${fields.idPersonagem} - ${fields.nomePersonagem}\n`;
-                    relatorio += `** Motivo:** ${fields.motivo}`;
-                    break;
-
-                case 'trocaDiscord':
-                    fields.idDiscordAntigo = getFieldValue('discord_idDiscordAntigo');
-                    fields.idDiscordNovo = getFieldValue('discord_idDiscordNovo');
-                    fields.steamHex = getFieldValue('discord_steamHex');
-                    fields.idPersonagem = getFieldValue('discord_idPersonagem');
-                    fields.nomePersonagem = getFieldValue('discord_nomePersonagem');
-                    fields.motivo = getFieldValue('discord_motivo');
-
-                    relatorio = `** Discord ID Antigo:** ${fields.idDiscordAntigo}\n`;
-                    relatorio += `** Discord ID Novo:** ${fields.idDiscordNovo}\n`;
-                    relatorio += `** Steam HEX:** ${fields.steamHex}\n`;
-                    relatorio += `** ID e Nome do Personagem:** ${fields.idPersonagem} - ${fields.nomePersonagem}\n`;
-                    relatorio += `** Motivo:** ${fields.motivo}`;
-                    break;
-
-                case 'banimentoSuporte':
-                    fields.idPersonagem = getFieldValue('banimento_idPersonagem');
-                    fields.nomePersonagem = getFieldValue('banimento_nomePersonagem');
-                    fields.idDiscord = getFieldValue('banimento_idDiscord');
-                    fields.motivo = getFieldValue('banimento_motivo');
-                    fields.tempo = getFieldValue('banimento_tempo');
-                    fields.provas = getFieldValue('banimento_provas');
-
-                    //relatorio = `** ID e Nome do Personagem:** ${fields.idPersonagem} - ${fields.nomePersonagem}\n`;
-                    relatorio += `** ID Discord:** <@${fields.idDiscord}>\n`;
-                    relatorio += `** Motivo:** ${fields.motivo}\n`;
-                    //relatorio += `** Tempo:** ${fields.tempo}\n`;
-                    relatorio += `** Provas:** ${fields.provas}`;
-                    break;
-
-                case 'multaVeiculoAbandonado':
-                    // Obter todos os campos relevantes para este relatório
-                    fields.tipoVeiculo = getFieldValue('multa_tipoVeiculo');
-                    fields.localInfracao = getFieldValue('multa_localInfracao');
-                    fields.nomeProprietario = getFieldValue('multa_nomeProprietario');
-                    fields.idProprietario = getFieldValue('multa_idProprietario');
-                    fields.valorMulta = getFieldValue('multa_valorMulta');
-
-                    // Obter os campos da ocorrência
-                    const tituloOcorrencia = getFieldValue('ocorrencia_titulo');
-                    const dataOcorrencia = getFieldValue('ocorrencia_data');
-                    const horaOcorrencia = getFieldValue('ocorrencia_hora');
-
-                    // Construir a string do relatório exatamente como você quer
-                    if (tituloOcorrencia) relatorio += `** Ocorrência:** ${tituloOcorrencia}\n`;
-                    if (dataOcorrencia) relatorio += `** Data:** ${dataOcorrencia.split('-').reverse().join('/')}\n`;
-                    if (horaOcorrencia) relatorio += `** Hora:** ${horaOcorrencia}\n\n`;
-
-                    relatorio += `Foi localizado ${fields.tipoVeiculo} ${fields.localInfracao}. \n`;
-                    relatorio += `Proprietário identificado: ${fields.nomeProprietario} - ID ${fields.idProprietario} \n`;
-                    relatorio += `Diante da infração, foi registrada a acusação de veículo abandonado, com aplicação de multa no valor de R$ ${fields.valorMulta} .`;
-                    break;
-
-                default:
-                    relatorio = "Selecione um tipo de relatório e preencha os campos.";
-                    break;
-            }
-
-            document.getElementById('relatorioGerado').textContent = relatorio;
+        if (filtered.length === 0) {
+          alert('Nenhuma entrevista aprovada para: ' + rumoParam);
+          return;
         }
 
-        function copiarRelatorio() {
-            const relatorioGerado = document.getElementById('relatorioGerado');
-            const textoParaCopiar = relatorioGerado.textContent;
-
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(textoParaCopiar)
-                    .then(() => {
-                        alert("Relatório copiado para a área de transferência!");
-                    })
-                    .catch(err => {
-                        console.error('Erro ao copiar: ', err);
-                        fallbackCopyTextToClipboard(textoParaCopiar);
-                    });
-            } else {
-                fallbackCopyTextToClipboard(textoParaCopiar);
-            }
+        var texto = '';
+        for (var i = 0; i < filtered.length; i++) {
+          var e = filtered[i];
+          var partes = [];
+          if (e.nome) partes.push('**Nome do Aprovado (IRL):** ' + e.nome);
+          if (e.data) partes.push('**Data de Nascimento:** ' + e.data + ' (' + e.idade + ' anos)');
+          if (e.discord) partes.push('**ID Discord:** ' + e.discord + ' | <@' + e.discord + '>');
+          if (e.rumo) partes.push('**Rumo:** ' + e.rumo);
+          if (e.observacoes) partes.push('**Observações:** ' + e.observacoes);
+          texto += partes.join('\n') + '\n\n';
         }
+        copiarTexto(texto.trim());
+      }
+    }
 
-        function fallbackCopyTextToClipboard(text) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed"; // Evita rolagem para o final
-            textArea.style.left = "-9999px"; // Fora da tela
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try {
-                const successful = document.execCommand('copy');
-                const msg = successful ? 'bem-sucedida' : 'falhou';
-                alert('Cópia ' + msg + ' (fallback)');
-            } catch (err) {
-                console.error('Fallback: Erro ao copiar texto: ', err);
-            }
-            document.body.removeChild(textArea);
-        }
-    </script>
+    function copiarTexto(texto) {
+      try {
+        navigator.clipboard.writeText(texto).then(function() {
+          toast('Copiado!');
+        });
+      } catch(e) {
+        var area = document.createElement('textarea');
+        area.value = texto;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        document.body.removeChild(area);
+        toast('Copiado!');
+      }
+    }
+
+    // =====================================================
+    // COPIAR REPROVADOS
+    // =====================================================
+
+    function copiarReprovados() {
+      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      var reprovados = [];
+
+      for (var i = 0; i < geral.length; i++) {
+        if (geral[i].status === 'reprovado') reprovados.push(geral[i]);
+      }
+
+      if (reprovados.length === 0) {
+        alert('Nenhum reprovado salvo.');
+        return;
+      }
+
+      var texto = '';
+      for (var i = 0; i < reprovados.length; i++) {
+        var e = reprovados[i];
+        texto += 'ID: ' + e.discord + ' | <@' + e.discord + '>\n';
+        texto += 'Motivo: ' + (e.observacoes || 'Não informado') + '\n\n';
+      }
+      copiarTexto(texto.trim());
+    }
+
+    // =====================================================
+    // SALVAR TXT
+    // =====================================================
+
+    function salvarTXT() {
+      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      if (geral.length === 0) {
+        alert('Nenhuma entrevista para salvar.');
+        return;
+      }
+
+      var agora = new Date().toLocaleString();
+      var texto = '=== ENTREVISTAS COMPREXO ===\n';
+      texto += 'Salvo em: ' + agora + '\n';
+      texto += 'Total: ' + geral.length + '\n';
+      texto += '============================\n\n';
+
+      for (var i = 0; i < geral.length; i++) {
+        var e = geral[i];
+        texto += (e.status === 'aprovado' ? '[APROVADO]' : '[REPROVADO]') + '\n';
+        if (e.nome) texto += 'Nome: ' + e.nome + '\n';
+        if (e.data) texto += 'Nascimento: ' + e.data + ' (' + e.idade + ' anos)\n';
+        texto += 'Discord: ' + e.discord + '\n';
+        if (e.rumo) texto += 'Rumo: ' + e.rumo + '\n';
+        if (e.observacoes) texto += 'Obs: ' + e.observacoes + '\n';
+        texto += 'Data: ' + e.timestamp + '\n';
+        texto += '---------------------------\n\n';
+      }
+
+      var blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'entrevistas_comprexo_' + Date.now() + '.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast('TXT salvo!');
+    }
+  </script>
 </body>
 </html>
