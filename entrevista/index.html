@@ -7,401 +7,358 @@
   <link rel="icon" href="https://i.postimg.cc/9QGqLt5t/COMPREXO-RDR-RED4x.webp" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #0a0a0a;
-      --bg-elevated: #111111;
-      --bg-card: #161616;
-      --bg-input: #1c1c1c;
-      --border: #2a2a2a;
-      --border-hover: #3a3a3a;
-      --accent: #e63946;
-      --accent-light: #ff4d5a;
-      --accent-glow: rgba(230, 57, 70, 0.15);
-      --text-primary: #f0f0f0;
-      --text-secondary: #a0a0a0;
-      --text-muted: #666;
-      --success: #22c55e;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-      --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
-      --shadow-glow: 0 0 20px rgba(230, 57, 70, 0.1);
-    }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html, body {
+    body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text-primary);
+      background: #0a0a0a;
+      color: #f0f0f0;
       min-height: 100vh;
       line-height: 1.5;
     }
 
+    /* HEADER */
     .header {
-      background: var(--bg-elevated);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(10px);
-    }
-
-    .header-inner {
-      max-width: 1400px;
-      margin: 0 auto;
+      background: #111;
+      border-bottom: 1px solid #2a2a2a;
       padding: 0 24px;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .brand {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #f0f0f0;
+      text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      font-size: 1.25rem;
-      letter-spacing: -0.5px;
-      text-decoration: none;
-      color: var(--text-primary);
+      gap: 8px;
     }
 
     .brand-dot {
       width: 8px;
       height: 8px;
-      background: var(--accent);
+      background: #e63946;
       border-radius: 50%;
-      animation: pulse-dot 2s ease-in-out infinite;
-      box-shadow: 0 0 8px var(--accent);
+      display: inline-block;
+      animation: blink 2s infinite;
+      box-shadow: 0 0 8px #e63946;
     }
 
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
 
     .nav-links {
       display: flex;
-      gap: 4px;
+      gap: 8px;
     }
 
     .nav-links a {
-      color: var(--text-secondary);
+      color: #888;
       text-decoration: none;
       font-weight: 500;
-      font-size: 0.875rem;
-      padding: 8px 14px;
-      border-radius: var(--radius-sm);
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.2s;
     }
 
     .nav-links a:hover {
-      color: var(--accent);
-      background: var(--accent-glow);
+      color: #e63946;
+      background: rgba(230, 57, 70, 0.1);
     }
 
     .nav-links a.active {
-      color: var(--accent);
-      background: var(--accent-glow);
+      color: #e63946;
+      background: rgba(230, 57, 70, 0.15);
       font-weight: 600;
     }
 
+    /* MAIN */
     .main {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 32px 24px;
+      padding: 24px;
     }
 
     .page-title {
-      font-size: 1.75rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      margin-bottom: 20px;
+      padding-left: 12px;
+      border-left: 3px solid #e63946;
     }
 
-    .page-title::before {
-      content: '';
-      width: 4px;
-      height: 28px;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-
+    /* GRID */
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      gap: 20px;
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 900px) {
       .grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
-      .mobile-menu-btn { display: flex !important; }
     }
 
+    /* CARD */
     .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      box-shadow: var(--shadow-md);
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
     }
 
     .card-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       margin-bottom: 20px;
     }
 
     .card-title {
-      font-size: 1.125rem;
+      font-size: 1.1rem;
       font-weight: 600;
-      color: var(--text-primary);
     }
 
-    .card-badge {
-      font-size: 0.75rem;
+    .badge {
+      font-size: 0.7rem;
       font-weight: 600;
       padding: 4px 10px;
       border-radius: 20px;
-      background: var(--accent-glow);
-      color: var(--accent);
+      background: rgba(230, 57, 70, 0.15);
+      color: #e63946;
     }
 
+    /* FORM */
     .form-group {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .form-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px;
+      grid-template-columns: 1fr 1fr 80px;
+      gap: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
     }
 
     label {
       display: block;
-      font-size: 0.8125rem;
+      font-size: 0.8rem;
       font-weight: 500;
-      color: var(--text-secondary);
-      margin-bottom: 6px;
+      color: #888;
+      margin-bottom: 4px;
     }
 
     input, select, textarea {
       width: 100%;
       font-family: inherit;
-      background: var(--bg-input);
-      border: 1.5px solid var(--border);
-      color: var(--text-primary);
-      border-radius: var(--radius-sm);
-      font-size: 0.9375rem;
-      padding: 10px 14px;
-      transition: all 0.2s ease;
+      background: #1c1c1c;
+      border: 1.5px solid #2a2a2a;
+      color: #f0f0f0;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      padding: 10px 12px;
+      transition: all 0.2s;
       outline: none;
     }
 
     input:focus, select:focus, textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
+      border-color: #e63946;
+      box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
     }
 
     input::placeholder, textarea::placeholder {
-      color: var(--text-muted);
+      color: #555;
     }
 
     select {
       cursor: pointer;
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23555' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
-      background-position: right 12px center;
-      padding-right: 32px;
-    }
-
-    select option {
-      background: var(--bg-input);
-      color: var(--text-primary);
+      background-position: right 10px center;
+      padding-right: 28px;
     }
 
     textarea {
-      min-height: 100px;
+      min-height: 80px;
       resize: vertical;
     }
 
     #idade {
-      background: var(--bg-elevated);
-      color: var(--accent);
+      background: #111;
+      color: #e63946;
       font-weight: 700;
       text-align: center;
-      border-color: var(--border);
     }
 
+    /* BUTTONS */
     .btn-group {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
-      margin-top: 20px;
+      margin-top: 16px;
     }
 
     .btn {
       font-family: inherit;
       border: none;
-      border-radius: var(--radius-sm);
-      padding: 10px 18px;
-      font-size: 0.875rem;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.2s;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 6px;
     }
 
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 2px 8px rgba(230, 57, 70, 0.3);
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-light);
+    .btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 4px 16px rgba(230, 57, 70, 0.4);
     }
 
     .btn-success {
-      background: var(--success);
+      background: #22c55e;
       color: white;
     }
 
-    .btn-success:hover { filter: brightness(1.1); }
+    .btn-success:hover {
+      background: #2dd46a;
+    }
 
     .btn-danger {
-      background: var(--danger);
+      background: #ef4444;
       color: white;
     }
 
-    .btn-danger:hover { filter: brightness(1.1); }
-
-    .btn-warning {
-      background: var(--warning);
-      color: #1a1a1a;
+    .btn-danger:hover {
+      background: #f87171;
     }
 
     .btn-secondary {
-      background: var(--bg-elevated);
-      color: var(--text-secondary);
-      border: 1px solid var(--border);
+      background: #222;
+      color: #888;
+      border: 1px solid #333;
     }
 
     .btn-secondary:hover {
-      border-color: var(--border-hover);
-      color: var(--text-primary);
+      background: #2a2a2a;
+      color: #f0f0f0;
     }
 
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-secondary);
-      border: 1px solid var(--border);
+    .btn-primary {
+      background: #e63946;
+      color: white;
     }
 
-    .btn-ghost:hover {
-      background: var(--bg-elevated);
-      color: var(--text-primary);
+    .btn-primary:hover {
+      background: #ff4d5a;
+      box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
     }
 
     .btn-sm {
-      padding: 6px 12px;
-      font-size: 0.8125rem;
+      padding: 6px 10px;
+      font-size: 0.8rem;
     }
 
-    .btn-block { width: 100%; }
+    .btn-block {
+      width: 100%;
+      justify-content: center;
+    }
 
-    .stats-bar {
+    /* STATS */
+    .stats {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
-      padding: 16px;
-      background: var(--bg-elevated);
-      border-radius: var(--radius-md);
-      margin: 20px 0;
-      border: 1px solid var(--border);
-    }
-
-    .stat-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-    }
-
-    .stat-value {
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .info-box {
-      background: var(--bg-elevated);
-      border-left: 3px solid var(--accent);
-      border-radius: var(--radius-sm);
-      padding: 16px;
+      gap: 12px;
+      padding: 14px;
+      background: #111;
+      border-radius: 10px;
       margin: 16px 0;
-      font-size: 0.875rem;
-      color: var(--text-secondary);
+      border: 1px solid #2a2a2a;
+    }
+
+    .stat {
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    .stat strong {
+      color: #e63946;
+      font-weight: 700;
+    }
+
+    /* INFO */
+    .info {
+      background: #111;
+      border-left: 3px solid #e63946;
+      border-radius: 8px;
+      padding: 14px;
+      margin: 14px 0;
+      font-size: 0.8rem;
+      color: #888;
       line-height: 1.7;
     }
 
-    .info-box a {
-      color: var(--accent);
+    .info a {
+      color: #e63946;
       text-decoration: none;
-      font-weight: 500;
     }
 
-    .info-box a:hover { text-decoration: underline; }
+    .info a:hover {
+      text-decoration: underline;
+    }
 
+    /* RUMO GRID */
     .rumo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin: 16px 0;
+      margin: 14px 0;
+    }
+
+    @media (max-width: 500px) {
+      .rumo-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     .rumo-grid .btn {
-      background: var(--bg-elevated);
-      color: var(--text-secondary);
-      border: 1px solid var(--border);
+      background: #1c1c1c;
+      color: #888;
+      border: 1px solid #2a2a2a;
     }
 
     .rumo-grid .btn:hover {
-      background: var(--accent);
+      background: #e63946;
       color: white;
-      border-color: var(--accent);
+      border-color: #e63946;
     }
 
+    /* RESULTS */
     .result-section {
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .result-section h4 {
-      font-size: 0.9375rem;
+      font-size: 0.85rem;
       font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
+      color: #888;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .result-section h4::before {
@@ -409,75 +366,75 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--accent);
+      background: #e63946;
     }
 
     .result-textarea {
-      background: var(--bg-input);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 12px;
-      min-height: 120px;
-      font-family: 'JetBrains Mono', 'Fira Code', monospace;
-      font-size: 0.8125rem;
-      line-height: 1.6;
-      color: var(--text-primary);
-      resize: vertical;
       width: 100%;
-    }
-
-    .result-textarea:focus {
-      border-color: var(--accent);
+      background: #1c1c1c;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 10px;
+      min-height: 100px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #f0f0f0;
+      resize: vertical;
       outline: none;
     }
 
+    .result-textarea:focus {
+      border-color: #e63946;
+    }
+
+    /* FOOTER */
     .footer {
       text-align: center;
-      padding: 40px 24px;
-      margin-top: 40px;
-      border-top: 1px solid var(--border);
-      background: var(--bg-elevated);
+      padding: 32px 24px;
+      margin-top: 32px;
+      border-top: 1px solid #2a2a2a;
+      background: #111;
     }
 
     .footer img {
-      width: 100px;
-      margin-bottom: 16px;
-      opacity: 0.8;
+      width: 80px;
+      margin-bottom: 12px;
+      opacity: 0.7;
     }
 
     .footer p {
-      font-size: 0.8125rem;
-      color: var(--text-muted);
-      margin: 4px 0;
+      font-size: 0.75rem;
+      color: #555;
+      margin: 3px 0;
     }
 
     .footer a {
-      color: var(--text-secondary);
+      color: #888;
       text-decoration: none;
-      transition: color 0.2s;
     }
 
-    .footer a:hover { color: var(--accent); }
+    .footer a:hover {
+      color: #e63946;
+    }
 
+    /* TOAST */
     #toast {
       position: fixed;
-      bottom: 24px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: var(--bg-card);
-      color: var(--text-primary);
+      background: #1c1c1c;
+      color: #f0f0f0;
       padding: 12px 24px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-glow), var(--shadow-md);
+      border-radius: 10px;
+      border: 1px solid #2a2a2a;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
       font-weight: 500;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       opacity: 0;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s;
       z-index: 1000;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      pointer-events: none;
     }
 
     #toast.show {
@@ -485,334 +442,366 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    #toast::before {
-      content: '✓';
-      color: var(--success);
-      font-weight: 700;
-    }
-
+    /* SCROLLBAR */
     ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 6px;
     }
 
-    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+
     ::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 4px;
+      background: #333;
+      border-radius: 3px;
     }
-    ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
 
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--text-secondary);
-      font-size: 1.5rem;
-      cursor: pointer;
+    ::-webkit-scrollbar-thumb:hover {
+      background: #444;
     }
   </style>
 <base target="_blank">
 </head>
 <body>
   <header class="header">
-    <div class="header-inner">
-      <a href="index.html" class="brand">
-        <span class="brand-dot"></span>
-        COMPREXO
-      </a>
-      <nav class="nav-links">
-        <a href="index.html">🏠 Início</a>
-        <a href="entrevista/index.html" class="active">🎤 Entrevista</a>
-        <a href="alinhamento/index.html">🎫 Alinhamento</a>
-      </nav>
-      <button class="mobile-menu-btn">☰</button>
-    </div>
+    <a href="index.html" class="brand">
+      <span class="brand-dot"></span>
+      COMPREXO
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">🏠 Início</a>
+      <a href="entrevista/index.html" class="active">🎤 Entrevista</a>
+      <a href="alinhamento/index.html">🎫 Alinhamento</a>
+    </nav>
   </header>
 
   <main class="main">
     <h1 class="page-title">Entrevista</h1>
 
     <div class="grid">
+      <!-- FORM CARD -->
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title">Formulário</h2>
-          <span class="card-badge">COMPREXO</span>
+          <span class="card-title">Formulário</span>
+          <span class="badge">COMPREXO</span>
         </div>
 
-        <form autocomplete="off" onsubmit="return false;">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="nome">Nome Completo (IRL)</label>
-              <input type="text" id="nome" placeholder="Digite o nome..." autocomplete="off" />
-            </div>
-            <div class="form-group">
-              <label for="data">Data de Nascimento</label>
-              <input type="text" id="data" placeholder="dd/mm/aaaa" autocomplete="off" />
-            </div>
-            <div class="form-group" style="max-width: 100px;">
-              <label for="idade">Idade</label>
-              <input type="text" id="idade" disabled />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="discord">ID Discord</label>
-              <input type="text" id="discord" placeholder="000000000000000000" autocomplete="off" />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="rumo">Rumo</label>
-              <select id="rumo">
-                <option value="">Selecione...</option>
-                <option value="Livre">Livre</option>
-                <option value="Policia">Polícia</option>
-                <option value="Fazenda">Fazenda</option>
-                <option value="Hospital">Hospital</option>
-                <option value="Nativo">Nativo</option>
-                <option value="Ilegal">Ilegal</option>
-                <option value="Outro">Outro</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="rumoOutro">Outro Rumo</label>
-              <input type="text" id="rumoOutro" placeholder="Especifique se aplicável" autocomplete="off" />
-            </div>
-          </div>
-
+        <div class="form-row">
           <div class="form-group">
-            <label for="observacoes">Observações</label>
-            <textarea id="observacoes" placeholder="Motivo da reprovação ou observações..."></textarea>
+            <label for="nome">Nome Completo (IRL)</label>
+            <input type="text" id="nome" placeholder="Digite o nome..." autocomplete="off">
           </div>
-
-          <div class="btn-group">
-            <button class="btn btn-success" onclick="adicionar('aprovado')" type="button">✓ Aprovar</button>
-            <button class="btn btn-danger" onclick="adicionar('reprovado')" type="button">✕ Reprovar</button>
-            <button class="btn btn-secondary" onclick="limparCampos()" type="button">Limpar</button>
-            <button class="btn btn-ghost" onclick="limparStorageGeral()" type="button">Nova Entrevista</button>
+          <div class="form-group">
+            <label for="data">Data de Nascimento</label>
+            <input type="text" id="data" placeholder="dd/mm/aaaa" autocomplete="off">
           </div>
-        </form>
-
-        <div class="stats-bar">
-          <div class="stat-item">Total: <span class="stat-value" id="totalGeral">0</span></div>
-          <div class="stat-item">Aprovados: <span class="stat-value" id="aprovadosGeral">0</span></div>
-          <div class="stat-item">Reprovados: <span class="stat-value" id="reprovadosGeral">0</span></div>
-          <div class="stat-item">Polícia: <span class="stat-value" id="aprovadosPolicia">0</span></div>
-          <div class="stat-item">Fazenda: <span class="stat-value" id="aprovadosFazenda">0</span></div>
-          <div class="stat-item">Nativo: <span class="stat-value" id="aprovadosNativo">0</span></div>
-          <div class="stat-item">Hospital: <span class="stat-value" id="aprovadosHospital">0</span></div>
-          <div class="stat-item">Ilegal: <span class="stat-value" id="aprovadosIlegal">0</span></div>
-          <div class="stat-item">Outros: <span class="stat-value" id="aprovadosOutro">0</span></div>
+          <div class="form-group">
+            <label for="idade">Idade</label>
+            <input type="text" id="idade" disabled>
+          </div>
         </div>
 
-        <div class="info-box">
-          <strong style="color: var(--text-primary);">ℹ️ Informações importantes:</strong><br><br>
-          • Todos os dados ficam salvos automaticamente.<br>
-          • Use <strong>"Nova Entrevista"</strong> para apagar tudo permanentemente.<br>
-          • <a href="https://comprexo.gg/regras/" target="_blank">Regras básicas</a> devem ser repassadas ao entrevistado.
+        <div class="form-group">
+          <label for="discord">ID Discord</label>
+          <input type="text" id="discord" placeholder="000000000000000000" autocomplete="off">
+        </div>
+
+        <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+          <div class="form-group">
+            <label for="rumo">Rumo</label>
+            <select id="rumo">
+              <option value="">Selecione...</option>
+              <option value="Livre">Livre</option>
+              <option value="Policia">Polícia</option>
+              <option value="Fazenda">Fazenda</option>
+              <option value="Hospital">Hospital</option>
+              <option value="Nativo">Nativo</option>
+              <option value="Ilegal">Ilegal</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="rumoOutro">Outro Rumo</label>
+            <input type="text" id="rumoOutro" placeholder="Especifique..." autocomplete="off">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="observacoes">Observações</label>
+          <textarea id="observacoes" placeholder="Motivo da reprovação ou observações..."></textarea>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-success" onclick="aprovar()" type="button">✓ Aprovar</button>
+          <button class="btn btn-danger" onclick="reprovar()" type="button">✕ Reprovar</button>
+          <button class="btn btn-secondary" onclick="limparCampos()" type="button">Limpar</button>
+          <button class="btn btn-secondary" onclick="novaEntrevista()" type="button">Nova Entrevista</button>
+        </div>
+
+        <div class="stats">
+          <span class="stat">Total: <strong id="totalGeral">0</strong></span>
+          <span class="stat">Aprovados: <strong id="aprovadosGeral">0</strong></span>
+          <span class="stat">Reprovados: <strong id="reprovadosGeral">0</strong></span>
+          <span class="stat">Polícia: <strong id="aprovadosPolicia">0</strong></span>
+          <span class="stat">Fazenda: <strong id="aprovadosFazenda">0</strong></span>
+          <span class="stat">Nativo: <strong id="aprovadosNativo">0</strong></span>
+          <span class="stat">Hospital: <strong id="aprovadosHospital">0</strong></span>
+          <span class="stat">Ilegal: <strong id="aprovadosIlegal">0</strong></span>
+          <span class="stat">Outros: <strong id="aprovadosOutro">0</strong></span>
+        </div>
+
+        <div class="info">
+          <strong style="color:#f0f0f0;">ℹ️ Informações:</strong><br>
+          • Dados salvos automaticamente no navegador<br>
+          • "Nova Entrevista" apaga tudo permanentemente<br>
+          • <a href="https://comprexo.gg/regras/" target="_blank">Regras básicas</a> para o entrevistado
         </div>
 
         <div class="rumo-grid">
-          <button class="btn btn-sm" onclick="copiarPorRumo('Policia', false)" type="button">📋 Polícia</button>
-          <button class="btn btn-sm" onclick="copiarPorRumo('Hospital', false)" type="button">📋 Hospital</button>
-          <button class="btn btn-sm" onclick="copiarPorRumo('Nativo', false)" type="button">📋 Nativo</button>
-          <button class="btn btn-sm" onclick="copiarPorRumo('Fazenda', false)" type="button">📋 Fazenda</button>
-          <button class="btn btn-sm" onclick="copiarPorRumo('Ilegal', false)" type="button">📋 Ilegal</button>
-          <button class="btn btn-sm" onclick="copiarPorRumo('Outro', false)" type="button">📋 Outro</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Policia', false)" type="button">📋 Polícia</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Hospital', false)" type="button">📋 Hospital</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Nativo', false)" type="button">📋 Nativo</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Fazenda', false)" type="button">📋 Fazenda</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Ilegal', false)" type="button">📋 Ilegal</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Outro', false)" type="button">📋 Outro</button>
         </div>
 
-        <button class="btn btn-danger btn-block" onclick="copiarReprovadosGeral()" type="button" style="margin-top: 12px;">
-          📋 Copiar Reprovados (Geral)
+        <button class="btn btn-danger btn-block" onclick="copiarReprovados()" type="button" style="margin-top:10px;">
+          📋 Copiar Reprovados
         </button>
 
-        <button class="btn btn-primary btn-block" onclick="salvarTxtComDataHora()" type="button" style="margin-top: 12px;">
-          💾 Salvar Entrevista Completa (TXT)
+        <button class="btn btn-primary btn-block" onclick="salvarTXT()" type="button" style="margin-top:8px;">
+          💾 Salvar como TXT
         </button>
       </div>
 
+      <!-- RESULTS CARD -->
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title">Resultados</h2>
-          <span class="card-badge" id="visualBadge">Visual</span>
+          <span class="card-title">Resultados</span>
+          <span class="badge">Visual</span>
         </div>
 
-        <div class="stats-bar" style="margin-bottom: 20px;">
-          <div class="stat-item">Aprovados: <span class="stat-value" id="aprovadosVisual">0</span></div>
-          <div class="stat-item">Reprovados: <span class="stat-value" id="reprovadosVisual">0</span></div>
-          <div class="stat-item">Polícia: <span class="stat-value" id="aprovadosPoliciaVisual">0</span></div>
-          <div class="stat-item">Fazenda: <span class="stat-value" id="aprovadosFazendaVisual">0</span></div>
-          <div class="stat-item">Nativo: <span class="stat-value" id="aprovadosNativoVisual">0</span></div>
-          <div class="stat-item">Hospital: <span class="stat-value" id="aprovadosHospitalVisual">0</span></div>
-          <div class="stat-item">Ilegal: <span class="stat-value" id="aprovadosIlegalVisual">0</span></div>
-          <div class="stat-item">Outros: <span class="stat-value" id="aprovadosOutroVisual">0</span></div>
+        <div class="stats" style="margin-bottom:16px;">
+          <span class="stat">Aprovados: <strong id="aprovadosVisual">0</strong></span>
+          <span class="stat">Reprovados: <strong id="reprovadosVisual">0</strong></span>
+          <span class="stat">Polícia: <strong id="aprovadosPoliciaVisual">0</strong></span>
+          <span class="stat">Fazenda: <strong id="aprovadosFazendaVisual">0</strong></span>
+          <span class="stat">Nativo: <strong id="aprovadosNativoVisual">0</strong></span>
+          <span class="stat">Hospital: <strong id="aprovadosHospitalVisual">0</strong></span>
+          <span class="stat">Ilegal: <strong id="aprovadosIlegalVisual">0</strong></span>
+          <span class="stat">Outros: <strong id="aprovadosOutroVisual">0</strong></span>
         </div>
 
         <div class="result-section">
           <h4>Aprovados</h4>
-          <textarea id="resultadoAprovados" class="result-textarea" aria-label="Aprovados"></textarea>
-          <div class="btn-group" style="margin-top: 8px;">
-            <button class="btn btn-primary btn-sm" onclick="copiarTexto('resultadoAprovados')" type="button">📋 Copiar</button>
-            <button class="btn btn-secondary btn-sm" onclick="limparResultado('resultadoAprovados')" type="button">🗑 Limpar</button>
+          <textarea id="resultadoAprovados" class="result-textarea"></textarea>
+          <div class="btn-group" style="margin-top:6px;">
+            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoAprovados')" type="button">📋 Copiar</button>
+            <button class="btn btn-secondary btn-sm" onclick="limpar('resultadoAprovados')" type="button">🗑 Limpar</button>
           </div>
         </div>
 
         <div class="result-section">
           <h4>Reprovados (Detalhado)</h4>
-          <textarea id="resultadoReprovadosDetalhado" class="result-textarea" aria-label="Reprovados Detalhado"></textarea>
-          <div class="btn-group" style="margin-top: 8px;">
-            <button class="btn btn-primary btn-sm" onclick="copiarTexto('resultadoReprovadosDetalhado')" type="button">📋 Copiar</button>
-            <button class="btn btn-secondary btn-sm" onclick="limparResultado('resultadoReprovadosDetalhado')" type="button">🗑 Limpar</button>
+          <textarea id="resultadoReprovadosDetalhado" class="result-textarea"></textarea>
+          <div class="btn-group" style="margin-top:6px;">
+            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoReprovadosDetalhado')" type="button">📋 Copiar</button>
+            <button class="btn btn-secondary btn-sm" onclick="limpar('resultadoReprovadosDetalhado')" type="button">🗑 Limpar</button>
           </div>
         </div>
 
         <div class="result-section">
-          <h4>Reprovados (ID e Motivo)</h4>
-          <textarea id="resultadoReprovadosSimples" class="result-textarea" aria-label="Reprovados Simples"></textarea>
-          <div class="btn-group" style="margin-top: 8px;">
-            <button class="btn btn-primary btn-sm" onclick="copiarTexto('resultadoReprovadosSimples')" type="button">📋 Copiar</button>
-            <button class="btn btn-secondary btn-sm" onclick="limparResultado('resultadoReprovadosSimples')" type="button">🗑 Limpar</button>
+          <h4>Reprovados (Simples)</h4>
+          <textarea id="resultadoReprovadosSimples" class="result-textarea"></textarea>
+          <div class="btn-group" style="margin-top:6px;">
+            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoReprovadosSimples')" type="button">📋 Copiar</button>
+            <button class="btn btn-secondary btn-sm" onclick="limpar('resultadoReprovadosSimples')" type="button">🗑 Limpar</button>
           </div>
         </div>
 
-        <div class="rumo-grid" style="margin-top: 16px;">
-          <button class="btn btn-sm" onclick="copiarPorRumo('Policia', true)" type="button">📋 Polícia</button>
-          <button class="btn btn-sm" onclick="copiarPorRumo('Fazenda', true)" type="button">📋 Fazenda</button>
-          <button class="btn btn-sm" onclick="copiarPorRumo('Nativo', true)" type="button">📋 Nativo</button>
-          <button class="btn btn-sm" onclick="copiarPorRumo('Hospital', true)" type="button">📋 Hospital</button>
-          <button class="btn btn-sm" onclick="copiarPorRumo('Ilegal', true)" type="button">📋 Ilegal</button>
-          <button class="btn btn-sm" onclick="copiarPorRumo('Outro', true)" type="button">📋 Outro</button>
+        <div class="rumo-grid" style="margin-top:10px;">
+          <button class="btn btn-sm" onclick="copiarRumo('Policia', true)" type="button">📋 Polícia</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Fazenda', true)" type="button">📋 Fazenda</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Nativo', true)" type="button">📋 Nativo</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Hospital', true)" type="button">📋 Hospital</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Ilegal', true)" type="button">📋 Ilegal</button>
+          <button class="btn btn-sm" onclick="copiarRumo('Outro', true)" type="button">📋 Outro</button>
         </div>
       </div>
     </div>
   </main>
 
   <footer class="footer">
-    <img src="https://i.postimg.cc/WzSNyqxY/Jacky-Confuso.png" alt="Jacky" />
+    <img src="https://i.postimg.cc/WzSNyqxY/Jacky-Confuso.png" alt="Jacky">
     <p>© 2026 - Todos os direitos reservados</p>
-    <p>Procurar <a href="https://github.com/nsantiago-cpx" target="_blank">Nath</a> para qualquer ajuste</p>
+    <p>Procurar <a href="https://github.com/nsantiago-cpx" target="_blank">Nath</a> para ajustes</p>
     <p>Original por <a href="https://jackymayers.github.io/" target="_blank">Jacky Mayers</a></p>
   </footer>
 
-  <div id="toast">Copiado para a área de transferência!</div>
+  <div id="toast">Copiado!</div>
 
   <script>
-    // ===== INIT =====
-    window.onload = function() {
-      ['nome', 'data', 'discord', 'rumo', 'rumoOutro', 'observacoes'].forEach(function(id) {
+    // =====================================================
+    // INICIALIZAÇÃO
+    // =====================================================
+
+    // Carregar dados salvos
+    window.addEventListener('load', function() {
+      var campos = ['nome', 'data', 'discord', 'rumo', 'rumoOutro', 'observacoes'];
+      for (var i = 0; i < campos.length; i++) {
+        var id = campos[i];
         var val = localStorage.getItem(id);
         if (val) document.getElementById(id).value = val;
-      });
-      ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'].forEach(function(id) {
+      }
+
+      var resultados = ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'];
+      for (var i = 0; i < resultados.length; i++) {
+        var id = resultados[i];
         var val = localStorage.getItem(id);
         if (val) document.getElementById(id).value = val;
-      });
-      // CHAMA A FUNÇÃO AO CARREGAR (caso já tenha data salva)
+      }
+
+      // Calcular idade se tiver data salva
       calcularIdade();
+
+      // Atualizar contadores
       atualizarContadores();
       atualizarContadorVisual();
-    };
-
-    // ===== STORAGE =====
-    document.querySelectorAll('input, textarea, select').forEach(function(el) {
-      el.addEventListener('input', function() {
-        localStorage.setItem(el.id, el.value);
-      });
     });
 
+    // Salvar campos automaticamente
+    var todosCampos = document.querySelectorAll('input, select, textarea');
+    for (var i = 0; i < todosCampos.length; i++) {
+      todosCampos[i].addEventListener('input', function() {
+        localStorage.setItem(this.id, this.value);
+      });
+    }
+
+    // Listener para calcular idade
+    document.getElementById('data').addEventListener('input', calcularIdade);
+    document.getElementById('data').addEventListener('blur', calcularIdade);
+
+    // Listener para limpar "Outro" quando não selecionado
     document.getElementById('rumo').addEventListener('change', function() {
-      var rumoSelect = document.getElementById('rumo');
-      var rumoOutro = document.getElementById('rumoOutro');
-      if (rumoSelect.value !== 'Outro') {
-        rumoOutro.value = '';
+      if (this.value !== 'Outro') {
+        document.getElementById('rumoOutro').value = '';
         localStorage.removeItem('rumoOutro');
       }
     });
 
-    // ===== LISTENER CORRETO PARA A DATA =====
-    // Usando 'input' para capturar enquanto digita
-    document.getElementById('data').addEventListener('input', function() {
-      calcularIdade();
-    });
+    // =====================================================
+    // FUNÇÕES AUXILIARES
+    // =====================================================
 
-    // Também no 'blur' (quando sai do campo) como backup
-    document.getElementById('data').addEventListener('blur', function() {
-      calcularIdade();
-    });
-
-    // ===== FUNÇÃO CALCULAR IDADE CORRIGIDA =====
     function calcularIdade() {
       var dataInput = document.getElementById('data').value.trim();
       var idadeCampo = document.getElementById('idade');
 
-      // Regex mais flexível: aceita dd/mm/aaaa, dd-mm-aaaa, dd.mm.aaaa, dd mm aaaa, etc.
-      var dataRegex = /^(\d{1,2})[\/\-\.\s](\d{1,2})[\/\-\.\s](\d{4})$/;
-      var match = dataInput.match(dataRegex);
+      // Aceita: dd/mm/aaaa, dd-mm-aaaa, dd.mm.aaaa
+      var regex = /^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/;
+      var match = dataInput.match(regex);
 
-      if (match) {
-        var dia = parseInt(match[1], 10);
-        var mes = parseInt(match[2], 10) - 1; // meses começam em 0
-        var ano = parseInt(match[3], 10);
-
-        var nascimento = new Date(ano, mes, dia);
-        var hoje = new Date();
-
-        // Verifica se a data é válida
-        if (nascimento.getMonth() !== mes || nascimento.getDate() !== dia) {
-          idadeCampo.value = '';
-          return;
-        }
-
-        var idade = hoje.getFullYear() - nascimento.getFullYear();
-        var m = hoje.getMonth() - nascimento.getMonth();
-
-        if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
-          idade--;
-        }
-
-        idadeCampo.value = idade >= 0 ? idade : '';
-      } else {
+      if (!match) {
         idadeCampo.value = '';
+        return;
+      }
+
+      var dia = parseInt(match[1], 10);
+      var mes = parseInt(match[2], 10) - 1;
+      var ano = parseInt(match[3], 10);
+
+      var nasc = new Date(ano, mes, dia);
+      var hoje = new Date();
+
+      // Verificar data válida
+      if (nasc.getMonth() !== mes || nasc.getDate() !== dia || nasc > hoje) {
+        idadeCampo.value = '';
+        return;
+      }
+
+      var idade = hoje.getFullYear() - nasc.getFullYear();
+      var diffMes = hoje.getMonth() - nasc.getMonth();
+
+      if (diffMes < 0 || (diffMes === 0 && hoje.getDate() < nasc.getDate())) {
+        idade--;
+      }
+
+      idadeCampo.value = idade >= 0 ? idade : '';
+    }
+
+    function formatarData(data) {
+      var regex = /^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/;
+      var match = data.match(regex);
+      return match ? match[1] + '/' + match[2] + '/' + match[3] : '';
+    }
+
+    function toast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function() {
+        t.classList.remove('show');
+      }, 2000);
+    }
+
+    function copiar(id) {
+      var el = document.getElementById(id);
+      if (!el.value.trim()) {
+        alert('Campo vazio!');
+        return;
+      }
+
+      el.select();
+      el.setSelectionRange(0, 99999);
+
+      try {
+        navigator.clipboard.writeText(el.value).then(function() {
+          toast('Copiado!');
+        });
+      } catch(e) {
+        document.execCommand('copy');
+        toast('Copiado!');
       }
     }
 
-    function limparCampos(aprovacao) {
-      if (!aprovacao && !confirm("Limpar todos os campos?")) return;
-      ['nome', 'data', 'idade', 'discord', 'rumo', 'rumoOutro', 'observacoes'].forEach(function(id) {
-        document.getElementById(id).value = '';
-        if (!aprovacao) localStorage.removeItem(id);
-      });
-    }
-
-    function limparResultado(id) {
-      if (!confirm("Limpar este resultado?")) return;
+    function limpar(id) {
+      if (!confirm('Limpar este campo?')) return;
       document.getElementById(id).value = '';
       localStorage.removeItem(id);
       atualizarContadorVisual();
     }
 
-    function showToast(msg) {
-      var toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(function() {
-        toast.classList.remove('show');
-      }, 2000);
-    }
-
-    async function copiarTexto(id) {
-      var texto = document.getElementById(id).value;
-      try {
-        await navigator.clipboard.writeText(texto);
-        showToast('Copiado!');
-      } catch (e) {
-        alert('Erro ao copiar. Copie manualmente.');
+    function limparCampos() {
+      if (!confirm('Limpar todos os campos do formulário?')) return;
+      var campos = ['nome', 'data', 'idade', 'discord', 'rumo', 'rumoOutro', 'observacoes'];
+      for (var i = 0; i < campos.length; i++) {
+        document.getElementById(campos[i]).value = '';
+        localStorage.removeItem(campos[i]);
       }
     }
 
-    // ===== ADICIONAR =====
+    function novaEntrevista() {
+      if (!confirm('⚠️ ISSO APAGA TODOS OS DADOS PERMANENTEMENTE!
+
+Tem certeza?')) return;
+      localStorage.removeItem('entrevistasGerais');
+      toast('Dados apagados!');
+      atualizarContadores();
+    }
+
+    // =====================================================
+    // APROVAR / REPROVAR
+    // =====================================================
+
+    function aprovar() {
+      adicionar('aprovado');
+    }
+
+    function reprovar() {
+      adicionar('reprovado');
+    }
+
     function adicionar(status) {
       var nome = document.getElementById('nome').value.trim();
       var data = formatarData(document.getElementById('data').value.trim());
@@ -823,52 +812,65 @@
       var observacoes = document.getElementById('observacoes').value.trim();
       var rumo = (rumoSelect === 'Outro' && rumoOutro) ? rumoOutro : rumoSelect;
 
-      if (!discord) { alert("ID Discord é obrigatório!"); return; }
-      if (!/^\d{17,20}$/.test(discord)) {
-        if (!confirm("ID Discord parece inválido. Continuar mesmo assim?")) return;
+      // Validações
+      if (!discord) {
+        alert('ID Discord é obrigatório!');
+        return;
       }
-      if (status === 'aprovado' && (!nome || !data || !rumo)) {
-        alert("Preencha Nome, Data e Rumo para aprovar."); return;
-      }
-      if (status === 'reprovado' && !confirm("Confirmar reprovação?")) return;
 
+      if (!/^\d{17,20}$/.test(discord)) {
+        if (!confirm('ID Discord parece inválido. Continuar mesmo assim?')) return;
+      }
+
+      if (status === 'aprovado' && (!nome || !data || !rumo)) {
+        alert('Para APROVAR, preencha: Nome, Data de Nascimento e Rumo!');
+        return;
+      }
+
+      if (status === 'reprovado' && !confirm('Confirmar REPROVAÇÃO?')) return;
+
+      // Montar resultado
       if (status === 'aprovado') {
-        var parts = [];
-        if (nome) parts.push("**Nome:** " + nome);
-        if (data) parts.push("**Nascimento:** " + data + " (" + idade + " anos)");
-        if (discord) parts.push("**Discord:** " + discord + " | <@" + discord + ">");
-        if (rumo) parts.push("**Rumo:** " + rumo);
-        if (observacoes) parts.push("**Obs:** " + observacoes);
+        var partes = [];
+        if (nome) partes.push('**Nome do Aprovado (IRL):** ' + nome);
+        if (data) partes.push('**Data de Nascimento:** ' + data + ' (' + idade + ' anos)');
+        if (discord) partes.push('**ID Discord:** ' + discord + ' | <@' + discord + '>');
+        if (rumo) partes.push('**Rumo:** ' + rumo);
+        if (observacoes) partes.push('**Observações:** ' + observacoes);
 
         var el = document.getElementById('resultadoAprovados');
         el.value += (el.value.trim() ? '
 
-' : '') + parts.join('
+' : '') + partes.join('
 ');
         localStorage.setItem('resultadoAprovados', el.value);
       } else {
-        var parts = [];
-        if (nome) parts.push("**Nome:** " + nome);
-        if (data) parts.push("**Nascimento:** " + data + " (" + idade + " anos)");
-        if (discord) parts.push("**Discord:** " + discord + " | <@" + discord + ">");
-        if (rumo) parts.push("**Rumo:** " + rumo);
-        parts.push("**Motivo:** " + (observacoes || 'Não informado'));
+        // Reprovado detalhado
+        var partes = [];
+        if (nome) partes.push('**Nome do Reprovado (IRL):** ' + nome);
+        if (data) partes.push('**Data de Nascimento:** ' + data + ' (' + idade + ' anos)');
+        if (discord) partes.push('**ID Discord:** ' + discord + ' | <@' + discord + '>');
+        if (rumo) partes.push('**Rumo:** ' + rumo);
+        partes.push('**Observações:** ' + (observacoes || 'Motivo não informado.'));
 
         var el = document.getElementById('resultadoReprovadosDetalhado');
         el.value += (el.value.trim() ? '
 
-' : '') + parts.join('
+' : '') + partes.join('
 ');
         localStorage.setItem('resultadoReprovadosDetalhado', el.value);
 
+        // Reprovado simples
         var simples = document.getElementById('resultadoReprovadosSimples');
         simples.value += (simples.value.trim() ? '
 
-' : '') + "ID: " + discord + " | <@" + discord + ">
-Motivo: " + (observacoes || 'Não informado');
+' : '') + 
+          'ID: ' + discord + ' | <@' + discord + '>
+Motivo: ' + (observacoes || 'Motivo não informado.');
         localStorage.setItem('resultadoReprovadosSimples', simples.value);
       }
 
+      // Salvar no storage geral
       var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
       geral.push({
         nome: nome,
@@ -882,55 +884,49 @@ Motivo: " + (observacoes || 'Não informado');
       });
       localStorage.setItem('entrevistasGerais', JSON.stringify(geral));
 
+      // Atualizar e limpar
       atualizarContadores();
       atualizarContadorVisual();
-      limparCampos(true);
-      showToast(status === 'aprovado' ? 'Aprovado!' : 'Reprovado!');
+      limparCampos();
+      toast(status === 'aprovado' ? '✅ Aprovado!' : '❌ Reprovado!');
     }
 
-    function formatarData(data) {
-      var m = data.match(/^(\d{1,2})[\/\-\.\s](\d{1,2})[\/\-\.\s](\d{4})$/);
-      return m ? m[1] + "/" + m[2] + "/" + m[3] : '';
-    }
+    // =====================================================
+    // CONTADORES
+    // =====================================================
 
-    function limparStorageGeral() {
-      if (!confirm("⚠️ Isso apaga TODOS os dados permanentemente. Continuar?")) return;
-      localStorage.removeItem('entrevistasGerais');
-      alert('Dados apagados.');
-      atualizarContadores();
-    }
-
-    // ===== CONTADORES =====
     function atualizarContadores() {
       var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
       var total = geral.length;
-      var aprovados = geral.filter(function(e) { return e.status === 'aprovado'; }).length;
-      var reprovados = geral.filter(function(e) { return e.status === 'reprovado'; }).length;
+      var aprovados = 0;
+      var reprovados = 0;
+      var policia = 0, fazenda = 0, nativo = 0, hospital = 0, ilegal = 0, outros = 0;
 
-      var conhecidos = ['policia', 'fazenda', 'nativo', 'hospital', 'ilegal'];
-
-      function count(r) {
-        return geral.filter(function(e) {
-          return e.status === 'aprovado' && (e.rumo || '').normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase() === r;
-        }).length;
-      }
-
-      function outros() {
-        return geral.filter(function(e) {
-          var r = (e.rumo || '').normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
-          return e.status === 'aprovado' && !conhecidos.includes(r);
-        }).length;
+      for (var i = 0; i < geral.length; i++) {
+        var e = geral[i];
+        if (e.status === 'aprovado') {
+          aprovados++;
+          var r = (e.rumo || '').toLowerCase();
+          if (r.indexOf('polic') === 0) policia++;
+          else if (r.indexOf('fazend') === 0) fazenda++;
+          else if (r.indexOf('nativ') === 0) nativo++;
+          else if (r.indexOf('hospital') === 0) hospital++;
+          else if (r.indexOf('ilegal') === 0) ilegal++;
+          else if (r) outros++;
+        } else {
+          reprovados++;
+        }
       }
 
       document.getElementById('totalGeral').textContent = total;
       document.getElementById('aprovadosGeral').textContent = aprovados;
       document.getElementById('reprovadosGeral').textContent = reprovados;
-      document.getElementById('aprovadosPolicia').textContent = count('policia');
-      document.getElementById('aprovadosFazenda').textContent = count('fazenda');
-      document.getElementById('aprovadosNativo').textContent = count('nativo');
-      document.getElementById('aprovadosHospital').textContent = count('hospital');
-      document.getElementById('aprovadosIlegal').textContent = count('ilegal');
-      document.getElementById('aprovadosOutro').textContent = outros();
+      document.getElementById('aprovadosPolicia').textContent = policia;
+      document.getElementById('aprovadosFazenda').textContent = fazenda;
+      document.getElementById('aprovadosNativo').textContent = nativo;
+      document.getElementById('aprovadosHospital').textContent = hospital;
+      document.getElementById('aprovadosIlegal').textContent = ilegal;
+      document.getElementById('aprovadosOutro').textContent = outros;
     }
 
     function atualizarContadorVisual() {
@@ -942,19 +938,18 @@ Motivo: " + (observacoes || 'Não informado');
 \s*
 /).filter(function(b) { return b.trim(); });
         aprovados = blocos.length;
-        var conhecidos = ['policia', 'fazenda', 'nativo', 'hospital', 'ilegal'];
 
-        blocos.forEach(function(b) {
-          var match = b.match(/[*_]*Rumo:[*_]*\s*(.*)/i);
-          var rumo = match ? match[1].normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim() : "";
+        for (var i = 0; i < blocos.length; i++) {
+          var match = blocos[i].match(/[*_]*Rumo:[*_]*\s*(.*)/i);
+          var rumo = match ? match[1].toLowerCase().trim() : '';
 
-          if (rumo.startsWith("polic")) policia++;
-          else if (rumo.startsWith("fazend")) fazenda++;
-          else if (rumo.startsWith("nativ")) nativo++;
-          else if (rumo.startsWith("hospital")) hospital++;
-          else if (rumo.startsWith("ilegal")) ilegal++;
-          else if (rumo && !conhecidos.some(function(c) { return rumo.startsWith(c); })) outro++;
-        });
+          if (rumo.indexOf('polic') === 0) policia++;
+          else if (rumo.indexOf('fazend') === 0) fazenda++;
+          else if (rumo.indexOf('nativ') === 0) nativo++;
+          else if (rumo.indexOf('hospital') === 0) hospital++;
+          else if (rumo.indexOf('ilegal') === 0) ilegal++;
+          else if (rumo) outro++;
+        }
       }
 
       document.getElementById('aprovadosVisual').textContent = aprovados;
@@ -966,135 +961,199 @@ Motivo: " + (observacoes || 'Não informado');
       document.getElementById('aprovadosOutroVisual').textContent = outro;
 
       var reprovadosText = document.getElementById('resultadoReprovadosDetalhado').value.trim();
-      document.getElementById('reprovadosVisual').textContent = reprovadosText ? reprovadosText.split(/
+      var reprovados = 0;
+      if (reprovadosText) {
+        reprovados = reprovadosText.split(/
 \s*
-/).filter(function(b) { return b.trim(); }).length : 0;
+/).filter(function(b) { return b.trim(); }).length;
+      }
+      document.getElementById('reprovadosVisual').textContent = reprovados;
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'].forEach(function(id) {
-        document.getElementById(id).addEventListener('input', atualizarContadorVisual);
-      });
-      atualizarContadorVisual();
-    });
+    // Atualizar visual quando digitar nos resultados
+    document.getElementById('resultadoAprovados').addEventListener('input', atualizarContadorVisual);
+    document.getElementById('resultadoReprovadosDetalhado').addEventListener('input', atualizarContadorVisual);
 
-    // ===== COPIAR POR RUMO =====
-    async function copiarPorRumo(rumoParam, visual) {
+    // =====================================================
+    // COPIAR POR RUMO
+    // =====================================================
+
+    function copiarRumo(rumoParam, visual) {
       if (visual) {
+        // Copiar do campo visual
         var text = document.getElementById('resultadoAprovados').value.trim();
-        if (!text) { alert('Nenhum aprovado.'); return; }
+        if (!text) { alert('Nenhum aprovado no campo visual.'); return; }
+
         var blocos = text.split(/
 \s*
 /).filter(function(b) { return b.trim(); });
-        var conhecidos = ['policia', 'fazenda', 'nativo', 'hospital', 'ilegal'];
         var resultado = [];
+        var conhecidos = ['policia', 'fazenda', 'nativo', 'hospital', 'ilegal'];
 
-        blocos.forEach(function(b) {
-          var match = b.match(/[*_]*Rumo:[*_]*\s*(.*)/i);
-          var rumo = match ? match[1].normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim() : "";
+        for (var i = 0; i < blocos.length; i++) {
+          var match = blocos[i].match(/[*_]*Rumo:[*_]*\s*(.*)/i);
+          var rumo = match ? match[1].toLowerCase().trim() : '';
+
           if (rumoParam === 'Outro') {
-            if (rumo && !conhecidos.some(function(c) { return rumo.startsWith(c); })) resultado.push(b);
-          } else if (rumo.startsWith(rumoParam.toLowerCase())) {
-            resultado.push(b);
+            var ehConhecido = false;
+            for (var j = 0; j < conhecidos.length; j++) {
+              if (rumo.indexOf(conhecidos[j]) === 0) ehConhecido = true;
+            }
+            if (rumo && !ehConhecido) resultado.push(blocos[i]);
+          } else if (rumo.indexOf(rumoParam.toLowerCase()) === 0) {
+            resultado.push(blocos[i]);
           }
-        });
-
-        if (resultado.length === 0) alert('Nenhum para ' + rumoParam);
-        else await copiarDirect(resultado.join('
-
-'));
-      } else {
-        var entrevistas = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-        var conhecidos = ['Policia', 'Fazenda', 'Nativo', 'Hospital', 'Ilegal'];
-        var filtered;
-
-        if (rumoParam === 'Outro') {
-          filtered = entrevistas.filter(function(e) {
-            return e.status === 'aprovado' && e.rumo && !conhecidos.includes(e.rumo);
-          });
-        } else {
-          filtered = entrevistas.filter(function(e) {
-            return e.status === 'aprovado' && (e.rumo || '').toLowerCase() === rumoParam.toLowerCase();
-          });
         }
 
-        if (filtered.length === 0) { alert('Nenhuma para ' + rumoParam); return; }
+        if (resultado.length === 0) {
+          alert('Nenhum aprovado para o rumo: ' + rumoParam);
+        } else {
+          copiarTexto(resultado.join('
+
+'));
+        }
+      } else {
+        // Copiar do storage geral
+        var entrevistas = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+        var conhecidos = ['Policia', 'Fazenda', 'Nativo', 'Hospital', 'Ilegal'];
+        var filtered = [];
+
+        for (var i = 0; i < entrevistas.length; i++) {
+          var e = entrevistas[i];
+          if (e.status !== 'aprovado') continue;
+
+          if (rumoParam === 'Outro') {
+            var ehConhecido = false;
+            for (var j = 0; j < conhecidos.length; j++) {
+              if (e.rumo === conhecidos[j]) ehConhecido = true;
+            }
+            if (e.rumo && !ehConhecido) filtered.push(e);
+          } else if ((e.rumo || '').toLowerCase() === rumoParam.toLowerCase()) {
+            filtered.push(e);
+          }
+        }
+
+        if (filtered.length === 0) {
+          alert('Nenhuma entrevista aprovada para: ' + rumoParam);
+          return;
+        }
 
         var texto = '';
-        filtered.forEach(function(e) {
-          var parts = [];
-          if (e.nome) parts.push("**Nome:** " + e.nome);
-          if (e.data) parts.push("**Nascimento:** " + e.data + " (" + e.idade + ")");
-          if (e.discord) parts.push("**Discord:** " + e.discord + " | <@" + e.discord + ">");
-          if (e.rumo) parts.push("**Rumo:** " + e.rumo);
-          if (e.observacoes) parts.push("**Obs:** " + e.observacoes);
-          texto += parts.join('
+        for (var i = 0; i < filtered.length; i++) {
+          var e = filtered[i];
+          var partes = [];
+          if (e.nome) partes.push('**Nome do Aprovado (IRL):** ' + e.nome);
+          if (e.data) partes.push('**Data de Nascimento:** ' + e.data + ' (' + e.idade + ' anos)');
+          if (e.discord) partes.push('**ID Discord:** ' + e.discord + ' | <@' + e.discord + '>');
+          if (e.rumo) partes.push('**Rumo:** ' + e.rumo);
+          if (e.observacoes) partes.push('**Observações:** ' + e.observacoes);
+          texto += partes.join('
 ') + '
 
 ';
-        });
-        await copiarDirect(texto.trim());
+        }
+        copiarTexto(texto.trim());
       }
     }
 
-    // ===== SALVAR TXT =====
-    async function salvarTxtComDataHora() {
+    function copiarTexto(texto) {
+      try {
+        navigator.clipboard.writeText(texto).then(function() {
+          toast('Copiado!');
+        });
+      } catch(e) {
+        var area = document.createElement('textarea');
+        area.value = texto;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        document.body.removeChild(area);
+        toast('Copiado!');
+      }
+    }
+
+    // =====================================================
+    // COPIAR REPROVADOS
+    // =====================================================
+
+    function copiarReprovados() {
       var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-      if (geral.length === 0) { alert("Nenhuma entrevista."); return; }
+      var reprovados = [];
 
-      var agora = new Date().toLocaleString();
-      var texto = "--- Entrevistas - " + agora + " ---
+      for (var i = 0; i < geral.length; i++) {
+        if (geral[i].status === 'reprovado') reprovados.push(geral[i]);
+      }
 
-";
-      geral.forEach(function(e) {
-        var parts = [];
-        parts.push((e.status === 'aprovado' ? '✅' : '❌') + " " + (e.nome || 'N/A'));
-        if (e.data) parts.push("Nascimento: " + e.data + " (" + e.idade + ")");
-        parts.push("Discord: " + e.discord);
-        if (e.rumo) parts.push("Rumo: " + e.rumo);
-        if (e.observacoes) parts.push("Obs: " + e.observacoes);
-        parts.push("Status: " + e.status + " | " + e.timestamp);
-        texto += parts.join('
-') + '
+      if (reprovados.length === 0) {
+        alert('Nenhum reprovado salvo.');
+        return;
+      }
+
+      var texto = '';
+      for (var i = 0; i < reprovados.length; i++) {
+        var e = reprovados[i];
+        texto += 'ID: ' + e.discord + ' | <@' + e.discord + '>
+';
+        texto += 'Motivo: ' + (e.observacoes || 'Não informado') + '
 
 ';
-      });
+      }
+      copiarTexto(texto.trim());
+    }
 
-      var blob = new Blob([texto], { type: "text/plain;charset=utf-8" });
+    // =====================================================
+    // SALVAR TXT
+    // =====================================================
+
+    function salvarTXT() {
+      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      if (geral.length === 0) {
+        alert('Nenhuma entrevista para salvar.');
+        return;
+      }
+
+      var agora = new Date().toLocaleString();
+      var texto = '=== ENTREVISTAS COMPREXO ===
+';
+      texto += 'Salvo em: ' + agora + '
+';
+      texto += 'Total: ' + geral.length + '
+';
+      texto += '============================
+
+';
+
+      for (var i = 0; i < geral.length; i++) {
+        var e = geral[i];
+        texto += (e.status === 'aprovado' ? '[APROVADO]' : '[REPROVADO]') + '
+';
+        if (e.nome) texto += 'Nome: ' + e.nome + '
+';
+        if (e.data) texto += 'Nascimento: ' + e.data + ' (' + e.idade + ' anos)
+';
+        texto += 'Discord: ' + e.discord + '
+';
+        if (e.rumo) texto += 'Rumo: ' + e.rumo + '
+';
+        if (e.observacoes) texto += 'Obs: ' + e.observacoes + '
+';
+        texto += 'Data: ' + e.timestamp + '
+';
+        texto += '---------------------------
+
+';
+      }
+
+      var blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
       a.href = url;
-      a.download = "entrevistas_" + agora.replace(/[\/:\s]/g, "_") + ".txt";
+      a.download = 'entrevistas_comprexo_' + Date.now() + '.txt';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showToast('TXT salvo!');
-    }
-
-    // ===== COPIAR REPROVADOS =====
-    async function copiarReprovadosGeral() {
-      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-      var reprovados = geral.filter(function(e) { return e.status === 'reprovado'; });
-      if (reprovados.length === 0) { alert("Nenhum reprovado."); return; }
-
-      var texto = '';
-      reprovados.forEach(function(e) {
-        texto += "ID: " + e.discord + " | <@" + e.discord + ">
-Motivo: " + (e.observacoes || 'Não informado') + "
-
-";
-      });
-      await copiarDirect(texto.trim());
-    }
-
-    async function copiarDirect(text) {
-      try {
-        await navigator.clipboard.writeText(text);
-        showToast('Copiado!');
-      } catch (e) {
-        alert('Erro ao copiar.');
-      }
+      toast('TXT salvo!');
     }
   </script>
 </body>
