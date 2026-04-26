@@ -6,11 +6,15 @@
   <link rel="icon" href="https://i.postimg.cc/9QGqLt5t/COMPREXO-RDR-RED4x.webp" type="image/x-icon" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #f9f9f9;
+      background-color: #0a0a0a;   /* 🖤 PRETO PURO */
+      color: #e0e0e0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -18,75 +22,100 @@
       text-align: center;
     }
     .logo {
-      font-size: 3rem;
-      font-weight: bold;
+      font-size: 2.5rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 12px;
+      margin-top: 40px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
     }
     .logo .dot {
-      font-size: 1.5rem;
-      color: #4fc3f7;
+      font-size: 1.2rem;
+      color: #e63946;   /* 🔴 Vermelho */
+      animation: blink 1.5s infinite;   /* ✨ Piscando */
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
     nav {
-      background: rgba(0, 0, 0, 0.5);
-      padding: 15px 25px;
-      border-radius: 12px;
+      background: #141414;   /* 🖤 Card escuro */
+      border: 1px solid #2a2a2a;   /* Borda sutil */
+      padding: 18px 30px;
+      border-radius: 16px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
-      margin: 25px 0;
-      font-size: 1.1rem;
-      font-weight: 700;
+      gap: 28px;
+      margin: 35px 0;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
     nav a {
-      color: #4fc3f7;
+      color: #b0b0b0;   /* Cinza */
+      text-decoration: none;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+    nav a:hover {
+      color: #e63946;   /* 🔴 Vermelho no hover */
+      background: rgba(230, 57, 70, 0.1);
+    }
+    .message {
+      font-size: 1.1rem;
+      max-width: 600px;
+      background: #141414;
+      border: 1px solid #2a2a2a;
+      padding: 30px 35px;
+      border-radius: 16px;
+      margin: 0 20px 35px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .message p {
+      margin: 8px 0;
+      font-size: 15px;
+      color: #a0a0a0;
+      line-height: 1.6;
+    }
+    .message .author {
+      font-size: 13px;
+      color: #e63946;
+      margin-top: 15px;
+      font-weight: 600;
+    }
+    .image-center {
+      width: 280px;
+      animation: pulse 2.5s infinite ease-in-out;
+      margin: 20px 0 50px;
+      filter: drop-shadow(0 0 20px rgba(230, 57, 70, 0.3));   /* 🔴 Sombra vermelha */
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    .footer {
+      font-size: 0.85em;
+      color: #555;
+      text-align: center;
+      padding: 25px;
+      margin-top: auto;
+      border-top: 1px solid #1a1a1a;   /* Linha separadora */
+      width: 100%;
+    }
+    .footer p {
+      margin: 6px 0;
+    }
+    .footer a {
+      color: #777;
       text-decoration: none;
       transition: color 0.3s;
     }
-    nav a:hover {
-      color: #82e0ff;
-    }
-    .message {
-      font-size: 1.3rem;
-      max-width: 700px;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 25px;
-      border-radius: 12px;
-      margin: 0 20px 30px;
-    }
-    .message p {
-      margin: 5px 0;
-      font-size: 14px;
-      color: #ccc;
-    }
-    .message .author {
-      font-size: 12px;
-      color: #888;
-      margin-top: 10px;
-    }
-    .image-center {
-      width: 300px;
-      animation: pulse 2s infinite;
-      margin: 30px 0 40px;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-    .footer {
-      font-size: 0.9em;
-      color: #aaa;
-      text-align: center;
-      padding: 20px;
-      margin-top: auto;
-    }
-    .footer img {
-      margin-top: 10px;
-      width: 120px;
+    .footer a:hover {
+      color: #e63946;
     }
   </style>
 </head>
@@ -112,11 +141,8 @@
   <div class="footer">
     <p>© 2026 - Todos os direitos reservados. Procurar Nath para qualquer ajuste.</p>
     <p>
-      <a href="https://jackymayers.github.io/" target="_blank" style="color:#aaa;">Jacky Mayers</a>!
-    </p>
-    <p>
       Editado por 
-      <a href="https://github.com/nsantiago-cpx" target="_blank" style="color:#FF00FF;">Nath</a>!
+      <a href="https://github.com/nsantiago-cpx" target="_blank" style="color:#e63946;">Nath</a>!
     </p>
   </div>
 </body>
