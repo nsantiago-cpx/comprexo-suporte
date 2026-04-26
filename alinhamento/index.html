@@ -460,6 +460,7 @@
       background: #444;
     }
   </style>
+<base target="_blank">
 </head>
 <body>
   <header class="header">
@@ -616,6 +617,20 @@
           <div class="btn-group" style="margin-top:6px;">
             <button class="btn btn-primary btn-sm" onclick="copiar('resultadoReprovadosSimples')" type="button">📋 Copiar</button>
             <button class="btn btn-secondary btn-sm" onclick="limpar('resultadoReprovadosSimples')" type="button">🗑 Limpar</button>
+          </div>
+        </div>
+
+
+        <div class="result-section">
+          <h4>Alinhamento - Liberação - <span id="dataLibLabel">data do dia</span></h4>
+          <div style="display:flex; gap:10px; margin-bottom:8px;">
+            <input type="text" id="dataLib" placeholder="dd/mm/aaaa" style="flex:1;" autocomplete="off">
+            <button class="btn btn-primary btn-sm" onclick="gerarAlinhamento()" type="button">📝 Gerar</button>
+          </div>
+          <textarea id="resultadoAlinhamento" class="result-textarea" placeholder="O texto formatado aparecerá aqui..."></textarea>
+          <div class="btn-group" style="margin-top:6px;">
+            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoAlinhamento')" type="button">📋 Copiar</button>
+            <button class="btn btn-secondary btn-sm" onclick="limpar('resultadoAlinhamento')" type="button">🗑 Limpar</button>
           </div>
         </div>
 
@@ -1048,6 +1063,77 @@
         toast('Copiado!');
       }
     }
+
+    // =====================================================
+    // ALINHAMENTO - LIBERAÇÃO
+    // =====================================================
+
+    function gerarAlinhamento() {
+      var dataLib = document.getElementById('dataLib').value.trim();
+      var el = document.getElementById('resultadoAlinhamento');
+      var aprovadosText = document.getElementById('resultadoAprovados').value.trim();
+
+      if (!dataLib) {
+        alert('Informe a data de liberação!');
+        return;
+      }
+
+      // Update label
+      document.getElementById('dataLibLabel').textContent = dataLib;
+
+      if (!aprovadosText) {
+        alert('Nenhum aprovado no campo de resultados.');
+        return;
+      }
+
+      var blocos = aprovadosText.split(/
+\s*
+/).filter(function(b) { return b.trim(); });
+      var linhas = [];
+
+      for (var i = 0; i < blocos.length; i++) {
+        var b = blocos[i];
+        var nomeMatch = b.match(/[*_]*Nome do Aprovado \(IRL\):[*_]*\s*(.*)/i);
+        var discordMatch = b.match(/[*_]*ID Discord:[*_]*\s*(\d+)/i);
+        var rumoMatch = b.match(/[*_]*Rumo:[*_]*\s*(.*)/i);
+
+        var nome = nomeMatch ? nomeMatch[1].trim() : 'N/A';
+        var discord = discordMatch ? discordMatch[1].trim() : 'N/A';
+        var rumo = rumoMatch ? rumoMatch[1].trim() : 'N/A';
+
+        linhas.push('• ' + nome + ' | <@' + discord + '> | ' + rumo);
+      }
+
+      var texto = '**Alinhamento - Liberação - ' + dataLib + '**
+
+';
+      texto += linhas.join('
+');
+      texto += '
+
+Total de liberações: ' + linhas.length;
+
+      el.value = texto;
+      localStorage.setItem('resultadoAlinhamento', texto);
+      localStorage.setItem('dataLib', dataLib);
+      toast('Alinhamento gerado!');
+    }
+
+    // Load saved alignment data
+    window.addEventListener('load', function() {
+      var savedData = localStorage.getItem('dataLib');
+      var savedText = localStorage.getItem('resultadoAlinhamento');
+      if (savedData) {
+        document.getElementById('dataLib').value = savedData;
+        document.getElementById('dataLibLabel').textContent = savedData;
+      }
+      if (savedText) document.getElementById('resultadoAlinhamento').value = savedText;
+    });
+
+    // Auto-save date field
+    document.getElementById('dataLib').addEventListener('input', function() {
+      localStorage.setItem('dataLib', this.value);
+    });
 
     // =====================================================
     // COPIAR REPROVADOS
