@@ -486,9 +486,19 @@
           <span class="badge">COMPREXO</span>
         </div>
 
-        <div class="form-group">
-          <label for="nome">Nome Completo (IRL)</label>
-          <input type="text" id="nome" placeholder="Digite o nome..." autocomplete="off">
+        <div class="form-row" style="grid-template-columns: 1fr 1fr 80px;">
+          <div class="form-group">
+            <label for="nome">Nome Completo (IRL)</label>
+            <input type="text" id="nome" placeholder="Digite o nome..." autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="data">Data de Nascimento</label>
+            <input type="text" id="data" placeholder="dd/mm/aaaa" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="idade">Idade</label>
+            <input type="text" id="idade" disabled>
+          </div>
         </div>
 
         <div class="form-group">
@@ -575,11 +585,11 @@
         </div>
 
         <div class="result-section">
-          <h4>Reprovados no Alinhamento (Simples)</h4>
-          <textarea id="resultadoReprovadosSimples" class="result-textarea"></textarea>
+          <h4>Aprovados no Alinhamento (Simples)</h4>
+          <textarea id="resultadoAprovadosSimples" class="result-textarea"></textarea>
           <div class="btn-group" style="margin-top:6px;">
-            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoReprovadosSimples')" type="button">📋 Copiar</button>
-            <button class="btn btn-secondary btn-sm" onclick="limpar('resultadoReprovadosSimples')" type="button">🗑 Limpar</button>
+            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoAprovadosSimples')" type="button">📋 Copiar</button>
+            <button class="btn btn-secondary btn-sm" onclick="limpar('resultadoAprovadosSimples')" type="button">🗑 Limpar</button>
           </div>
         </div>
 
@@ -607,14 +617,17 @@
 
     // Carregar dados salvos
     window.addEventListener('load', function() {
-      var campos = ['nome', 'discord', 'quemIndicou', 'observacoes'];
+      var campos = ['nome', 'data', 'discord', 'quemIndicou', 'observacoes'];
       for (var i = 0; i < campos.length; i++) {
         var id = campos[i];
         var val = localStorage.getItem(id + '_alinhamento');
         if (val) document.getElementById(id).value = val;
       }
 
-      var resultados = ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'];
+      // Calcular idade se tiver data salva
+      calcularIdade();
+
+      var resultados = ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoAprovadosSimples'];
       for (var i = 0; i < resultados.length; i++) {
         var id = resultados[i];
         var val = localStorage.getItem(id + '_alinhamento');
@@ -634,11 +647,47 @@
       });
     }
 
-    // Listener para limpar campos
+    // Listener para calcular idade
+    document.getElementById('data').addEventListener('input', calcularIdade);
+    document.getElementById('data').addEventListener('blur', calcularIdade);
 
     // =====================================================
     // FUNÇÕES AUXILIARES
     // =====================================================
+
+    function calcularIdade() {
+      var dataInput = document.getElementById('data').value.trim();
+      var idadeCampo = document.getElementById('idade');
+
+      var regex = /^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/;
+      var match = dataInput.match(regex);
+
+      if (!match) {
+        idadeCampo.value = '';
+        return;
+      }
+
+      var dia = parseInt(match[1], 10);
+      var mes = parseInt(match[2], 10) - 1;
+      var ano = parseInt(match[3], 10);
+
+      var nasc = new Date(ano, mes, dia);
+      var hoje = new Date();
+
+      if (nasc.getMonth() !== mes || nasc.getDate() !== dia || nasc > hoje) {
+        idadeCampo.value = '';
+        return;
+      }
+
+      var idade = hoje.getFullYear() - nasc.getFullYear();
+      var diffMes = hoje.getMonth() - nasc.getMonth();
+
+      if (diffMes < 0 || (diffMes === 0 && hoje.getDate() < nasc.getDate())) {
+        idade--;
+      }
+
+      idadeCampo.value = idade >= 0 ? idade : '';
+    }
 
     function formatarData(data) {
       var regex = /^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/;
@@ -684,7 +733,7 @@
 
     function limparCampos() {
       if (!confirm('Limpar todos os campos do formulário?')) return;
-      var campos = ['nome', 'discord', 'quemIndicou', 'observacoes'];
+      var campos = ['nome', 'data', 'idade', 'discord', 'quemIndicou', 'observacoes'];
       for (var i = 0; i < campos.length; i++) {
         document.getElementById(campos[i]).value = '';
         localStorage.removeItem(campos[i] + '_alinhamento');
