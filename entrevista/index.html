@@ -362,7 +362,7 @@
           <option value="">Selecione o Rumo</option>
           <option value="Livre">Livre</option>
           <option value="Policia">Polícia</option>
-          <option value="Fazendeiro">Fazendeiro</option>
+          <option value="Fazenda">Fazenda</option>
           <option value="Hospital">Hospital</option>
           <option value="Nativo">Nativo</option>
           <option value="Ilegal">Ilegal</option>
@@ -385,7 +385,7 @@
         <span class="rumos-bar">
           <span>polícia: <span id="aprovadosPolicia">0</span></span>|
           <span>hospital: <span id="aprovadosHospital">0</span></span>|
-          <span>mecânica: <span id="aprovadosFazendeiro">0</span></span>|
+          <span>mecânica: <span id="aprovadosFazenda">0</span></span>|
           <span>mecânica: <span id="aprovadosNativo">0</span></span>|
           <span>ilegal: <span id="aprovadosIlegal">0</span></span>|
           <span>outros: <span id="aprovadosOutro">0</span></span>
@@ -403,7 +403,7 @@
         <button onclick="copiarPorRumo('Policia', false)" type="button">Copiar Polícia</button>
         <button onclick="copiarPorRumo('Hospital', false)" type="button">Copiar Hospital</button>
         <button onclick="copiarPorRumo('Nativo', false)" type="button">Copiar Nativo</button>
-        <button onclick="copiarPorRumo('Fazendeiro', false)" type="button">Copiar Fazendeiro</button>
+        <button onclick="copiarPorRumo('Fazenda', false)" type="button">Copiar Fazenda</button>
         <button onclick="copiarPorRumo('Ilegal', false)" type="button">Copiar Ilegal</button>
         <button onclick="copiarPorRumo('Outro', false)" type="button">Copiar Outro</button>
       </div>
@@ -422,7 +422,8 @@
         <span class="rumos-bar">
           <span>Polícia: <span id="aprovadosPoliciaVisual">0</span></span>|
           <span>Hospital: <span id="aprovadosHospitalVisual">0</span></span>|
-          <span>Mecânica: <span id="aprovadosMecanicaVisual">0</span></span>|
+          <span>Fazenda: <span id="aprovadosFazendaVisual">0</span></span>|
+          <span>Nativo: <span id="aprovadosNativoVisual">0</span></span>|
           <span>Ilegal: <span id="aprovadosIlegalVisual">0</span></span>|
           <span>Outros: <span id="aprovadosOutroVisual">0</span></span>
         </span>
@@ -447,7 +448,8 @@
       </div>
       <div class="botoes-rumo" style="margin-top:13px;">
         <button onclick="copiarPorRumo('Policia', true)" type="button">Copiar Polícia</button>
-        <button onclick="copiarPorRumo('Mecanica', true)" type="button">Copiar Mecânica</button>
+        <button onclick="copiarPorRumo('Fazenda', true)" type="button">Copiar Fazenda</button>
+        <button onclick="copiarPorRumo('Nativo', true)" type="button">Copiar Nativo</button>
         <button onclick="copiarPorRumo('Hospital', true)" type="button">Copiar Hospital</button>
         <button onclick="copiarPorRumo('Ilegal', true)" type="button">Copiar Ilegal</button>
         <button onclick="copiarPorRumo('Outro', true)" type="button">Copiar Outro</button>
@@ -658,7 +660,7 @@
       const aprovados = entrevistasGerais.filter(e => e.status === 'aprovado').length;
       const reprovados = entrevistasGerais.filter(e => e.status === 'reprovado').length;
 
-      const conhecidosArray = ['policia', 'mecanica', 'hospital', 'ilegal'];
+      const conhecidosArray = ['policia', 'Fazenda','nativo', 'hospital', 'ilegal'];
 
       const countByRumo = rumo => entrevistasGerais.filter(e => e.status === 'aprovado' && (e.rumo || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() === rumo.toLowerCase()).length;
 
@@ -671,7 +673,7 @@
       document.getElementById('aprovadosGeral').textContent = aprovados;
       document.getElementById('reprovadosGeral').textContent = reprovados;
       document.getElementById('aprovadosPolicia').textContent = countByRumo('policia');
-      document.getElementById('aprovadosFazendeiro').textContent = countByRumo('Fazendeiro');
+      document.getElementById('aprovadosFazenda').textContent = countByRumo('Fazenda');
       document.getElementById('aprovadosHospital').textContent = countByRumo('hospital');
       document.getElementById('aprovadosNativo').textContent = countByRumo('Nativo');
       document.getElementById('aprovadosIlegal').textContent = countByRumo('ilegal');
@@ -680,19 +682,20 @@
 
     function atualizarContadorVisual() {
       const aprovadosText = document.getElementById('resultadoAprovados').value.trim();
-      let aprovados = 0, policia = 0, mecanica = 0, hospital = 0, ilegal = 0, outro = 0;
+      let aprovados = 0, policia = 0, Fazenda = 0, Nativo = 0, hospital = 0, ilegal = 0, outro = 0;
 
       if (aprovadosText) {
         const blocos = aprovadosText.split(/\n\s*\n/).filter(b=>b.trim());
         aprovados = blocos.length;
-        const conhecidosArray = ['policia', 'mecanica', 'hospital', 'ilegal'];
+        const conhecidosArray = ['policia', 'Fazenda', 'nativo', 'hospital', 'ilegal'];
 
         blocos.forEach(b=>{
           const match = b.match(/[*_]*Rumo:[*_]*\s*(.*)/i);
           let rumo = match ? match[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim() : "";
 
           if (rumo.startsWith("polic")) policia++;
-          else if (rumo.startsWith("mecan")) mecanica++;
+          else if (rumo.startsWith("mecan")) Fazenda++;
+          else if (rumo.startsWith("mecan")) nativo++;
           else if (rumo.startsWith("hospital")) hospital++;
           else if (rumo.startsWith("ilegal")) ilegal++;
           else if (rumo && !conhecidosArray.some(c => rumo.startsWith(c))) outro++;
@@ -700,7 +703,8 @@
       }
       document.getElementById('aprovadosVisual').textContent = aprovados;
       document.getElementById('aprovadosPoliciaVisual').textContent = policia;
-      document.getElementById('aprovadosMecanicaVisual').textContent = mecanica;
+      document.getElementById('aprovadosFazendaVisual').textContent = Fazenda;
+      document.getElementById('aprovadosNativoVisual').textContent = nativo;
       document.getElementById('aprovadosHospitalVisual').textContent = hospital;
       document.getElementById('aprovadosIlegalVisual').textContent = ilegal;
       document.getElementById('aprovadosOutroVisual').textContent = outro;
@@ -725,7 +729,7 @@
         const aprovadosText = document.getElementById('resultadoAprovados').value.trim();
         if (!aprovadosText) { alert('Nenhum aprovado no campo visual.'); return; }
         const blocos = aprovadosText.split(/\n\s*\n/).filter(b=>b.trim());
-        const conhecidosArray = ['policia','mecanica','hospital','ilegal'];
+        const conhecidosArray = ['policia','fazenda','nativo','hospital','ilegal'];
         let resultado = [];
 
         blocos.forEach(b=>{
@@ -747,7 +751,7 @@
       } else {
         let entrevistas = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
         let filteredEntrevistas;
-        const conhecidosArray = ['Policia','Mecanica','Hospital','Ilegal'];
+        const conhecidosArray = ['Policia','Fazenda', 'Nativo','Hospital','Ilegal'];
 
         if (rumoParam === 'Outro') {
           filteredEntrevistas = entrevistas.filter(e => e.status === 'aprovado' && e.rumo && !conhecidosArray.includes(e.rumo));
