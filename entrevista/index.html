@@ -356,15 +356,15 @@
       </div>
       <div class="input-group">
         <input type="text" id="discord" placeholder="ID Discord" autocomplete="off" />
-        <input type="text" id="entrevista" placeholder="Nº da Entrevista" autocomplete="off" />
       </div>
       <div class="input-group">
         <select id="rumo">
           <option value="">Selecione o Rumo</option>
           <option value="Livre">Livre</option>
           <option value="Policia">Polícia</option>
-          <option value="Mecanica">Mecânica</option>
+          <option value="Fazendeiro">Fazendeiro</option>
           <option value="Hospital">Hospital</option>
+          <option value="Nativo">Nativo</option>
           <option value="Ilegal">Ilegal</option>
           <option value="Outro">Outro (especifique ao lado)</option>
         </select>
@@ -385,7 +385,8 @@
         <span class="rumos-bar">
           <span>polícia: <span id="aprovadosPolicia">0</span></span>|
           <span>hospital: <span id="aprovadosHospital">0</span></span>|
-          <span>mecânica: <span id="aprovadosMecanica">0</span></span>|
+          <span>mecânica: <span id="aprovadosFazendeiro">0</span></span>|
+          <span>mecânica: <span id="aprovadosNativo">0</span></span>|
           <span>ilegal: <span id="aprovadosIlegal">0</span></span>|
           <span>outros: <span id="aprovadosOutro">0</span></span>
         </span>
@@ -400,8 +401,9 @@
 </div>
       <div class="botoes-rumo">
         <button onclick="copiarPorRumo('Policia', false)" type="button">Copiar Polícia</button>
-        <button onclick="copiarPorRumo('Mecanica', false)" type="button">Copiar Mecânica</button>
         <button onclick="copiarPorRumo('Hospital', false)" type="button">Copiar Hospital</button>
+        <button onclick="copiarPorRumo('Nativo', false)" type="button">Copiar Nativo</button>
+        <button onclick="copiarPorRumo('Fazendeiro', false)" type="button">Copiar Fazendeiro</button>
         <button onclick="copiarPorRumo('Ilegal', false)" type="button">Copiar Ilegal</button>
         <button onclick="copiarPorRumo('Outro', false)" type="button">Copiar Outro</button>
       </div>
@@ -593,7 +595,6 @@
         if (nome) resultadoAprovadosStr.push(`**Nome do Aprovado (IRL):** ${nome}`);
         if (data) resultadoAprovadosStr.push(`**Data de Nascimento:** ${data} (${idade} anos)`);
         if (discord) resultadoAprovadosStr.push(`**ID Discord:** ${discord} |<@${discord}>`);
-        if (entrevista) resultadoAprovadosStr.push(`**Número da Entrevista:** ${entrevista}`);
         if (rumo) resultadoAprovadosStr.push(`**Rumo:** ${rumo}`);
         if (observacoes) resultadoAprovadosStr.push(`**Observações:** ${observacoes}`);
 
@@ -604,7 +605,6 @@
         if (nome) resultadoDetalhadoStr.push(`**Nome do Reprovado (IRL):** ${nome}`);
         if (data) resultadoDetalhadoStr.push(`**Data de Nascimento:** ${data} (${idade} anos)`);
         if (discord) resultadoDetalhadoStr.push(`**ID Discord:** ${discord} |<@${discord}>`);
-        if (entrevista) resultadoDetalhadoStr.push(`**Número da Entrevista:** ${entrevista}`);
         if (rumo) resultadoDetalhadoStr.push(`**Rumo:** ${rumo}`);
         resultadoDetalhadoStr.push(`**Observações:** ${observacoes ? observacoes : 'Motivo não informado.'}`);
 
@@ -624,7 +624,6 @@
         data: data,
         idade: idade,
         discord: discord,
-        entrevista: entrevista,
         rumo: rumo,
         observacoes: observacoes,
         status: status,
@@ -672,8 +671,9 @@
       document.getElementById('aprovadosGeral').textContent = aprovados;
       document.getElementById('reprovadosGeral').textContent = reprovados;
       document.getElementById('aprovadosPolicia').textContent = countByRumo('policia');
-      document.getElementById('aprovadosMecanica').textContent = countByRumo('mecanica');
+      document.getElementById('aprovadosFazendeiro').textContent = countByRumo('Fazendeiro');
       document.getElementById('aprovadosHospital').textContent = countByRumo('hospital');
+      document.getElementById('aprovadosNativo').textContent = countByRumo('Nativo');
       document.getElementById('aprovadosIlegal').textContent = countByRumo('ilegal');
       document.getElementById('aprovadosOutro').textContent = countOutro();
     }
