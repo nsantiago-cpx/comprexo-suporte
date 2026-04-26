@@ -460,7 +460,6 @@
       background: #444;
     }
   </style>
-<!-- <base target="_blank"> -->
 </head>
 <body>
   <header class="header">
@@ -782,9 +781,7 @@
     }
 
     function novaEntrevista() {
-      if (!confirm('⚠️ ISSO APAGA TODOS OS DADOS PERMANENTEMENTE!
-
-Tem certeza?')) return;
+      if (!confirm('⚠️ ISSO APAGA TODOS OS DADOS PERMANENTEMENTE!\n\nTem certeza?')) return;
       localStorage.removeItem('entrevistasGerais');
       toast('Dados apagados!');
       atualizarContadores();
@@ -839,10 +836,7 @@ Tem certeza?')) return;
         if (observacoes) partes.push('**Observações:** ' + observacoes);
 
         var el = document.getElementById('resultadoAprovados');
-        el.value += (el.value.trim() ? '
-
-' : '') + partes.join('
-');
+        el.value += (el.value.trim() ? '\n\n' : '') + partes.join('\n');
         localStorage.setItem('resultadoAprovados', el.value);
       } else {
         // Reprovado detalhado
@@ -854,19 +848,13 @@ Tem certeza?')) return;
         partes.push('**Observações:** ' + (observacoes || 'Motivo não informado.'));
 
         var el = document.getElementById('resultadoReprovadosDetalhado');
-        el.value += (el.value.trim() ? '
-
-' : '') + partes.join('
-');
+        el.value += (el.value.trim() ? '\n\n' : '') + partes.join('\n');
         localStorage.setItem('resultadoReprovadosDetalhado', el.value);
 
         // Reprovado simples
         var simples = document.getElementById('resultadoReprovadosSimples');
-        simples.value += (simples.value.trim() ? '
-
-' : '') + 
-          'ID: ' + discord + ' | <@' + discord + '>
-Motivo: ' + (observacoes || 'Motivo não informado.');
+        simples.value += (simples.value.trim() ? '\n\n' : '') + 
+          'ID: ' + discord + ' | <@' + discord + '>\nMotivo: ' + (observacoes || 'Motivo não informado.');
         localStorage.setItem('resultadoReprovadosSimples', simples.value);
       }
 
@@ -934,9 +922,7 @@ Motivo: ' + (observacoes || 'Motivo não informado.');
       var aprovados = 0, policia = 0, fazenda = 0, nativo = 0, hospital = 0, ilegal = 0, outro = 0;
 
       if (aprovadosText) {
-        var blocos = aprovadosText.split(/
-\s*
-/).filter(function(b) { return b.trim(); });
+        var blocos = aprovadosText.split(/\n\s*\n/).filter(function(b) { return b.trim(); });
         aprovados = blocos.length;
 
         for (var i = 0; i < blocos.length; i++) {
@@ -963,9 +949,7 @@ Motivo: ' + (observacoes || 'Motivo não informado.');
       var reprovadosText = document.getElementById('resultadoReprovadosDetalhado').value.trim();
       var reprovados = 0;
       if (reprovadosText) {
-        reprovados = reprovadosText.split(/
-\s*
-/).filter(function(b) { return b.trim(); }).length;
+        reprovados = reprovadosText.split(/\n\s*\n/).filter(function(b) { return b.trim(); }).length;
       }
       document.getElementById('reprovadosVisual').textContent = reprovados;
     }
@@ -984,9 +968,7 @@ Motivo: ' + (observacoes || 'Motivo não informado.');
         var text = document.getElementById('resultadoAprovados').value.trim();
         if (!text) { alert('Nenhum aprovado no campo visual.'); return; }
 
-        var blocos = text.split(/
-\s*
-/).filter(function(b) { return b.trim(); });
+        var blocos = text.split(/\n\s*\n/).filter(function(b) { return b.trim(); });
         var resultado = [];
         var conhecidos = ['policia', 'fazenda', 'nativo', 'hospital', 'ilegal'];
 
@@ -1008,9 +990,7 @@ Motivo: ' + (observacoes || 'Motivo não informado.');
         if (resultado.length === 0) {
           alert('Nenhum aprovado para o rumo: ' + rumoParam);
         } else {
-          copiarTexto(resultado.join('
-
-'));
+          copiarTexto(resultado.join('\n\n'));
         }
       } else {
         // Copiar do storage geral
@@ -1047,10 +1027,7 @@ Motivo: ' + (observacoes || 'Motivo não informado.');
           if (e.discord) partes.push('**ID Discord:** ' + e.discord + ' | <@' + e.discord + '>');
           if (e.rumo) partes.push('**Rumo:** ' + e.rumo);
           if (e.observacoes) partes.push('**Observações:** ' + e.observacoes);
-          texto += partes.join('
-') + '
-
-';
+          texto += partes.join('\n') + '\n\n';
         }
         copiarTexto(texto.trim());
       }
@@ -1092,11 +1069,8 @@ Motivo: ' + (observacoes || 'Motivo não informado.');
       var texto = '';
       for (var i = 0; i < reprovados.length; i++) {
         var e = reprovados[i];
-        texto += 'ID: ' + e.discord + ' | <@' + e.discord + '>
-';
-        texto += 'Motivo: ' + (e.observacoes || 'Não informado') + '
-
-';
+        texto += 'ID: ' + e.discord + ' | <@' + e.discord + '>\n';
+        texto += 'Motivo: ' + (e.observacoes || 'Não informado') + '\n\n';
       }
       copiarTexto(texto.trim());
     }
@@ -1113,35 +1087,21 @@ Motivo: ' + (observacoes || 'Motivo não informado.');
       }
 
       var agora = new Date().toLocaleString();
-      var texto = '=== ENTREVISTAS COMPREXO ===
-';
-      texto += 'Salvo em: ' + agora + '
-';
-      texto += 'Total: ' + geral.length + '
-';
-      texto += '============================
-
-';
+      var texto = '=== ENTREVISTAS COMPREXO ===\n';
+      texto += 'Salvo em: ' + agora + '\n';
+      texto += 'Total: ' + geral.length + '\n';
+      texto += '============================\n\n';
 
       for (var i = 0; i < geral.length; i++) {
         var e = geral[i];
-        texto += (e.status === 'aprovado' ? '[APROVADO]' : '[REPROVADO]') + '
-';
-        if (e.nome) texto += 'Nome: ' + e.nome + '
-';
-        if (e.data) texto += 'Nascimento: ' + e.data + ' (' + e.idade + ' anos)
-';
-        texto += 'Discord: ' + e.discord + '
-';
-        if (e.rumo) texto += 'Rumo: ' + e.rumo + '
-';
-        if (e.observacoes) texto += 'Obs: ' + e.observacoes + '
-';
-        texto += 'Data: ' + e.timestamp + '
-';
-        texto += '---------------------------
-
-';
+        texto += (e.status === 'aprovado' ? '[APROVADO]' : '[REPROVADO]') + '\n';
+        if (e.nome) texto += 'Nome: ' + e.nome + '\n';
+        if (e.data) texto += 'Nascimento: ' + e.data + ' (' + e.idade + ' anos)\n';
+        texto += 'Discord: ' + e.discord + '\n';
+        if (e.rumo) texto += 'Rumo: ' + e.rumo + '\n';
+        if (e.observacoes) texto += 'Obs: ' + e.observacoes + '\n';
+        texto += 'Data: ' + e.timestamp + '\n';
+        texto += '---------------------------\n\n';
       }
 
       var blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
