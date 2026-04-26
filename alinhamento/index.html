@@ -424,11 +424,11 @@
         </div>
 
         <div class="result-section">
-          <h4>Reprovados no Alinhamento (Simples)</h4>
-          <textarea id="resultadoReprovadosSimples" class="result-textarea"></textarea>
+          <h4>Aprovados no Alinhamento (Simples)</h4>
+          <textarea id="resultadoAprovadosSimples" class="result-textarea"></textarea>
           <div class="btn-group" style="margin-top:6px;">
-            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoReprovadosSimples')" type="button">📋 Copiar</button>
-            <button class="btn btn-secondary btn-sm" onclick="limparCampo('resultadoReprovadosSimples')" type="button">🗑 Limpar</button>
+            <button class="btn btn-primary btn-sm" onclick="copiar('resultadoAprovadosSimples')" type="button">📋 Copiar</button>
+            <button class="btn btn-secondary btn-sm" onclick="limparCampo('resultadoAprovadosSimples')" type="button">🗑 Limpar</button>
           </div>
         </div>
 
@@ -461,7 +461,7 @@
 
       calcularIdade();
 
-      ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'].forEach(function (id) {
+      ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoAprovadosSimples'].forEach(function (id) {
         var val = localStorage.getItem('resultado_alin_' + id);
         if (val) document.getElementById(id).value = val;
       });
@@ -478,7 +478,7 @@
     });
 
     // Auto-salvar resultados
-    ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'].forEach(function (id) {
+    ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoAprovadosSimples'].forEach(function (id) {
       document.getElementById(id).addEventListener('input', function () {
         localStorage.setItem('resultado_alin_' + id, this.value);
         atualizarContadorVisual();
@@ -563,7 +563,7 @@
       });
       document.getElementById('idade').value = '';
 
-      ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'].forEach(function (id) {
+      ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoAprovadosSimples'].forEach(function (id) {
         document.getElementById(id).value = '';
         localStorage.removeItem('resultado_alin_' + id);
       });
@@ -611,6 +611,11 @@
         el.value += (el.value.trim() ? '\n\n' : '') + partes.join('\n');
         localStorage.setItem('resultado_alin_resultadoAprovados', el.value);
 
+        var elSimp = document.getElementById('resultadoAprovadosSimples');
+        elSimp.value += (elSimp.value.trim() ? '\n' : '') +
+          (nome ? nome + ' — ' : '') + '<@' + discord + '>';
+        localStorage.setItem('resultado_alin_resultadoAprovadosSimples', elSimp.value);
+
       } else {
         var partes = [];
         if (nome)        partes.push('**Nome do Reprovado (IRL):** ' + nome);
@@ -622,10 +627,7 @@
         elDet.value += (elDet.value.trim() ? '\n\n' : '') + partes.join('\n');
         localStorage.setItem('resultado_alin_resultadoReprovadosDetalhado', elDet.value);
 
-        var elSimp = document.getElementById('resultadoReprovadosSimples');
-        elSimp.value += (elSimp.value.trim() ? '\n' : '') +
-          '<@' + discord + '> — ' + (observacoes || 'Motivo não informado.');
-        localStorage.setItem('resultado_alin_resultadoReprovadosSimples', elSimp.value);
+
       }
 
       // Salvar na lista geral
