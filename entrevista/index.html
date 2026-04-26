@@ -41,7 +41,6 @@
       line-height: 1.5;
     }
 
-    /* ===== HEADER / NAV ===== */
     .header {
       background: var(--bg-elevated);
       border-bottom: 1px solid var(--border);
@@ -115,7 +114,6 @@
       font-weight: 600;
     }
 
-    /* ===== MAIN CONTENT ===== */
     .main {
       max-width: 1400px;
       margin: 0 auto;
@@ -139,7 +137,6 @@
       border-radius: 2px;
     }
 
-    /* ===== GRID LAYOUT ===== */
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -152,7 +149,6 @@
       .mobile-menu-btn { display: flex !important; }
     }
 
-    /* ===== CARDS ===== */
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -183,7 +179,6 @@
       color: var(--accent);
     }
 
-    /* ===== FORM ELEMENTS ===== */
     .form-group {
       margin-bottom: 16px;
     }
@@ -251,7 +246,6 @@
       border-color: var(--border);
     }
 
-    /* ===== BUTTONS ===== */
     .btn-group {
       display: flex;
       gap: 10px;
@@ -291,18 +285,14 @@
       color: white;
     }
 
-    .btn-success:hover {
-      filter: brightness(1.1);
-    }
+    .btn-success:hover { filter: brightness(1.1); }
 
     .btn-danger {
       background: var(--danger);
       color: white;
     }
 
-    .btn-danger:hover {
-      filter: brightness(1.1);
-    }
+    .btn-danger:hover { filter: brightness(1.1); }
 
     .btn-warning {
       background: var(--warning);
@@ -336,11 +326,8 @@
       font-size: 0.8125rem;
     }
 
-    .btn-block {
-      width: 100%;
-    }
+    .btn-block { width: 100%; }
 
-    /* ===== STATS BAR ===== */
     .stats-bar {
       display: flex;
       flex-wrap: wrap;
@@ -365,7 +352,6 @@
       color: var(--accent);
     }
 
-    /* ===== INFO BOX ===== */
     .info-box {
       background: var(--bg-elevated);
       border-left: 3px solid var(--accent);
@@ -383,11 +369,8 @@
       font-weight: 500;
     }
 
-    .info-box a:hover {
-      text-decoration: underline;
-    }
+    .info-box a:hover { text-decoration: underline; }
 
-    /* ===== RUMO BUTTONS ===== */
     .rumo-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -407,7 +390,6 @@
       border-color: var(--accent);
     }
 
-    /* ===== RESULTS AREA ===== */
     .result-section {
       margin-bottom: 20px;
     }
@@ -449,7 +431,6 @@
       outline: none;
     }
 
-    /* ===== FOOTER ===== */
     .footer {
       text-align: center;
       padding: 40px 24px;
@@ -476,11 +457,8 @@
       transition: color 0.2s;
     }
 
-    .footer a:hover {
-      color: var(--accent);
-    }
+    .footer a:hover { color: var(--accent); }
 
-    /* ===== TOAST ===== */
     #toast {
       position: fixed;
       bottom: 24px;
@@ -513,26 +491,18 @@
       font-weight: 700;
     }
 
-    /* ===== SCROLLBAR ===== */
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
     }
 
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
-
+    ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb {
       background: var(--border);
       border-radius: 4px;
     }
+    ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
 
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--border-hover);
-    }
-
-    /* ===== MOBILE MENU ===== */
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -545,7 +515,6 @@
 <base target="_blank">
 </head>
 <body>
-  <!-- Header -->
   <header class="header">
     <div class="header-inner">
       <a href="index.html" class="brand">
@@ -561,12 +530,10 @@
     </div>
   </header>
 
-  <!-- Main Content -->
   <main class="main">
     <h1 class="page-title">Entrevista</h1>
 
     <div class="grid">
-      <!-- Form Card -->
       <div class="card">
         <div class="card-header">
           <h2 class="card-title">Formulário</h2>
@@ -576,29 +543,29 @@
         <form autocomplete="off" onsubmit="return false;">
           <div class="form-row">
             <div class="form-group">
-              <label>Nome Completo (IRL)</label>
+              <label for="nome">Nome Completo (IRL)</label>
               <input type="text" id="nome" placeholder="Digite o nome..." autocomplete="off" />
             </div>
             <div class="form-group">
-              <label>Data de Nascimento</label>
-              <input type="text" id="data" placeholder="dd mm aaaa" autocomplete="off" />
+              <label for="data">Data de Nascimento</label>
+              <input type="text" id="data" placeholder="dd/mm/aaaa" autocomplete="off" />
             </div>
             <div class="form-group" style="max-width: 100px;">
-              <label>Idade</label>
+              <label for="idade">Idade</label>
               <input type="text" id="idade" disabled />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label>ID Discord</label>
+              <label for="discord">ID Discord</label>
               <input type="text" id="discord" placeholder="000000000000000000" autocomplete="off" />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label>Rumo</label>
+              <label for="rumo">Rumo</label>
               <select id="rumo">
                 <option value="">Selecione...</option>
                 <option value="Livre">Livre</option>
@@ -611,13 +578,13 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Outro Rumo</label>
+              <label for="rumoOutro">Outro Rumo</label>
               <input type="text" id="rumoOutro" placeholder="Especifique se aplicável" autocomplete="off" />
             </div>
           </div>
 
           <div class="form-group">
-            <label>Observações</label>
+            <label for="observacoes">Observações</label>
             <textarea id="observacoes" placeholder="Motivo da reprovação ou observações..."></textarea>
           </div>
 
@@ -629,7 +596,6 @@
           </div>
         </form>
 
-        <!-- Stats -->
         <div class="stats-bar">
           <div class="stat-item">Total: <span class="stat-value" id="totalGeral">0</span></div>
           <div class="stat-item">Aprovados: <span class="stat-value" id="aprovadosGeral">0</span></div>
@@ -642,7 +608,6 @@
           <div class="stat-item">Outros: <span class="stat-value" id="aprovadosOutro">0</span></div>
         </div>
 
-        <!-- Info -->
         <div class="info-box">
           <strong style="color: var(--text-primary);">ℹ️ Informações importantes:</strong><br><br>
           • Todos os dados ficam salvos automaticamente.<br>
@@ -650,7 +615,6 @@
           • <a href="https://comprexo.gg/regras/" target="_blank">Regras básicas</a> devem ser repassadas ao entrevistado.
         </div>
 
-        <!-- Rumo Buttons -->
         <div class="rumo-grid">
           <button class="btn btn-sm" onclick="copiarPorRumo('Policia', false)" type="button">📋 Polícia</button>
           <button class="btn btn-sm" onclick="copiarPorRumo('Hospital', false)" type="button">📋 Hospital</button>
@@ -669,7 +633,6 @@
         </button>
       </div>
 
-      <!-- Results Card -->
       <div class="card">
         <div class="card-header">
           <h2 class="card-title">Resultados</h2>
@@ -726,7 +689,6 @@
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="footer">
     <img src="https://i.postimg.cc/WzSNyqxY/Jacky-Confuso.png" alt="Jacky" />
     <p>© 2026 - Todos os direitos reservados</p>
@@ -734,60 +696,91 @@
     <p>Original por <a href="https://jackymayers.github.io/" target="_blank">Jacky Mayers</a></p>
   </footer>
 
-  <!-- Toast -->
   <div id="toast">Copiado para a área de transferência!</div>
 
-  <!-- Scripts -->
   <script>
     // ===== INIT =====
-    window.onload = () => {
-      ['nome', 'data', 'discord', 'rumo', 'rumoOutro', 'observacoes'].forEach(id => {
-        if (localStorage.getItem(id)) document.getElementById(id).value = localStorage.getItem(id);
+    window.onload = function() {
+      ['nome', 'data', 'discord', 'rumo', 'rumoOutro', 'observacoes'].forEach(function(id) {
+        var val = localStorage.getItem(id);
+        if (val) document.getElementById(id).value = val;
       });
-      ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'].forEach(id => {
-        if (localStorage.getItem(id)) document.getElementById(id).value = localStorage.getItem(id);
+      ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'].forEach(function(id) {
+        var val = localStorage.getItem(id);
+        if (val) document.getElementById(id).value = val;
       });
+      // CHAMA A FUNÇÃO AO CARREGAR (caso já tenha data salva)
       calcularIdade();
       atualizarContadores();
       atualizarContadorVisual();
     };
 
     // ===== STORAGE =====
-    document.querySelectorAll('input, textarea, select').forEach(el => {
-      el.addEventListener('input', () => localStorage.setItem(el.id, el.value));
+    document.querySelectorAll('input, textarea, select').forEach(function(el) {
+      el.addEventListener('input', function() {
+        localStorage.setItem(el.id, el.value);
+      });
     });
 
-    document.getElementById('rumo').addEventListener('change', () => {
-      const rumoSelect = document.getElementById('rumo');
-      const rumoOutro = document.getElementById('rumoOutro');
+    document.getElementById('rumo').addEventListener('change', function() {
+      var rumoSelect = document.getElementById('rumo');
+      var rumoOutro = document.getElementById('rumoOutro');
       if (rumoSelect.value !== 'Outro') {
         rumoOutro.value = '';
         localStorage.removeItem('rumoOutro');
       }
     });
 
-    document.getElementById('data').addEventListener('input', calcularIdade);
+    // ===== LISTENER CORRETO PARA A DATA =====
+    // Usando 'input' para capturar enquanto digita
+    document.getElementById('data').addEventListener('input', function() {
+      calcularIdade();
+    });
 
-    // ===== FUNÇÕES AUXILIARES =====
+    // Também no 'blur' (quando sai do campo) como backup
+    document.getElementById('data').addEventListener('blur', function() {
+      calcularIdade();
+    });
+
+    // ===== FUNÇÃO CALCULAR IDADE CORRIGIDA =====
     function calcularIdade() {
-      const dataInput = document.getElementById('data').value.trim();
-      const idadeCampo = document.getElementById('idade');
-      const match = dataInput.match(/(\d{2})[-\/\.\s]?(\d{2})[-\/\.\s]?(\d{4})/);
+      var dataInput = document.getElementById('data').value.trim();
+      var idadeCampo = document.getElementById('idade');
+
+      // Regex mais flexível: aceita dd/mm/aaaa, dd-mm-aaaa, dd.mm.aaaa, dd mm aaaa, etc.
+      var dataRegex = /^(\d{1,2})[\/\-\.\s](\d{1,2})[\/\-\.\s](\d{4})$/;
+      var match = dataInput.match(dataRegex);
+
       if (match) {
-        const [dia, mes, ano] = [parseInt(match[1]), parseInt(match[2]) - 1, parseInt(match[3])];
-        const nasc = new Date(ano, mes, dia);
-        const hoje = new Date();
-        let idade = hoje.getFullYear() - nasc.getFullYear();
-        if (hoje.getMonth() - nasc.getMonth() < 0 || (hoje.getMonth() === nasc.getMonth() && hoje.getDate() < nasc.getDate())) idade--;
-        idadeCampo.value = idade;
+        var dia = parseInt(match[1], 10);
+        var mes = parseInt(match[2], 10) - 1; // meses começam em 0
+        var ano = parseInt(match[3], 10);
+
+        var nascimento = new Date(ano, mes, dia);
+        var hoje = new Date();
+
+        // Verifica se a data é válida
+        if (nascimento.getMonth() !== mes || nascimento.getDate() !== dia) {
+          idadeCampo.value = '';
+          return;
+        }
+
+        var idade = hoje.getFullYear() - nascimento.getFullYear();
+        var m = hoje.getMonth() - nascimento.getMonth();
+
+        if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+          idade--;
+        }
+
+        idadeCampo.value = idade >= 0 ? idade : '';
       } else {
         idadeCampo.value = '';
       }
     }
 
-    function limparCampos(aprovacao = false) {
+    function limparCampos(aprovacao) {
       if (!aprovacao && !confirm("Limpar todos os campos?")) return;
-      ['nome', 'data', 'idade', 'discord', 'rumo', 'rumoOutro', 'observacoes'].forEach(id => {
+      ['nome', 'data', 'idade', 'discord', 'rumo', 'rumoOutro', 'observacoes'].forEach(function(id) {
         document.getElementById(id).value = '';
         if (!aprovacao) localStorage.removeItem(id);
       });
@@ -801,32 +794,34 @@
     }
 
     function showToast(msg) {
-      const toast = document.getElementById('toast');
+      var toast = document.getElementById('toast');
       toast.textContent = msg;
       toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
+      setTimeout(function() {
+        toast.classList.remove('show');
+      }, 2000);
     }
 
     async function copiarTexto(id) {
-      const texto = document.getElementById(id).value;
+      var texto = document.getElementById(id).value;
       try {
         await navigator.clipboard.writeText(texto);
         showToast('Copiado!');
-      } catch {
+      } catch (e) {
         alert('Erro ao copiar. Copie manualmente.');
       }
     }
 
     // ===== ADICIONAR =====
     function adicionar(status) {
-      const nome = document.getElementById('nome').value.trim();
-      const data = formatarData(document.getElementById('data').value.trim());
-      const idade = document.getElementById('idade').value.trim();
-      const discord = document.getElementById('discord').value.trim();
-      const rumoSelect = document.getElementById('rumo').value;
-      const rumoOutro = document.getElementById('rumoOutro').value.trim();
-      const observacoes = document.getElementById('observacoes').value.trim();
-      const rumo = (rumoSelect === 'Outro' && rumoOutro) ? rumoOutro : rumoSelect;
+      var nome = document.getElementById('nome').value.trim();
+      var data = formatarData(document.getElementById('data').value.trim());
+      var idade = document.getElementById('idade').value.trim();
+      var discord = document.getElementById('discord').value.trim();
+      var rumoSelect = document.getElementById('rumo').value;
+      var rumoOutro = document.getElementById('rumoOutro').value.trim();
+      var observacoes = document.getElementById('observacoes').value.trim();
+      var rumo = (rumoSelect === 'Outro' && rumoOutro) ? rumoOutro : rumoSelect;
 
       if (!discord) { alert("ID Discord é obrigatório!"); return; }
       if (!/^\d{17,20}$/.test(discord)) {
@@ -838,44 +833,53 @@
       if (status === 'reprovado' && !confirm("Confirmar reprovação?")) return;
 
       if (status === 'aprovado') {
-        const parts = [];
-        if (nome) parts.push(`**Nome:** ${nome}`);
-        if (data) parts.push(`**Nascimento:** ${data} (${idade} anos)`);
-        if (discord) parts.push(`**Discord:** ${discord} | <@${discord}>`);
-        if (rumo) parts.push(`**Rumo:** ${rumo}`);
-        if (observacoes) parts.push(`**Obs:** ${observacoes}`);
+        var parts = [];
+        if (nome) parts.push("**Nome:** " + nome);
+        if (data) parts.push("**Nascimento:** " + data + " (" + idade + " anos)");
+        if (discord) parts.push("**Discord:** " + discord + " | <@" + discord + ">");
+        if (rumo) parts.push("**Rumo:** " + rumo);
+        if (observacoes) parts.push("**Obs:** " + observacoes);
 
-        const el = document.getElementById('resultadoAprovados');
+        var el = document.getElementById('resultadoAprovados');
         el.value += (el.value.trim() ? '
 
 ' : '') + parts.join('
 ');
         localStorage.setItem('resultadoAprovados', el.value);
       } else {
-        const parts = [];
-        if (nome) parts.push(`**Nome:** ${nome}`);
-        if (data) parts.push(`**Nascimento:** ${data} (${idade} anos)`);
-        if (discord) parts.push(`**Discord:** ${discord} | <@${discord}>`);
-        if (rumo) parts.push(`**Rumo:** ${rumo}`);
-        parts.push(`**Motivo:** ${observacoes || 'Não informado'}`);
+        var parts = [];
+        if (nome) parts.push("**Nome:** " + nome);
+        if (data) parts.push("**Nascimento:** " + data + " (" + idade + " anos)");
+        if (discord) parts.push("**Discord:** " + discord + " | <@" + discord + ">");
+        if (rumo) parts.push("**Rumo:** " + rumo);
+        parts.push("**Motivo:** " + (observacoes || 'Não informado'));
 
-        const el = document.getElementById('resultadoReprovadosDetalhado');
+        var el = document.getElementById('resultadoReprovadosDetalhado');
         el.value += (el.value.trim() ? '
 
 ' : '') + parts.join('
 ');
         localStorage.setItem('resultadoReprovadosDetalhado', el.value);
 
-        const simples = document.getElementById('resultadoReprovadosSimples');
+        var simples = document.getElementById('resultadoReprovadosSimples');
         simples.value += (simples.value.trim() ? '
 
-' : '') + `ID: ${discord} | <@${discord}>
-Motivo: ${observacoes || 'Não informado'}`;
+' : '') + "ID: " + discord + " | <@" + discord + ">
+Motivo: " + (observacoes || 'Não informado');
         localStorage.setItem('resultadoReprovadosSimples', simples.value);
       }
 
-      let geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-      geral.push({ nome, data, idade, discord, rumo, observacoes, status, timestamp: new Date().toLocaleString() });
+      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      geral.push({
+        nome: nome,
+        data: data,
+        idade: idade,
+        discord: discord,
+        rumo: rumo,
+        observacoes: observacoes,
+        status: status,
+        timestamp: new Date().toLocaleString()
+      });
       localStorage.setItem('entrevistasGerais', JSON.stringify(geral));
 
       atualizarContadores();
@@ -885,8 +889,8 @@ Motivo: ${observacoes || 'Não informado'}`;
     }
 
     function formatarData(data) {
-      const m = data.match(/(\d{2})[-\/\.\s]?(\d{2})[-\/\.\s]?(\d{4})/);
-      return m ? `${m[1]}/${m[2]}/${m[3]}` : '';
+      var m = data.match(/^(\d{1,2})[\/\-\.\s](\d{1,2})[\/\-\.\s](\d{4})$/);
+      return m ? m[1] + "/" + m[2] + "/" + m[3] : '';
     }
 
     function limparStorageGeral() {
@@ -898,17 +902,25 @@ Motivo: ${observacoes || 'Não informado'}`;
 
     // ===== CONTADORES =====
     function atualizarContadores() {
-      const geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-      const total = geral.length;
-      const aprovados = geral.filter(e => e.status === 'aprovado').length;
-      const reprovados = geral.filter(e => e.status === 'reprovado').length;
+      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      var total = geral.length;
+      var aprovados = geral.filter(function(e) { return e.status === 'aprovado'; }).length;
+      var reprovados = geral.filter(function(e) { return e.status === 'reprovado'; }).length;
 
-      const conhecidos = ['policia', 'fazenda', 'nativo', 'hospital', 'ilegal'];
-      const count = r => geral.filter(e => e.status === 'aprovado' && (e.rumo || '').normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase() === r).length;
-      const outros = () => geral.filter(e => {
-        const r = (e.rumo || '').normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
-        return e.status === 'aprovado' && !conhecidos.includes(r);
-      }).length;
+      var conhecidos = ['policia', 'fazenda', 'nativo', 'hospital', 'ilegal'];
+
+      function count(r) {
+        return geral.filter(function(e) {
+          return e.status === 'aprovado' && (e.rumo || '').normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase() === r;
+        }).length;
+      }
+
+      function outros() {
+        return geral.filter(function(e) {
+          var r = (e.rumo || '').normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+          return e.status === 'aprovado' && !conhecidos.includes(r);
+        }).length;
+      }
 
       document.getElementById('totalGeral').textContent = total;
       document.getElementById('aprovadosGeral').textContent = aprovados;
@@ -922,26 +934,26 @@ Motivo: ${observacoes || 'Não informado'}`;
     }
 
     function atualizarContadorVisual() {
-      const aprovadosText = document.getElementById('resultadoAprovados').value.trim();
-      let aprovados = 0, policia = 0, fazenda = 0, nativo = 0, hospital = 0, ilegal = 0, outro = 0;
+      var aprovadosText = document.getElementById('resultadoAprovados').value.trim();
+      var aprovados = 0, policia = 0, fazenda = 0, nativo = 0, hospital = 0, ilegal = 0, outro = 0;
 
       if (aprovadosText) {
-        const blocos = aprovadosText.split(/
+        var blocos = aprovadosText.split(/
 \s*
-/).filter(b => b.trim());
+/).filter(function(b) { return b.trim(); });
         aprovados = blocos.length;
-        const conhecidos = ['policia', 'fazenda', 'nativo', 'hospital', 'ilegal'];
+        var conhecidos = ['policia', 'fazenda', 'nativo', 'hospital', 'ilegal'];
 
-        blocos.forEach(b => {
-          const match = b.match(/[*_]*Rumo:[*_]*\s*(.*)/i);
-          let rumo = match ? match[1].normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim() : "";
+        blocos.forEach(function(b) {
+          var match = b.match(/[*_]*Rumo:[*_]*\s*(.*)/i);
+          var rumo = match ? match[1].normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim() : "";
 
           if (rumo.startsWith("polic")) policia++;
           else if (rumo.startsWith("fazend")) fazenda++;
           else if (rumo.startsWith("nativ")) nativo++;
           else if (rumo.startsWith("hospital")) hospital++;
           else if (rumo.startsWith("ilegal")) ilegal++;
-          else if (rumo && !conhecidos.some(c => rumo.startsWith(c))) outro++;
+          else if (rumo && !conhecidos.some(function(c) { return rumo.startsWith(c); })) outro++;
         });
       }
 
@@ -953,14 +965,14 @@ Motivo: ${observacoes || 'Não informado'}`;
       document.getElementById('aprovadosIlegalVisual').textContent = ilegal;
       document.getElementById('aprovadosOutroVisual').textContent = outro;
 
-      const reprovadosText = document.getElementById('resultadoReprovadosDetalhado').value.trim();
+      var reprovadosText = document.getElementById('resultadoReprovadosDetalhado').value.trim();
       document.getElementById('reprovadosVisual').textContent = reprovadosText ? reprovadosText.split(/
 \s*
-/).filter(b => b.trim()).length : 0;
+/).filter(function(b) { return b.trim(); }).length : 0;
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'].forEach(id => {
+    document.addEventListener('DOMContentLoaded', function() {
+      ['resultadoAprovados', 'resultadoReprovadosDetalhado', 'resultadoReprovadosSimples'].forEach(function(id) {
         document.getElementById(id).addEventListener('input', atualizarContadorVisual);
       });
       atualizarContadorVisual();
@@ -969,49 +981,53 @@ Motivo: ${observacoes || 'Não informado'}`;
     // ===== COPIAR POR RUMO =====
     async function copiarPorRumo(rumoParam, visual) {
       if (visual) {
-        const text = document.getElementById('resultadoAprovados').value.trim();
+        var text = document.getElementById('resultadoAprovados').value.trim();
         if (!text) { alert('Nenhum aprovado.'); return; }
-        const blocos = text.split(/
+        var blocos = text.split(/
 \s*
-/).filter(b => b.trim());
-        const conhecidos = ['policia', 'fazenda', 'nativo', 'hospital', 'ilegal'];
-        const resultado = [];
+/).filter(function(b) { return b.trim(); });
+        var conhecidos = ['policia', 'fazenda', 'nativo', 'hospital', 'ilegal'];
+        var resultado = [];
 
-        blocos.forEach(b => {
-          const match = b.match(/[*_]*Rumo:[*_]*\s*(.*)/i);
-          let rumo = match ? match[1].normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim() : "";
+        blocos.forEach(function(b) {
+          var match = b.match(/[*_]*Rumo:[*_]*\s*(.*)/i);
+          var rumo = match ? match[1].normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim() : "";
           if (rumoParam === 'Outro') {
-            if (rumo && !conhecidos.some(c => rumo.startsWith(c))) resultado.push(b);
+            if (rumo && !conhecidos.some(function(c) { return rumo.startsWith(c); })) resultado.push(b);
           } else if (rumo.startsWith(rumoParam.toLowerCase())) {
             resultado.push(b);
           }
         });
 
-        if (resultado.length === 0) alert(`Nenhum para ${rumoParam}`);
+        if (resultado.length === 0) alert('Nenhum para ' + rumoParam);
         else await copiarDirect(resultado.join('
 
 '));
       } else {
-        let entrevistas = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-        const conhecidos = ['Policia', 'Fazenda', 'Nativo', 'Hospital', 'Ilegal'];
-        let filtered;
+        var entrevistas = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+        var conhecidos = ['Policia', 'Fazenda', 'Nativo', 'Hospital', 'Ilegal'];
+        var filtered;
 
         if (rumoParam === 'Outro') {
-          filtered = entrevistas.filter(e => e.status === 'aprovado' && e.rumo && !conhecidos.includes(e.rumo));
+          filtered = entrevistas.filter(function(e) {
+            return e.status === 'aprovado' && e.rumo && !conhecidos.includes(e.rumo);
+          });
         } else {
-          filtered = entrevistas.filter(e => e.status === 'aprovado' && (e.rumo || '').toLowerCase() === rumoParam.toLowerCase());
+          filtered = entrevistas.filter(function(e) {
+            return e.status === 'aprovado' && (e.rumo || '').toLowerCase() === rumoParam.toLowerCase();
+          });
         }
 
-        if (filtered.length === 0) { alert(`Nenhuma para ${rumoParam}`); return; }
+        if (filtered.length === 0) { alert('Nenhuma para ' + rumoParam); return; }
 
-        let texto = '';
-        filtered.forEach(e => {
-          const parts = [];
-          if (e.nome) parts.push(`**Nome:** ${e.nome}`);
-          if (e.data) parts.push(`**Nascimento:** ${e.data} (${e.idade})`);
-          if (e.discord) parts.push(`**Discord:** ${e.discord} | <@${e.discord}>`);
-          if (e.rumo) parts.push(`**Rumo:** ${e.rumo}`);
-          if (e.observacoes) parts.push(`**Obs:** ${e.observacoes}`);
+        var texto = '';
+        filtered.forEach(function(e) {
+          var parts = [];
+          if (e.nome) parts.push("**Nome:** " + e.nome);
+          if (e.data) parts.push("**Nascimento:** " + e.data + " (" + e.idade + ")");
+          if (e.discord) parts.push("**Discord:** " + e.discord + " | <@" + e.discord + ">");
+          if (e.rumo) parts.push("**Rumo:** " + e.rumo);
+          if (e.observacoes) parts.push("**Obs:** " + e.observacoes);
           texto += parts.join('
 ') + '
 
@@ -1023,32 +1039,32 @@ Motivo: ${observacoes || 'Não informado'}`;
 
     // ===== SALVAR TXT =====
     async function salvarTxtComDataHora() {
-      const geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
       if (geral.length === 0) { alert("Nenhuma entrevista."); return; }
 
-      const agora = new Date().toLocaleString();
-      let texto = `--- Entrevistas - ${agora} ---
+      var agora = new Date().toLocaleString();
+      var texto = "--- Entrevistas - " + agora + " ---
 
-`;
-      geral.forEach(e => {
-        const parts = [];
-        parts.push(`${e.status === 'aprovado' ? '✅' : '❌'} ${e.nome || 'N/A'}`);
-        if (e.data) parts.push(`Nascimento: ${e.data} (${e.idade})`);
-        parts.push(`Discord: ${e.discord}`);
-        if (e.rumo) parts.push(`Rumo: ${e.rumo}`);
-        if (e.observacoes) parts.push(`Obs: ${e.observacoes}`);
-        parts.push(`Status: ${e.status} | ${e.timestamp}`);
+";
+      geral.forEach(function(e) {
+        var parts = [];
+        parts.push((e.status === 'aprovado' ? '✅' : '❌') + " " + (e.nome || 'N/A'));
+        if (e.data) parts.push("Nascimento: " + e.data + " (" + e.idade + ")");
+        parts.push("Discord: " + e.discord);
+        if (e.rumo) parts.push("Rumo: " + e.rumo);
+        if (e.observacoes) parts.push("Obs: " + e.observacoes);
+        parts.push("Status: " + e.status + " | " + e.timestamp);
         texto += parts.join('
 ') + '
 
 ';
       });
 
-      const blob = new Blob([texto], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      var blob = new Blob([texto], { type: "text/plain;charset=utf-8" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
       a.href = url;
-      a.download = `entrevistas_${agora.replace(/[\/:\s]/g, "_")}.txt`;
+      a.download = "entrevistas_" + agora.replace(/[\/:\s]/g, "_") + ".txt";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -1058,16 +1074,16 @@ Motivo: ${observacoes || 'Não informado'}`;
 
     // ===== COPIAR REPROVADOS =====
     async function copiarReprovadosGeral() {
-      const geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-      const reprovados = geral.filter(e => e.status === 'reprovado');
+      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      var reprovados = geral.filter(function(e) { return e.status === 'reprovado'; });
       if (reprovados.length === 0) { alert("Nenhum reprovado."); return; }
 
-      let texto = '';
-      reprovados.forEach(e => {
-        texto += `ID: ${e.discord} | <@${e.discord}>
-Motivo: ${e.observacoes || 'Não informado'}
+      var texto = '';
+      reprovados.forEach(function(e) {
+        texto += "ID: " + e.discord + " | <@" + e.discord + ">
+Motivo: " + (e.observacoes || 'Não informado') + "
 
-`;
+";
       });
       await copiarDirect(texto.trim());
     }
@@ -1076,7 +1092,7 @@ Motivo: ${e.observacoes || 'Não informado'}
       try {
         await navigator.clipboard.writeText(text);
         showToast('Copiado!');
-      } catch {
+      } catch (e) {
         alert('Erro ao copiar.');
       }
     }
