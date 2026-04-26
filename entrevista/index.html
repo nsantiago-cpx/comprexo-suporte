@@ -463,14 +463,14 @@
 </head>
 <body>
   <header class="header">
-    <a href="index.html" class="brand">
+    <a href="../index.html" class="brand">
       <span class="brand-dot"></span>
       COMPREXO
     </a>
     <nav class="nav-links">
-      <a href="index.html">🏠 Início</a>
-      <a href="entrevista/index.html" class="active">🎤 Entrevista</a>
-      <a href="alinhamento/index.html">🎫 Alinhamento</a>
+      <a href="../index.html">🏠 Início</a>
+      <a href="../entrevista/index.html" class="active">🎤 Entrevista</a>
+      <a href="../alinhamento/index.html">🎫 Alinhamento</a>
     </nav>
   </header>
 
@@ -645,7 +645,6 @@
     // INICIALIZAÇÃO
     // =====================================================
 
-    // Carregar dados salvos
     window.addEventListener('load', function() {
       var campos = ['nome', 'data', 'discord', 'rumo', 'rumoOutro', 'observacoes'];
       for (var i = 0; i < campos.length; i++) {
@@ -661,15 +660,11 @@
         if (val) document.getElementById(id).value = val;
       }
 
-      // Calcular idade se tiver data salva
       calcularIdade();
-
-      // Atualizar contadores
       atualizarContadores();
       atualizarContadorVisual();
     });
 
-    // Salvar campos automaticamente
     var todosCampos = document.querySelectorAll('input, select, textarea');
     for (var i = 0; i < todosCampos.length; i++) {
       todosCampos[i].addEventListener('input', function() {
@@ -677,11 +672,9 @@
       });
     }
 
-    // Listener para calcular idade
     document.getElementById('data').addEventListener('input', calcularIdade);
     document.getElementById('data').addEventListener('blur', calcularIdade);
 
-    // Listener para limpar "Outro" quando não selecionado
     document.getElementById('rumo').addEventListener('change', function() {
       if (this.value !== 'Outro') {
         document.getElementById('rumoOutro').value = '';
@@ -697,14 +690,10 @@
       var dataInput = document.getElementById('data').value.trim();
       var idadeCampo = document.getElementById('idade');
 
-      // Aceita: dd/mm/aaaa, dd-mm-aaaa, dd.mm.aaaa
       var regex = /^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/;
       var match = dataInput.match(regex);
 
-      if (!match) {
-        idadeCampo.value = '';
-        return;
-      }
+      if (!match) { idadeCampo.value = ''; return; }
 
       var dia = parseInt(match[1], 10);
       var mes = parseInt(match[2], 10) - 1;
@@ -713,7 +702,6 @@
       var nasc = new Date(ano, mes, dia);
       var hoje = new Date();
 
-      // Verificar data válida
       if (nasc.getMonth() !== mes || nasc.getDate() !== dia || nasc > hoje) {
         idadeCampo.value = '';
         return;
@@ -739,25 +727,16 @@
       var t = document.getElementById('toast');
       t.textContent = msg;
       t.classList.add('show');
-      setTimeout(function() {
-        t.classList.remove('show');
-      }, 2000);
+      setTimeout(function() { t.classList.remove('show'); }, 2000);
     }
 
     function copiar(id) {
       var el = document.getElementById(id);
-      if (!el.value.trim()) {
-        alert('Campo vazio!');
-        return;
-      }
-
+      if (!el.value.trim()) { alert('Campo vazio!'); return; }
       el.select();
       el.setSelectionRange(0, 99999);
-
       try {
-        navigator.clipboard.writeText(el.value).then(function() {
-          toast('Copiado!');
-        });
+        navigator.clipboard.writeText(el.value).then(function() { toast('Copiado!'); });
       } catch(e) {
         document.execCommand('copy');
         toast('Copiado!');
@@ -791,13 +770,8 @@
     // APROVAR / REPROVAR
     // =====================================================
 
-    function aprovar() {
-      adicionar('aprovado');
-    }
-
-    function reprovar() {
-      adicionar('reprovado');
-    }
+    function aprovar() { adicionar('aprovado'); }
+    function reprovar() { adicionar('reprovado'); }
 
     function adicionar(status) {
       var nome = document.getElementById('nome').value.trim();
@@ -809,11 +783,7 @@
       var observacoes = document.getElementById('observacoes').value.trim();
       var rumo = (rumoSelect === 'Outro' && rumoOutro) ? rumoOutro : rumoSelect;
 
-      // Validações
-      if (!discord) {
-        alert('ID Discord é obrigatório!');
-        return;
-      }
+      if (!discord) { alert('ID Discord é obrigatório!'); return; }
 
       if (!/^\d{17,20}$/.test(discord)) {
         if (!confirm('ID Discord parece inválido. Continuar mesmo assim?')) return;
@@ -826,7 +796,6 @@
 
       if (status === 'reprovado' && !confirm('Confirmar REPROVAÇÃO?')) return;
 
-      // Montar resultado
       if (status === 'aprovado') {
         var partes = [];
         if (nome) partes.push('**Nome do Aprovado (IRL):** ' + nome);
@@ -839,7 +808,6 @@
         el.value += (el.value.trim() ? '\n\n' : '') + partes.join('\n');
         localStorage.setItem('resultadoAprovados', el.value);
       } else {
-        // Reprovado detalhado
         var partes = [];
         if (nome) partes.push('**Nome do Reprovado (IRL):** ' + nome);
         if (data) partes.push('**Data de Nascimento:** ' + data + ' (' + idade + ' anos)');
@@ -851,28 +819,20 @@
         el.value += (el.value.trim() ? '\n\n' : '') + partes.join('\n');
         localStorage.setItem('resultadoReprovadosDetalhado', el.value);
 
-        // Reprovado simples
         var simples = document.getElementById('resultadoReprovadosSimples');
-        simples.value += (simples.value.trim() ? '\n\n' : '') + 
+        simples.value += (simples.value.trim() ? '\n\n' : '') +
           'ID: ' + discord + ' | <@' + discord + '>\nMotivo: ' + (observacoes || 'Motivo não informado.');
         localStorage.setItem('resultadoReprovadosSimples', simples.value);
       }
 
-      // Salvar no storage geral
       var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
       geral.push({
-        nome: nome,
-        data: data,
-        idade: idade,
-        discord: discord,
-        rumo: rumo,
-        observacoes: observacoes,
-        status: status,
+        nome: nome, data: data, idade: idade, discord: discord,
+        rumo: rumo, observacoes: observacoes, status: status,
         timestamp: new Date().toLocaleString()
       });
       localStorage.setItem('entrevistasGerais', JSON.stringify(geral));
 
-      // Atualizar e limpar
       atualizarContadores();
       atualizarContadorVisual();
       limparCampos();
@@ -886,8 +846,7 @@
     function atualizarContadores() {
       var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
       var total = geral.length;
-      var aprovados = 0;
-      var reprovados = 0;
+      var aprovados = 0, reprovados = 0;
       var policia = 0, fazenda = 0, nativo = 0, hospital = 0, ilegal = 0, outros = 0;
 
       for (var i = 0; i < geral.length; i++) {
@@ -947,14 +906,12 @@
       document.getElementById('aprovadosOutroVisual').textContent = outro;
 
       var reprovadosText = document.getElementById('resultadoReprovadosDetalhado').value.trim();
-      var reprovados = 0;
-      if (reprovadosText) {
-        reprovados = reprovadosText.split(/\n\s*\n/).filter(function(b) { return b.trim(); }).length;
-      }
+      var reprovados = reprovadosText
+        ? reprovadosText.split(/\n\s*\n/).filter(function(b) { return b.trim(); }).length
+        : 0;
       document.getElementById('reprovadosVisual').textContent = reprovados;
     }
 
-    // Atualizar visual quando digitar nos resultados
     document.getElementById('resultadoAprovados').addEventListener('input', atualizarContadorVisual);
     document.getElementById('resultadoReprovadosDetalhado').addEventListener('input', atualizarContadorVisual);
 
@@ -964,7 +921,6 @@
 
     function copiarRumo(rumoParam, visual) {
       if (visual) {
-        // Copiar do campo visual
         var text = document.getElementById('resultadoAprovados').value.trim();
         if (!text) { alert('Nenhum aprovado no campo visual.'); return; }
 
@@ -993,7 +949,6 @@
           copiarTexto(resultado.join('\n\n'));
         }
       } else {
-        // Copiar do storage geral
         var entrevistas = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
         var conhecidos = ['Policia', 'Fazenda', 'Nativo', 'Hospital', 'Ilegal'];
         var filtered = [];
@@ -1013,10 +968,7 @@
           }
         }
 
-        if (filtered.length === 0) {
-          alert('Nenhuma entrevista aprovada para: ' + rumoParam);
-          return;
-        }
+        if (filtered.length === 0) { alert('Nenhuma entrevista aprovada para: ' + rumoParam); return; }
 
         var texto = '';
         for (var i = 0; i < filtered.length; i++) {
@@ -1035,9 +987,7 @@
 
     function copiarTexto(texto) {
       try {
-        navigator.clipboard.writeText(texto).then(function() {
-          toast('Copiado!');
-        });
+        navigator.clipboard.writeText(texto).then(function() { toast('Copiado!'); });
       } catch(e) {
         var area = document.createElement('textarea');
         area.value = texto;
@@ -1055,16 +1005,9 @@
 
     function copiarReprovados() {
       var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-      var reprovados = [];
+      var reprovados = geral.filter(function(e) { return e.status === 'reprovado'; });
 
-      for (var i = 0; i < geral.length; i++) {
-        if (geral[i].status === 'reprovado') reprovados.push(geral[i]);
-      }
-
-      if (reprovados.length === 0) {
-        alert('Nenhum reprovado salvo.');
-        return;
-      }
+      if (reprovados.length === 0) { alert('Nenhum reprovado salvo.'); return; }
 
       var texto = '';
       for (var i = 0; i < reprovados.length; i++) {
@@ -1081,10 +1024,7 @@
 
     function salvarTXT() {
       var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
-      if (geral.length === 0) {
-        alert('Nenhuma entrevista para salvar.');
-        return;
-      }
+      if (geral.length === 0) { alert('Nenhuma entrevista para salvar.'); return; }
 
       var agora = new Date().toLocaleString();
       var texto = '=== ENTREVISTAS COMPREXO ===\n';
