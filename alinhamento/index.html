@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Entrevista - COMPREXO</title>
+  <title>Alinhamento - COMPREXO</title>
   <link rel="icon" href="https://i.postimg.cc/9QGqLt5t/COMPREXO-RDR-RED4x.webp" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -470,13 +470,13 @@
     </a>
     <nav class="nav-links">
       <a href="index.html">🏠 Início</a>
-      <a href="entrevista/index.html" class="active">🎤 Entrevista</a>
+      <a href="Alinhamento/index.html" class="active">🎤 Alinhamento</a>
       <a href="alinhamento/index.html">🎫 Alinhamento</a>
     </nav>
   </header>
 
   <main class="main">
-    <h1 class="page-title">Entrevista</h1>
+    <h1 class="page-title">Alinhamento</h1>
 
     <div class="grid">
       <!-- FORM CARD -->
@@ -535,7 +535,7 @@
           <button class="btn btn-success" onclick="aprovar()" type="button">✓ Aprovar</button>
           <button class="btn btn-danger" onclick="reprovar()" type="button">✕ Reprovar</button>
           <button class="btn btn-secondary" onclick="limparCampos()" type="button">Limpar</button>
-          <button class="btn btn-secondary" onclick="novaEntrevista()" type="button">Nova Entrevista</button>
+          <button class="btn btn-secondary" onclick="novaAlinhamento()" type="button">Nova Alinhamento</button>
         </div>
 
         <div class="stats">
@@ -553,8 +553,8 @@
         <div class="info">
           <strong style="color:#f0f0f0;">ℹ️ Informações:</strong><br>
           • Dados salvos automaticamente no navegador<br>
-          • "Nova Entrevista" apaga tudo permanentemente<br>
-          • <a href="https://comprexo.gg/regras/" target="_blank">Regras básicas</a> para o entrevistado
+          • "Nova Alinhamento" apaga tudo permanentemente<br>
+          • <a href="https://comprexo.gg/regras/" target="_blank">Regras básicas</a> para o Alinhamentodo
         </div>
 
         <div class="rumo-grid">
@@ -795,9 +795,9 @@
       }
     }
 
-    function novaEntrevista() {
+    function novaAlinhamento() {
       if (!confirm('⚠️ ISSO APAGA TODOS OS DADOS PERMANENTEMENTE!\n\nTem certeza?')) return;
-      localStorage.removeItem('entrevistasGerais');
+      localStorage.removeItem('AlinhamentosGerais');
       toast('Dados apagados!');
       atualizarContadores();
     }
@@ -874,7 +874,7 @@
       }
 
       // Salvar no storage geral
-      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      var geral = JSON.parse(localStorage.getItem('AlinhamentosGerais') || '[]');
       geral.push({
         nome: nome,
         data: data,
@@ -885,7 +885,7 @@
         status: status,
         timestamp: new Date().toLocaleString()
       });
-      localStorage.setItem('entrevistasGerais', JSON.stringify(geral));
+      localStorage.setItem('AlinhamentosGerais', JSON.stringify(geral));
 
       // Atualizar e limpar
       atualizarContadores();
@@ -899,7 +899,7 @@
     // =====================================================
 
     function atualizarContadores() {
-      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      var geral = JSON.parse(localStorage.getItem('AlinhamentosGerais') || '[]');
       var total = geral.length;
       var aprovados = 0;
       var reprovados = 0;
@@ -1009,12 +1009,12 @@
         }
       } else {
         // Copiar do storage geral
-        var entrevistas = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+        var Alinhamentos = JSON.parse(localStorage.getItem('AlinhamentosGerais') || '[]');
         var conhecidos = ['Policia', 'Fazenda', 'Nativo', 'Hospital', 'Ilegal'];
         var filtered = [];
 
-        for (var i = 0; i < entrevistas.length; i++) {
-          var e = entrevistas[i];
+        for (var i = 0; i < Alinhamentos.length; i++) {
+          var e = Alinhamentos[i];
           if (e.status !== 'aprovado') continue;
 
           if (rumoParam === 'Outro') {
@@ -1029,7 +1029,7 @@
         }
 
         if (filtered.length === 0) {
-          alert('Nenhuma entrevista aprovada para: ' + rumoParam);
+          alert('Nenhuma Alinhamento aprovada para: ' + rumoParam);
           return;
         }
 
@@ -1140,7 +1140,7 @@ Total de liberações: ' + linhas.length;
     // =====================================================
 
     function copiarReprovados() {
-      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      var geral = JSON.parse(localStorage.getItem('AlinhamentosGerais') || '[]');
       var reprovados = [];
 
       for (var i = 0; i < geral.length; i++) {
@@ -1166,14 +1166,14 @@ Total de liberações: ' + linhas.length;
     // =====================================================
 
     function salvarTXT() {
-      var geral = JSON.parse(localStorage.getItem('entrevistasGerais') || '[]');
+      var geral = JSON.parse(localStorage.getItem('AlinhamentosGerais') || '[]');
       if (geral.length === 0) {
-        alert('Nenhuma entrevista para salvar.');
+        alert('Nenhuma Alinhamento para salvar.');
         return;
       }
 
       var agora = new Date().toLocaleString();
-      var texto = '=== ENTREVISTAS COMPREXO ===\n';
+      var texto = '=== AlinhamentoS COMPREXO ===\n';
       texto += 'Salvo em: ' + agora + '\n';
       texto += 'Total: ' + geral.length + '\n';
       texto += '============================\n\n';
@@ -1194,7 +1194,7 @@ Total de liberações: ' + linhas.length;
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
       a.href = url;
-      a.download = 'entrevistas_comprexo_' + Date.now() + '.txt';
+      a.download = 'Alinhamentos_comprexo_' + Date.now() + '.txt';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
