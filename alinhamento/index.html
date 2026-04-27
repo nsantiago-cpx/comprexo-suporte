@@ -610,8 +610,9 @@
         localStorage.setItem('resultado_alin_resultadoAprovados', el.value);
 
         var elSimp = document.getElementById('resultadoAprovadosSimples');
-        elSimp.value += (elSimp.value.trim() ? '\n' : '') +
-          (nome ? nome + ' — ' : '') + '<@' + discord + '>';
+        var hoje = new Date().toLocaleDateString('pt-BR');
+        var linha = (nome ? nome + ' — ' : '') + '<@' + discord + '>';
+        elSimp.value = 'Call de Alinhamento - ' + hoje + '\n' + linha;
         localStorage.setItem('resultado_alin_resultadoAprovadosSimples', elSimp.value);
 
       } else {
@@ -624,7 +625,6 @@
         var elDet = document.getElementById('resultadoReprovadosDetalhado');
         elDet.value += (elDet.value.trim() ? '\n\n' : '') + partes.join('\n');
         localStorage.setItem('resultado_alin_resultadoReprovadosDetalhado', elDet.value);
-
 
       }
 
